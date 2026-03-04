@@ -6,7 +6,6 @@ import { ToggleTask } from "../lib/actions/updateTask";
 function TaskTable({ tasks }: { tasks: Task[] }) {
   return (
     <div>
-      <p>TaskTable</p>
       <div className="w-full">
         <table className="w-full table-auto border border-gray-300 dark:border-gray-600">
           <thead>

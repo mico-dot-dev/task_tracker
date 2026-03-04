@@ -1,9 +1,9 @@
 import React from "react";
-import TaskForm from "@/app/components/TaskForm";
 import TaskTable from "@/app/components/TaskTable";
 import UserAuth from "@/app/lib/auth/requireAuth";
 import { GetTasksByUserId } from "@/app/lib/services/task";
 import { Task } from "@/app/lib/models/task";
+import { TaskButton } from "@/app/components/TaskComponents";
 
 async function Hero() {
   const user = await UserAuth();
@@ -11,9 +11,13 @@ async function Hero() {
   const tasksData = await GetTasksByUserId(user.id);
   const tasks: Task[] = tasksData;
   return (
-    <div>
-      <TaskForm />
-      <TaskTable tasks={tasks} />
+    <div className="flex h-screen justify-center items-center">
+      <div className="h-[90%] w-[90%] relative">
+        <TaskTable tasks={tasks} />
+        <div className="absolute bottom-0 flex justify-end w-full ">
+          <TaskButton></TaskButton>
+        </div>
+      </div>
     </div>
   );
 }
