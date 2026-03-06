@@ -6,8 +6,10 @@ import { LoginError, UserExistsError } from "../models/status-error";
 // Checks if email exists and returns user data if found
 export async function getUserByEmail(email: string) {
   try {
+    const supabaseServerClient = await supabaseServer();
+
     // Implementation for user login
-    const { data, error } = await supabaseServer
+    const { data, error } = await supabaseServerClient
       .from("users")
       .select("*")
       .eq("email", email)
@@ -26,6 +28,7 @@ export async function getUserByEmail(email: string) {
 
 // Creates a new user in the database
 export async function createUser(user: unknown) {
+  const supabaseServerClient = await supabaseServer();
   // Implementation for creating a user
   const parsedUser = UserSchema.parse(user);
 
@@ -36,7 +39,7 @@ export async function createUser(user: unknown) {
     }
   });
   try {
-    const { data, error } = await supabaseServer.auth.signUp({
+    const { data, error } = await supabaseServerClient.auth.signUp({
       email: parsedUser.email,
       password: parsedUser.password,
     });
@@ -54,10 +57,12 @@ export async function createUser(user: unknown) {
 //Login function
 export async function loginUser(user: unknown) {
   try {
+    const supabaseServerClient = await supabaseServer();
+
     const parsedUser = UserSchema.parse(user);
     const loggedUser = await getUserByEmail(parsedUser.email);
 
-    const { data, error } = await supabaseServer.auth.signInWithPassword({
+    const { data, error } = await supabaseServerClient.auth.signInWithPassword({
       email: parsedUser.email,
       password: parsedUser.password,
     });

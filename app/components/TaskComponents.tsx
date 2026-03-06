@@ -1,20 +1,29 @@
 "use client";
 
 import React from "react";
+import Swal from "sweetalert2";
 
 export function TaskForm() {
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("Task form submitted");
     try {
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
 
-      const response = fetch("/api/task", {
+      const response = await fetch("/api/task", {
         method: "POST",
         body: formData,
       });
-    } catch (error) {}
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Task added successfully",
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   }
 
   return (

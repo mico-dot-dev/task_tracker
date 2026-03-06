@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const cookieStore = await cookies();
     const task: CreateTaskDTO = {
-      user_id: Number(cookieStore.get("user_id")?.value),
+      user_id: cookieStore.get("user_id")?.value as string,
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       completed: false,

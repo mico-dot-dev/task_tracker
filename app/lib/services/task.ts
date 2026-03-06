@@ -3,8 +3,9 @@ import { TaskSchema } from "../validator/task";
 
 export async function AddTask(taskInfo: unknown) {
   try {
+    const supabaseServerClient = await supabaseServer();
     const parsedTask = TaskSchema.parse(taskInfo);
-    const { data, error } = await supabaseServer.from("tasks").insert({
+    const { data, error } = await supabaseServerClient.from("tasks").insert({
       user_id: parsedTask.user_id,
       title: parsedTask.title,
       description: parsedTask.description,
@@ -13,15 +14,17 @@ export async function AddTask(taskInfo: unknown) {
     if (error) {
       throw new Error(`Failed to add task: ${error.message}`);
     }
-    return data;
+
+    return new Response("Task added successfully", { status: 200 });
   } catch (error) {
     throw new Error(`AddTask failed: ${(error as Error).message}`);
   }
 }
 
-export async function GetTasksByUserId(user_id: number) {
+export async function GetTasksByUserId(user_id: string) {
   try {
-    const { data, error } = await supabaseServer
+    const supabaseServerClient = await supabaseServer();
+    const { data, error } = await supabaseServerClient
       .from("tasks")
       .select("*")
       .eq("user_id", user_id);

@@ -1,33 +1,19 @@
 import { supabaseClient } from "../services/supabase/client";
+import { Task } from "../models/task";
 
-export async function ToggleTask(taskId: number) {
+export async function ToggleTask(task: Task) {
+  const supabaseClientBrowser = await supabaseClient();
   try {
-    // Fetch current task to get current completion status
-    const { data: currentTask, error: fetchError } = await supabaseClient
+    const { error } = await supabaseClientBrowser
       .from("tasks")
-      .select("completed")
-      .eq("id", taskId)
-      .single();
-
-    if (fetchError) {
-      throw new Error(`Failed to fetch task: ${fetchError.message}`);
-    }
-
-    // Invert the boolean
-    const { data, error } = await supabaseClient
-      .from("tasks")
-      .update({ completed: !currentTask })
-      .eq("id", taskId);
-
+      .update({ completed: !task.completed })
+      .eq("id", task.id);
     if (error) {
       throw new Error(`Failed to update task: ${error.message}`);
     }
-
-    console.log("Updated task data:");
-    console.log(data);
-
-    return data;
+    return { ...task, completed: !task.completed };
   } catch (error) {
+    console.log("updateTask error:", error);
     throw new Error(`UpdateTaskCompletion failed: ${(error as Error).message}`);
   }
 }
