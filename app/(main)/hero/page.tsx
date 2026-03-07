@@ -4,6 +4,7 @@ import UserAuth from "@/app/lib/auth/requireAuth";
 import { GetTasksByUserId } from "@/app/lib/services/task";
 import { Task } from "@/app/lib/models/task";
 import { TaskButton } from "@/app/components/TaskComponents";
+export const dynamic = "force-dynamic";
 
 async function Hero() {
   const user = await UserAuth();

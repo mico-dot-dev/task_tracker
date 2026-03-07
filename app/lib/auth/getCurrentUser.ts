@@ -20,6 +20,6 @@ export default async function getCurrentUser() {
 
     return user;
   } catch (error) {
-    console.error("Error fetching current user:", error);
+    console.error("Get Current User Error :", error);
   }
 }
