@@ -2,23 +2,33 @@
 import React, { useState } from "react";
 import { Task } from "@/app/lib/models/task";
 import { ToggleTask } from "@/app/lib/actions/updateTask";
-import { set } from "zod";
+import { useRouter } from "next/navigation";
 
 function TaskTable({ tasks }: { tasks: Task[] }) {
   const [taskList, setTaskList] = useState<Task[]>(tasks);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch("/api/update-task");
+      const data: Task[] = await response.json();
+      setTaskList(data);
+    } catch (error) {
+      console.log("Task Table Fetch:", error);
+    }
+  };
   async function handleToggleTaskCompletion(task: Task) {
     // Implementation for handling task completion toggle
+    setLoading(true);
     try {
-      setTaskList((prevTasks) =>
-        prevTasks.map((t) =>
-          t.id === task.id ? { ...t, completed: !t.completed } : t,
-        ),
-      );
       await ToggleTask(task);
-      window.location.reload();
+      await fetchTasks();
+      router.refresh();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -46,6 +56,7 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
               </label>
             </li>
           ))}
+          {loading && <p className="text-sm text-gray-500">Updating...</p>}
         </ul>
       </div>
     </div>
