@@ -10,13 +10,13 @@ function AccountForm({ isLogin }: { isLogin: boolean }) {
   let link = isLogin ? "/signUp" : "/login";
   let description = isLogin ? "Welcome back!" : "Create your account.";
   let stats = isLogin ? "Don't have an account? " : "Already have an account? ";
+  let apiEndpoint = isLogin ? "/api/login" : "/api/sign-up";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
-      let apiEndpoint = isLogin ? "/api/login" : "/api/sign-up";
       const response = await fetch(apiEndpoint, {
         method: "POST",
         body: formData,
