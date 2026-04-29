@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Providers } from "./providers/theme-provider";
-import { ThemeToggle } from "./components/ThemeChanger";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,10 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en">
+      <body className="bg-background">{children}</body>
     </html>
   );
 }

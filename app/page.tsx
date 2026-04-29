@@ -1,12 +1,9 @@
-import AccountForm from "./components/AccountForm";
-import { ThemeToggle } from "./components/ThemeChanger";
+import AccountForm from "./components/AuthForm";
 
 export default function Home() {
   return (
     <>
-      <div>
-        <AccountForm isLogin={true} />
-      </div>
+      <AccountForm />
     </>
   );
 }
