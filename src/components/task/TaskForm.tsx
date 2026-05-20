@@ -1,25 +1,25 @@
 "use client";
 import React from "react";
-import { AVAILABLE_CATEGORIES } from "@/src/constants/categories";
+import { AVAILABLE_CATEGORIES } from "@/src/lib/task-util";
 import { useForm } from "react-hook-form";
-import { TaskFormModel, TaskFormSchema } from "@/src/types/task";
+import { TaskFormModelInput, TaskFormSchema } from "@/src/types/task";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 
 function TaskForm() {
-  const { register, handleSubmit } = useForm<TaskFormModel>({
+  const { register, handleSubmit } = useForm<TaskFormModelInput>({
     resolver: zodResolver(TaskFormSchema),
     defaultValues: {
       title: "",
-      description: "",
-      category: AVAILABLE_CATEGORIES[0],
       completed: false,
+      category: AVAILABLE_CATEGORIES[0],
       user_id: "",
+      description: "",
     },
   });
 
-  async function TaskSubmit(data: TaskFormModel) {
+  async function TaskSubmit(data: TaskFormModelInput) {
     try {
       const res = await CreateTask(data);
       if (!res.success) {
@@ -52,16 +52,7 @@ function TaskForm() {
               id="task-title"
               type="text"
               placeholder="Task Title"
-              className="
-              bg-foreground border-border rounded-2xl
-              h-12 indent-3
-              text-primary-text
-            
-              focus:outline-none
-              focus:ring-2
-              focus:ring-primary
-              focus:border-primary
-              "
+              className="input-base"
             />
             <label htmlFor="task-description">Task Description</label>
             <input
@@ -70,16 +61,7 @@ function TaskForm() {
               id="task-description"
               placeholder="Task Description"
               type="text"
-              className="
-              bg-foreground border-border rounded-2xl
-              h-12 indent-3
-              text-primary-text
-            
-              focus:outline-none
-              focus:ring-2
-              focus:ring-primary
-              focus:border-primary
-              "
+              className="input-base"
             />
 
             <label htmlFor="task-category">Category</label>
@@ -89,16 +71,7 @@ function TaskForm() {
               defaultValue={AVAILABLE_CATEGORIES[0]}
               name="category"
               id="task-category"
-              className="
-              bg-foreground border-border rounded-2xl
-              h-12 indent-3
-              text-primary-text
-            
-              focus:outline-none
-              focus:ring-2
-              focus:ring-primary
-              focus:border-primary
-              "
+              className="input-base"
             >
               {AVAILABLE_CATEGORIES.map((category) => (
                 <option key={category} value={category}>

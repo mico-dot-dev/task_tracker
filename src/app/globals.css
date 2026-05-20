@@ -18,6 +18,12 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-info: var(--info);
+
+  /* For Categories */
+  --color-priority: #ff5e5e;
+  --color-Today: #ffbf47;
+  --color-Week: #47ffc5;
+  --color-Other: #94a3b8;
 }
 
 :root {
@@ -58,4 +64,17 @@ Success: #16A34A
 Warning: #F59E0B
 Error:   #DC2626
 Info:    #0EA5E9 */
+}
+
+@layer components {
+  .input-base {
+    @apply bg-foreground border-border rounded-2xl
+              h-12 indent-3
+              text-primary-text
+            
+              focus:outline-none
+              focus:ring-2
+              focus:ring-primary
+              focus:border-primary;
+  }
 }

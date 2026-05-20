@@ -5,7 +5,7 @@ import { supabaseServer } from "@/src/lib/supabase/server";
 import {
   TaskListModel,
   TaskFormSchema,
-  TaskFormModel,
+  TaskFormModelInput,
   ActionResponse,
 } from "@/src/types/task";
 import { category, tasks } from "@/src/generated/prisma";
@@ -68,7 +68,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   }
 }
 
-export async function CreateTask(data: TaskFormModel) {
+export async function CreateTask(data: TaskFormModelInput) {
   try {
     const user = await GetAuthUser();
     if (!user.success) {
@@ -111,3 +111,5 @@ export async function CreateTask(data: TaskFormModel) {
     throw new Error("Failed to create task");
   }
 }
+
+// export function UpdateTask(){}

@@ -104,32 +104,14 @@ function AccountForm() {
               <input
                 type="email"
                 placeholder="Email Adress"
-                className="
-                bg-foreground border-border rounded-2xl
-                h-12 indent-3 
-                text-primary-text 
-                
-                focus:outline-none
-                focus:ring-2
-                focus:ring-primary
-                focus:border-primary
-                "
+                className="input-base"
                 required
                 {...register("email")}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="
-                bg-foreground border border-border rounded-2xl
-                h-12 indent-3 
-                text-primary-text 
-
-                focus:outline-none
-                focus:ring-2
-                focus:ring-primary
-                focus:border-primary
-                "
+                className="input-base"
                 autoComplete="off"
                 required
                 minLength={6}

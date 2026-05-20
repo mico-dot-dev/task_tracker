@@ -1,16 +1,14 @@
 import React from "react";
 import { TaskListModel } from "@/src/types/task";
-import { AVAILABLE_CATEGORIES } from "@/src/constants/categories";
+import {
+  AVAILABLE_CATEGORIES,
+  GroupTasksByCategory,
+} from "@/src/lib/task-util";
+
+import TaskCard from "@/src/components/task/TaskCard";
 
 function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
-  const byCategory = {
-    PRIORITY: Tasks.filter((t) => t.category === "PRIORITY"),
-    TODAY: Tasks.filter((t) => t.category === "TODAY"),
-    WEEK: Tasks.filter((t) => t.category === "WEEK"),
-    OTHER: Tasks.filter((t) => t.category === "OTHER"),
-  };
-
-  console.dir(byCategory);
+  const byCategory = GroupTasksByCategory(Tasks);
 
   return (
     <div className="w-1/2 justify-items-center mt-10">
@@ -33,7 +31,16 @@ function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
 
         {/* tasks */}
         <div className="overflow-y-scroll overflow-x-hidden">
-          {(["PRIORITY", "TODAY", "WEEK", "OTHER"] as const).map(
+          {byCategory !== null &&
+            byCategory.map(({ cat, label, tasks }) => (
+              <ul key={cat}>
+                {tasks.map((task) => (
+                  <TaskCard Task={task} key={task.id} />
+                ))}
+              </ul>
+            ))}
+
+          {/* {(["PRIORITY", "TODAY", "WEEK", "OTHER"] as const).map(
             (cat) =>
               byCategory[cat].length > 0 && (
                 <div key={cat}>
@@ -48,7 +55,7 @@ function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
                   </ul>
                 </div>
               ),
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -14,16 +14,17 @@ const TaskSchema = z.object({
   category: z.nativeEnum(category).default(category.OTHER),
 });
 
-export const TaskListSchema = TaskSchema.partial().extend({
+export const TaskListSchema = TaskSchema.extend({
   id: z.string(),
 });
 
-export const TaskFormSchema = TaskSchema.partial().extend({
+export const TaskFormSchema = TaskSchema.extend({
   user_id: z.string(),
 });
 
 export type TaskListModel = z.infer<typeof TaskListSchema>;
-export type TaskFormModel = z.infer<typeof TaskFormSchema>;
+export type TaskFormModelInput = z.input<typeof TaskFormSchema>;
+export type TaskFormModelOutput = z.output<typeof TaskFormSchema>;
 
 export type ActionResponse<T = void> =
   | { success: true; data: T; message?: string }
