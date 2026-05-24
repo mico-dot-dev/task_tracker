@@ -48,6 +48,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       where: {
         user_id: user.data.user,
       },
+      orderBy: { completed: "asc" },
     });
 
     const parsedTasks: TaskListModel[] = userTasks.map((task: tasks) => ({
@@ -112,4 +113,27 @@ export async function CreateTask(data: TaskFormModelInput) {
   }
 }
 
-// export function UpdateTask(){}
+export async function UpdateTaskCompletion(taskID: string) {
+  try {
+    const tasknum = parseInt(taskID, 10);
+    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
+
+    const task = await prisma.tasks.findUnique({
+      select: { completed: true },
+      where: { id: tasknum },
+    });
+
+    if (!task) throw new Error(`Task not found: ${taskID}`);
+
+    const res = await prisma.tasks.update({
+      where: { id: tasknum },
+      data: { completed: !task.completed },
+    });
+    revalidatePath("/(dashboard)/tasks");
+
+    console.log("Toggling completion for task:", taskID);
+  } catch (error) {
+    console.error("Error occurred while updating task completion:", error);
+    throw new Error("Failed to update task completion");
+  }
+}

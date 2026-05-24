@@ -30,32 +30,15 @@ function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
         </div>
 
         {/* tasks */}
-        <div className="overflow-y-scroll overflow-x-hidden">
+        <div className="flex flex-col overflow-y-scroll overflow-x-hidden task-list-scrollbar h-[75vh]">
           {byCategory !== null &&
             byCategory.map(({ cat, label, tasks }) => (
-              <ul key={cat}>
+              <ul key={cat} className="flex flex-col">
                 {tasks.map((task) => (
                   <TaskCard Task={task} key={task.id} />
                 ))}
               </ul>
             ))}
-
-          {/* {(["PRIORITY", "TODAY", "WEEK", "OTHER"] as const).map(
-            (cat) =>
-              byCategory[cat].length > 0 && (
-                <div key={cat}>
-                  <p>{cat}</p> <hr />
-                  <ul>
-                    {byCategory[cat].map((task) => (
-                      <li key={task.id} className="cursor-pointer">
-                        <input type="checkbox" value={task.id} id={task.id} />{" "}
-                        <label htmlFor={task.id}> {task.title}</label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ),
-          )} */}
         </div>
       </div>
     </div>

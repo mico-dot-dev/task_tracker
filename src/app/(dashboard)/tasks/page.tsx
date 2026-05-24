@@ -8,7 +8,7 @@ async function page() {
   const tasks = res.success ? res.data : [];
 
   return (
-    <div className="flex flex-row justify-between min-h-full min-w-full ">
+    <div className="flex flex-row justify-between min-h-full min-w-full overflow-hidden">
       <TaskList Tasks={tasks} />
       <TaskForm />
     </div>
