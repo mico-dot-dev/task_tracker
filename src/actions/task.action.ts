@@ -137,3 +137,27 @@ export async function UpdateTaskCompletion(taskID: string) {
     throw new Error("Failed to update task completion");
   }
 }
+
+export async function DeleteTask(taskID: string) {
+  try {
+    const tasknum = parseInt(taskID, 10);
+    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
+
+    const task = await prisma.tasks.findUnique({
+      select: { id: true },
+      where: { id: tasknum },
+    });
+
+    if (!task) throw new Error(`Task not found: ${taskID}`);
+
+    await prisma.tasks.delete({
+      where: { id: tasknum },
+    });
+    revalidatePath("/(dashboard)/tasks");
+
+    console.log("Deleting task:", taskID);
+  } catch (error) {
+    console.error("Error occurred while deleting task:", error);
+    throw new Error("Failed to delete task");
+  }
+}

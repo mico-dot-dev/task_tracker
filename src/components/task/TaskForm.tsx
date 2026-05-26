@@ -38,7 +38,7 @@ function TaskForm() {
 
   return (
     <div className="w-1/2 mt-10 justify-items-center">
-      <div className="flex flex-col w-4/5 h-[95%]">
+      <div className="flex flex-col w-4/5 h-[95%] justify-center">
         <p className="flex mb-10">Add a new task</p>
         <form
           onSubmit={handleSubmit(TaskSubmit)}
@@ -81,7 +81,7 @@ function TaskForm() {
             </select>
           </div>
 
-          <button className="cursor-pointer bg-primary text-background rounded-4xl h-12 text-lg flex items-center justify-center ">
+          <button className="cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center ">
             Add Task
           </button>
         </form>

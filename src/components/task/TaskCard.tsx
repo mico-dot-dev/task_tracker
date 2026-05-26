@@ -5,7 +5,7 @@ import { TaskListModel } from "@/src/types/task";
 import { category } from "@/src/generated/prisma";
 import { twJoin } from "tailwind-merge";
 import { MdEditNote, MdDeleteOutline } from "react-icons/md";
-import { UpdateTaskCompletion } from "@/src/actions/task.action";
+import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
 
 function TaskCard({ Task }: { Task: TaskListModel }) {
   const statusColors: Record<category, string> = {
@@ -21,6 +21,15 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
       // if(res)
     } catch (error) {
       console.error("Error occurred while toggling task completion:", error);
+    }
+  }
+
+  function handleDeleteTask() {
+    try {
+      const res = DeleteTask(Task.id);
+      // if(res)
+    } catch (error) {
+      console.error("Error occurred while deleting task:", error);
     }
   }
 
@@ -60,9 +69,12 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
           {Task.title}
         </label>
       </div>
-      <div className="flex flex-row gap-4 text-3xl items-center">
-        <MdEditNote className="cursor-pointer" />
-        <MdDeleteOutline className="cursor-pointer" />
+      <div className="flex flex-row gap-8 text-3xl items-center mr-4 text-text-on-button">
+        <MdEditNote className="cursor-pointer bg-primary rounded-md h-8 aspect-square" />
+        <MdDeleteOutline
+          className="cursor-pointer bg-primary rounded-md h-8 aspect-square"
+          onClick={handleDeleteTask}
+        />
       </div>
     </li>
   );
