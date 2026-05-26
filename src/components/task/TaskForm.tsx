@@ -1,31 +1,61 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { AVAILABLE_CATEGORIES } from "@/src/lib/task-util";
 import { useForm } from "react-hook-form";
-import { TaskFormModelInput, TaskFormSchema } from "@/src/types/task";
+import {
+  TaskFormBase,
+  TaskFormModelInput,
+  TaskFormSchema,
+  TaskSchema,
+  TaskFormModelUpdate,
+} from "@/src/types/task";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateTask } from "@/src/actions/task.action";
+import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
+import { useSearchParams } from "next/navigation";
 
 function TaskForm() {
-  const { register, handleSubmit } = useForm<TaskFormModelInput>({
-    resolver: zodResolver(TaskFormSchema),
+  const searchParams = useSearchParams();
+  const taskId = searchParams.get("id");
+
+  const { register, handleSubmit, reset } = useForm<TaskFormBase>({
+    resolver: zodResolver(TaskSchema),
     defaultValues: {
       title: "",
       completed: false,
       category: AVAILABLE_CATEGORIES[0],
-      user_id: "",
       description: "",
     },
   });
 
-  async function TaskSubmit(data: TaskFormModelInput) {
-    try {
-      const res = await CreateTask(data);
-      if (!res.success) {
-        console.error("Error creating task:", res.error);
-        return;
+  useEffect(() => {
+    async function fetchTaskData(id: string) {
+      try {
+        const res = await GetTaskByID(id);
+        if (res.success && res.data) {
+          reset(res.data);
+          return;
+        }
+      } catch (error) {
+        console.error("Error occurred while fetching task data:", error);
       }
+    }
+    if (taskId) {
+      fetchTaskData(taskId);
+    }
+  }, [taskId, reset]);
+
+  async function TaskSubmit(data: TaskFormModelInput | TaskFormModelUpdate) {
+    try {
+      const action = taskId ? UpdateTask : CreateTask;
+
+      if ("id" in data) {
+        data = { ...data, id: taskId } as TaskFormModelUpdate;
+      } else {
+        data = { ...data, id: "1" } as TaskFormModelUpdate;
+      }
+
+      const res = await action(data);
 
       Swal.fire({
         icon: "success",
@@ -82,9 +112,14 @@ function TaskForm() {
           </div>
 
           <button className="cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center ">
-            Add Task
+            {taskId ? "Update Task" : "Add Task"}
           </button>
         </form>
+        {taskId && (
+          <button className="mt-5 cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center ">
+            Cancel Edit
+          </button>
+        )}
       </div>
     </div>
   );

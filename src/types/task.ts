@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { category } from "@/src/generated/prisma";
 
-const TaskSchema = z.object({
+export const TaskSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
@@ -23,8 +23,10 @@ export const TaskFormSchema = TaskSchema.extend({
 });
 
 export type TaskListModel = z.infer<typeof TaskListSchema>;
+export type TaskFormModelBase = z.input<typeof TaskSchema>;
 export type TaskFormModelInput = z.input<typeof TaskFormSchema>;
 export type TaskFormModelOutput = z.output<typeof TaskFormSchema>;
+export type TaskFormModelUpdate = z.input<typeof TaskListSchema>;
 
 export type ActionResponse<T = void> =
   | { success: true; data: T; message?: string }

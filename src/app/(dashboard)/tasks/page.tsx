@@ -1,4 +1,5 @@
-import React, { use } from "react";
+"use server";
+import React, { Suspense, use } from "react";
 import TaskList from "@/src/components/task/TaskList";
 import TaskForm from "@/src/components/task/TaskForm";
 import { GetUserTasks } from "@/src/actions/task.action";
@@ -9,8 +10,10 @@ async function page() {
 
   return (
     <div className="flex flex-row justify-between min-h-full min-w-full overflow-hidden">
-      <TaskList Tasks={tasks} />
-      <TaskForm />
+      <Suspense>
+        <TaskList Tasks={tasks} />
+        <TaskForm />
+      </Suspense>
     </div>
   );
 }

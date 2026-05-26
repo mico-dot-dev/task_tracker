@@ -6,8 +6,10 @@ import { category } from "@/src/generated/prisma";
 import { twJoin } from "tailwind-merge";
 import { MdEditNote, MdDeleteOutline } from "react-icons/md";
 import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
+import { useRouter } from "next/navigation";
 
 function TaskCard({ Task }: { Task: TaskListModel }) {
+  const router = useRouter();
   const statusColors: Record<category, string> = {
     [category.PRIORITY]: "bg-amber-500",
     [category.TODAY]: "bg-blue-500",
@@ -31,6 +33,12 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
     } catch (error) {
       console.error("Error occurred while deleting task:", error);
     }
+  }
+
+  function handleEditTask() {
+    try {
+      router.replace(`tasks/?id=${Task.id}`);
+    } catch (error) {}
   }
 
   return (
@@ -70,7 +78,10 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
         </label>
       </div>
       <div className="flex flex-row gap-8 text-3xl items-center mr-4 text-text-on-button">
-        <MdEditNote className="cursor-pointer bg-primary rounded-md h-8 aspect-square" />
+        <MdEditNote
+          className="cursor-pointer bg-primary rounded-md h-8 aspect-square"
+          onClick={handleEditTask}
+        />
         <MdDeleteOutline
           className="cursor-pointer bg-primary rounded-md h-8 aspect-square"
           onClick={handleDeleteTask}

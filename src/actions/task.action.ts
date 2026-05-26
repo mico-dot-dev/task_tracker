@@ -6,6 +6,7 @@ import {
   TaskListModel,
   TaskFormSchema,
   TaskFormModelInput,
+  TaskFormModelUpdate,
   ActionResponse,
 } from "@/src/types/task";
 import { category, tasks } from "@/src/generated/prisma";
@@ -160,4 +161,43 @@ export async function DeleteTask(taskID: string) {
     console.error("Error occurred while deleting task:", error);
     throw new Error("Failed to delete task");
   }
+}
+
+export async function GetTaskByID(
+  taskID: string,
+): Promise<ActionResponse<TaskListModel>> {
+  try {
+    console.log("Fetching task by ID:", taskID);
+    const tasknum = parseInt(taskID, 10);
+    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
+
+    const task = await prisma.tasks.findUnique({
+      where: { id: tasknum },
+    });
+
+    if (!task) throw new Error(`Task not found: ${taskID}`);
+
+    return {
+      success: true,
+      data: {
+        id: task.id!.toString(),
+        title: task.title!,
+        description: task.description!,
+        completed: task.completed!,
+        category: task.task_category as category,
+      },
+    };
+  } catch (error) {
+    console.error("Error occurred while fetching task by ID:", error);
+    throw new Error("Failed to fetch task by ID");
+  }
+}
+
+export async function UpdateTask(data: TaskFormModelUpdate) {
+  try {
+    return {
+      success: false,
+      data: null,
+    };
+  } catch (error) {}
 }
