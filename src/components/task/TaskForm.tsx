@@ -3,11 +3,13 @@ import React, { useEffect } from "react";
 import { AVAILABLE_CATEGORIES } from "@/src/lib/task-util";
 import { useForm } from "react-hook-form";
 import {
-  TaskFormBase,
+  TaskFormModelBase,
   TaskFormModelInput,
   TaskFormSchema,
   TaskSchema,
   TaskFormModelUpdate,
+  ActionResponse,
+  TaskListModel,
 } from "@/src/types/task";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
@@ -18,7 +20,7 @@ function TaskForm() {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
 
-  const { register, handleSubmit, reset } = useForm<TaskFormBase>({
+  const { register, handleSubmit, reset } = useForm<TaskFormModelBase>({
     resolver: zodResolver(TaskSchema),
     defaultValues: {
       title: "",
@@ -31,6 +33,16 @@ function TaskForm() {
   useEffect(() => {
     async function fetchTaskData(id: string) {
       try {
+        if (!taskId) {
+          reset({
+            title: "",
+            description: "",
+            category: AVAILABLE_CATEGORIES[0],
+            completed: false,
+          });
+          return;
+        }
+
         const res = await GetTaskByID(id);
         if (res.success && res.data) {
           reset(res.data);
@@ -45,17 +57,28 @@ function TaskForm() {
     }
   }, [taskId, reset]);
 
-  async function TaskSubmit(data: TaskFormModelInput | TaskFormModelUpdate) {
+  async function TaskSubmit(data: TaskFormModelBase) {
     try {
-      const action = taskId ? UpdateTask : CreateTask;
-
-      if ("id" in data) {
-        data = { ...data, id: taskId } as TaskFormModelUpdate;
+      let res: ActionResponse<TaskFormModelBase>;
+      if (taskId) {
+        const updateData: TaskFormModelUpdate = {
+          ...data,
+          id: taskId,
+        };
+        res = await UpdateTask(updateData);
       } else {
-        data = { ...data, id: "1" } as TaskFormModelUpdate;
+        const createData: TaskFormModelInput = {
+          ...data,
+          user_id: "",
+        };
+        res = await CreateTask(createData);
       }
 
-      const res = await action(data);
+      if (!res.success) {
+        throw new Error(
+          res.error || "An error occurred while saving the task.",
+        );
+      }
 
       Swal.fire({
         icon: "success",

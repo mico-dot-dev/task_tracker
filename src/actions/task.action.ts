@@ -8,6 +8,7 @@ import {
   TaskFormModelInput,
   TaskFormModelUpdate,
   ActionResponse,
+  TaskFormModelBase,
 } from "@/src/types/task";
 import { category, tasks } from "@/src/generated/prisma";
 import { ca } from "zod/locales";
@@ -70,7 +71,9 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   }
 }
 
-export async function CreateTask(data: TaskFormModelInput) {
+export async function CreateTask(
+  data: TaskFormModelInput,
+): Promise<ActionResponse<TaskFormModelBase>> {
   try {
     const user = await GetAuthUser();
     if (!user.success) {
@@ -95,9 +98,9 @@ export async function CreateTask(data: TaskFormModelInput) {
 
     const newTask = await prisma.tasks.create({
       data: {
-        title: parsedTask.data.title,
-        description: parsedTask.data.description,
-        completed: parsedTask.data.completed,
+        title: parsedTask.data.title!,
+        description: parsedTask.data.description!,
+        completed: parsedTask.data.completed!,
         user_id: user.data.user,
         task_category: parsedTask.data.category,
       },
@@ -106,7 +109,12 @@ export async function CreateTask(data: TaskFormModelInput) {
     revalidatePath("/(dashboard)/tasks");
     return {
       success: true,
-      data: newTask,
+      data: {
+        title: newTask.title!,
+        description: newTask.description!,
+        completed: newTask.completed!,
+        category: newTask.task_category as category,
+      },
     };
   } catch (error) {
     console.log("Error creating task:", error);
@@ -193,11 +201,20 @@ export async function GetTaskByID(
   }
 }
 
-export async function UpdateTask(data: TaskFormModelUpdate) {
+export async function UpdateTask(
+  data: TaskFormModelUpdate,
+): Promise<ActionResponse<TaskFormModelBase>> {
   try {
     return {
-      success: false,
-      data: null,
+      success: true,
+      data: {
+        title: "",
+        description: "",
+        completed: false,
+        category: category.OTHER,
+      },
     };
-  } catch (error) {}
+  } catch (error) {
+    throw new Error("Failed to update task");
+  }
 }
