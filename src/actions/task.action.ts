@@ -205,13 +205,27 @@ export async function UpdateTask(
   data: TaskFormModelUpdate,
 ): Promise<ActionResponse<TaskFormModelBase>> {
   try {
+    const tasknum = parseInt(data.id, 10);
+
+    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${data.id}`);
+
+    const updatedTask = await prisma.tasks.update({
+      where: { id: tasknum },
+      data: {
+        title: data.title,
+        description: data.description,
+        completed: data.completed,
+        task_category: data.category,
+      },
+    });
+    revalidatePath("/(dashboard)/tasks");
     return {
       success: true,
       data: {
-        title: "",
-        description: "",
-        completed: false,
-        category: category.OTHER,
+        title: updatedTask.title!,
+        description: updatedTask.description!,
+        completed: updatedTask.completed!,
+        category: updatedTask.task_category as category,
       },
     };
   } catch (error) {

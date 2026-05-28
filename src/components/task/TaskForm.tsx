@@ -15,10 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function TaskForm() {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
+  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<TaskFormModelBase>({
     resolver: zodResolver(TaskSchema),
@@ -89,6 +91,18 @@ function TaskForm() {
     }
   }
 
+  function handleCancelEdit() {
+    try {
+      reset({
+        title: "",
+        description: "",
+        category: AVAILABLE_CATEGORIES[0],
+        completed: false,
+      });
+      router.replace("/tasks");
+    } catch (error) {}
+  }
+
   return (
     <div className="w-1/2 mt-10 justify-items-center">
       <div className="flex flex-col w-4/5 h-[95%] justify-center">
@@ -139,7 +153,10 @@ function TaskForm() {
           </button>
         </form>
         {taskId && (
-          <button className="mt-5 cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center ">
+          <button
+            className="mt-5 cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center "
+            onClick={handleCancelEdit}
+          >
             Cancel Edit
           </button>
         )}
