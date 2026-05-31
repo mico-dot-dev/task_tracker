@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import { AuthSchema, AuthModel } from "@/src/types/auth";
 import { SignUpUser, LoginUser } from "@/src/actions/auth.action";
 import { useRouter } from "next/navigation";
+import { FaFacebook, FaDiscord } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 function AccountForm() {
   const router = useRouter();
@@ -40,6 +42,12 @@ function AccountForm() {
       password: "",
     },
   });
+
+  function toggleMode() {
+    try {
+      setMode((prev) => (prev === "login" ? "signup" : "login"));
+    } catch (error) {}
+  }
 
   async function AuthSubmit(data: AuthModel) {
     try {
@@ -97,7 +105,7 @@ function AccountForm() {
           <p className="text-3xl text-center font-bold">{content.title}</p>
 
           <form
-            className="flex flex-col my-[30%] "
+            className="flex flex-col my-[20%] "
             onSubmit={handleSubmit(AuthSubmit)}
           >
             <div className="flex flex-col gap-8 mb-5">
@@ -128,15 +136,20 @@ function AccountForm() {
           </form>
 
           <fieldset className="flex border-t border-text mb-30">
-            <legend className="text-center px-2">or {content.mode} with</legend>
-            <div className="flex justify-between w-full">
-              <p>Google</p>
-              <p>Fb</p>
-              <p>Discord</p>
+            <legend className="text-center px-2 mb-5">
+              or {content.mode} with
+            </legend>
+            <div className="flex justify-between w-full text-3xl">
+              <FcGoogle className="" />
+              <FaFacebook className="" />
+              <FaDiscord className="" />
             </div>
           </fieldset>
 
-          <button className="flex justify-self-center text-center cursor-pointer text-s text-text">
+          <button
+            className="flex justify-self-center text-center cursor-pointer text-s text-text"
+            onClick={toggleMode}
+          >
             <p>{content.invertText} &thinsp;</p>{" "}
             <p className="text-primary hover:underline">
               {content.invertTitle}
