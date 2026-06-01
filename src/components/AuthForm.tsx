@@ -72,7 +72,7 @@ function AccountForm() {
             title: "Login Successful",
             text: res.message,
           }).then(() => {
-            router.push("/tasks");
+            router.push("/dashboard");
           });
         }
         // for sign up
@@ -86,10 +86,10 @@ function AccountForm() {
         } else {
           Swal.fire({
             icon: "success",
-            title: "Account Created",
-            text: "Please confirm your email address to complete the registration.",
+            title: "Email Sent",
+            text: "Validation email sent. Please check your inbox to complete the registration.",
           }).then(() => {
-            window.location.href = "/login";
+            setMode("login");
           });
         }
       }
