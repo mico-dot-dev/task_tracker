@@ -2,7 +2,7 @@ import React from "react";
 
 function Navbar() {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open w-50">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex ">
         {/* Page content here */}
@@ -10,13 +10,13 @@ function Navbar() {
           Open drawer
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side w-full">
         <label
           htmlFor="my-drawer-3"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 min-h-full w-80 p-4">
+        <ul className="menu bg-base-200 min-h-full w-45 p-4">
           {/* Sidebar content here */}
           <li>
             <a>Dashboard</a>
@@ -26,6 +26,9 @@ function Navbar() {
           </li>
           <li>
             <a href="/dashboard/stock">Stock</a>
+          </li>
+          <li>
+            <a href="/dashboard/expense">Expense</a>
           </li>
         </ul>
       </div>
