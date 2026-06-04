@@ -1,7 +1,7 @@
 "use server";
 import React, { Suspense, use } from "react";
 import TaskList from "@/src/components/task/TaskList";
-import TaskForm from "@/src/components/task/TaskForm";
+import TaskForm from "@/src/components/form/TaskForm";
 import { GetUserTasks } from "@/src/actions/task.action";
 
 async function page() {

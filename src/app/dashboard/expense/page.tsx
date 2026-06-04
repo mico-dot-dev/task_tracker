@@ -1,12 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import ExpenseCard from "@/src/components/expenses/ExpenseCard";
+import ExpensesModal from "@/src/components/modal/ExpensesModal";
 
 function page() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div>
       <p>Balance</p>
       <button>Add Income</button>
-      <button>Add Expense</button>
+      <button className="cursor-pointer" onClick={() => setModalOpen(true)}>
+        Add Expense
+      </button>
       <button>Transaction History</button>
 
       <div className="mt-5">
@@ -22,6 +28,8 @@ function page() {
         <ExpenseCard />
         <ExpenseCard />
       </div>
+
+      <ExpensesModal isOpen={modalOpen} setIsOpen={setModalOpen} />
     </div>
   );
 }
