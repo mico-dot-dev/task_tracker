@@ -1,13 +1,12 @@
 import React from "react";
 
-function ExpenseCard() {
+function ExpenseItemCard() {
   return (
     <div className="mb-3">
       <p>Electricity</p>
-      <p>$100.00</p>
-      <p>Type: Bills</p>
+      <p>Home Expenses - Running Bill</p>
     </div>
   );
 }
 
-export default ExpenseCard;
+export default ExpenseItemCard;

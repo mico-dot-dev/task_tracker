@@ -25,10 +25,13 @@ function Navbar() {
             <a href="/dashboard/task">Task</a>
           </li>
           <li>
+            <a href="/dashboard/expense">Expense</a>
+          </li>
+          <li>
             <a href="/dashboard/stock">Stock</a>
           </li>
           <li>
-            <a href="/dashboard/expense">Expense</a>
+            <a href="/dashboard/transaction">Transaction</a>
           </li>
         </ul>
       </div>
