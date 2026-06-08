@@ -5,6 +5,11 @@ function page() {
   return (
     <div>
       <h1>Transaction Page</h1>
+      <button>Add Transaction</button>
+      <button>Transaction History</button>
+      <p>Transaction List</p>
+      <TransactionItemCard />
+      <TransactionItemCard />
       <TransactionItemCard />
     </div>
   );

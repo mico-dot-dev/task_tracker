@@ -9,10 +9,10 @@ async function page() {
   const tasks = res.success ? res.data : [];
 
   return (
-    <div className="flex flex-row justify-between min-h-full min-w-full overflow-hidden">
+    <div className="flex flex-1 flex-row justify-between min-h-full overflow-hidden">
       <Suspense>
         <TaskList Tasks={tasks} />
-        <TaskForm />
+        {/* <TaskForm /> */}
       </Suspense>
     </div>
   );

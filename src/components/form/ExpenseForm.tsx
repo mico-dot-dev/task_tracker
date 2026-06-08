@@ -7,15 +7,18 @@ function ExpenseForm() {
         <label htmlFor="expense-name">Expense Name</label>
         <input id="expense-name" type="text" />
 
-        <label htmlFor="expense-amount">Amount</label>
-        <input id="expense-amount" type="text" />
-
         <label htmlFor="expense-category">Category</label>
         <select id="expense-category">
           <option value="food">Food</option>
           <option value="transportation">Transportation</option>
           <option value="entertainment">Entertainment</option>
         </select>
+
+        <label htmlFor="expense-amount">Amount</label>
+        <input id="expense-amount" type="text" />
+
+        <label htmlFor="expense-amount">Fare List</label>
+        <input id="expense-amount" type="text" />
       </form>
     </div>
   );
