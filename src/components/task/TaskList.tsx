@@ -12,7 +12,7 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
   const today = new Date().toUTCString().split(" ").slice(0, 4).join(" ");
 
   return (
-    <div className="flex flex-1 justify-items-center mt-10">
+    <div className="flex flex-1 justify-items-center mt-10 mr-5">
       <div className="flex flex-col flex-1">
         <header className="mb-7">
           <p className="text-2xl font-bold text-primary-text">
@@ -30,7 +30,6 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
               <CiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </div>
 
-            {/* 2. Input Field */}
             <input
               type="text"
               placeholder="Search a task..."
@@ -39,11 +38,16 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
                    focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
-          <button className="flex">
-            Group by <strong> Category </strong>
-          </button>
+          <div className="flex flex-row gap-3 ">
+            <button className="flex">
+              Group by <strong> Category </strong>
+            </button>
+            <button>Filter</button>
+          </div>
 
-          <button>Filter</button>
+          <div>
+            <button>Add Task</button>
+          </div>
         </section>
 
         <hr className="my-3" />

@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 
 function TaskCard({ Task }: { Task: TaskListModel }) {
   const router = useRouter();
-  const statusColors: Record<category, string> = {
-    [category.PRIORITY]: "bg-amber-500",
-    [category.TODAY]: "bg-blue-500",
-    [category.WEEK]: "bg-emerald-500",
-    [category.OTHER]: "bg-slate-500",
-  };
+  // const statusColors: Record<category, string> = {
+  //   [category.PRIORITY]: "bg-amber-500",
+  //   [category.TODAY]: "bg-blue-500",
+  //   [category.WEEK]: "bg-emerald-500",
+  //   [category.OTHER]: "bg-slate-500",
+  // };
 
   function handleToggleComplete() {
     try {
@@ -42,7 +42,7 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
   }
 
   return (
-    <li className="flex flex-row justify-between mt-5">
+    <li className="flex flex-row justify-between mt-5 bg-foreground">
       <div
         className={twJoin(
           "flex flex-row items-center py-2.5 pl-3 min-w-4/5 hover:border hover:border-primary",
@@ -50,10 +50,10 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
         )}
       >
         <span
-          className={twJoin(
-            "w-1 h-5",
-            statusColors[Task.category] ?? "bg-gray-500",
-          )}
+        // className={twJoin(
+        //   "w-1 h-5",
+        //   statusColors[Task.category] ?? "bg-gray-500",
+        // )}
         ></span>
         <input
           type="checkbox"
@@ -76,16 +76,24 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
         >
           {Task.title}
         </label>
+        <label htmlFor={Task.id}>{Task.category}</label>
+        <label htmlFor={Task.id}>Due: June 15, 2026</label>
       </div>
       <div className="flex flex-row gap-8 text-3xl items-center mr-4 text-text-on-button">
-        <MdEditNote
+        <button className="cursor-pointer bg-primary text-text-on-button p-2 rounded-md">
+          Edit
+        </button>
+        <button className="cursor-pointer bg-primary text-text-on-button p-2 rounded-md">
+          Delete
+        </button>
+        {/* <MdEditNote
           className="cursor-pointer bg-primary rounded-md h-8 aspect-square"
           onClick={handleEditTask}
         />
         <MdDeleteOutline
           className="cursor-pointer bg-primary rounded-md h-8 aspect-square"
           onClick={handleDeleteTask}
-        />
+        /> */}
       </div>
     </li>
   );
