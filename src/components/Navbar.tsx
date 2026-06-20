@@ -2,21 +2,21 @@ import React from "react";
 
 function Navbar() {
   return (
-    <div className="drawer lg:drawer-open w-50">
+    <div className="drawer lg:drawer-open w-50 bg-transparent text-primary-text ">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex ">
+      <div className="drawer-content flex lg:hidden">
         {/* Page content here */}
-        <label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden">
+        <label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden ">
           Open drawer
         </label>
       </div>
-      <div className="drawer-side w-full">
+      <div className="drawer-side w-full bg-foreground text-primary-text">
         <label
           htmlFor="my-drawer-3"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 min-h-full w-45 p-4">
+        <ul className="menu  min-h-full w-45 lg:border-r-[0.01px] lg:border-border bg-foreground">
           {/* Sidebar content here */}
           <li>
             <a>Dashboard</a>
