@@ -68,10 +68,13 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
         </div>
 
         {/* tasks */}
-        <div className="flex flex-col task-list-scrollbar h-[75vh]">
+        <div className="flex flex-col">
           {byCategory !== null &&
             byCategory.map(({ cat, label, tasks }) => (
-              <ul key={cat} className="flex flex-col">
+              <ul
+                key={cat}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+              >
                 {tasks.map((task) => (
                   <TaskCard Task={task} key={task.id} />
                 ))}

@@ -4,16 +4,17 @@
 @theme inline {
   --color-background: #000000;
   --color-foreground: #0d0d11;
-  --color-border: #6b21a8;
+  --color-border: #1e1b4b;
 
   --color-header-text: #f3f4f6;
   --color-primary-text: #d1d5db;
   --color-muted-text: #6b7280;
 
-  --color-primary: var(--primary);
-  --color-hover: var(--hover);
-  --color-active: var(--active);
-  --color-text-on-button: var(--text-on-button);
+  --color-primary: #a855f7;
+  --color-hover: #c084fc;
+  --color-focus: #eab308;
+  --color-active: #8b5cf6;
+  --color-text-on-button: #f3f4f6;
 
   --color-success: var(--success);
   --color-warning: var(--warning);
