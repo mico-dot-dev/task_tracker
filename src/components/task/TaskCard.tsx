@@ -4,9 +4,10 @@ import React from "react";
 import { TaskListModel } from "@/src/types/task";
 import { category } from "@/src/generated/prisma";
 import { twJoin } from "tailwind-merge";
-import { MdEditNote, MdDeleteOutline } from "react-icons/md";
 import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";
+
+import { Circle, CircleCheck, EllipsisVertical } from "lucide-react";
 
 function TaskCard({ Task }: { Task: TaskListModel }) {
   const router = useRouter();
@@ -26,54 +27,33 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
     }
   }
 
-  function handleDeleteTask() {
-    try {
-      const res = DeleteTask(Task.id);
-      // if(res)
-    } catch (error) {
-      console.error("Error occurred while deleting task:", error);
-    }
-  }
-
-  function handleEditTask() {
-    try {
-      router.replace(`tasks/?id=${Task.id}`);
-    } catch (error) {}
-  }
-
   return (
     <li className="bg-foreground border border-border rounded-md w-">
       <div
         className={twJoin(
-          "flex flex-row items-center",
+          "flex flex-row m-5",
           Task.completed && "line-through text-gray-500",
         )}
       >
-        <input
-          type="checkbox"
-          className="
-          appearance-none
-          aspect-square h-5 rounded-full
-          border-2 border-primary
-          cursor-pointer
-          ml-3
-        
-          checked:bg-active"
-          checked={Task.completed}
-          onChange={handleToggleComplete}
-          value={Task.id}
-          id={Task.id}
-        />
-        <div>
-          <label
-            htmlFor={Task.id}
-            className="text-2xl ml-2 cursor-pointer flex w-full"
-          >
-            {Task.title}
-          </label>
-          <label htmlFor={Task.id}>{Task.category}</label>
-          <label htmlFor={Task.id}>Due: June 15, 2026</label>
+        <button
+          onClick={handleToggleComplete}
+          className="cursor-pointer self-start"
+        >
+          {(Task.completed && <CircleCheck size={20} className="" />) || (
+            <Circle size={20} />
+          )}
+        </button>
+
+        <div className="self-start flex flex-col ml-3 flex-1">
+          <p className="text-2xl flex w-full">{Task.title}</p>
+          <div className="flex flex-row">
+            <p className="text-md flex w-full">Due: June 15, 2026</p>
+            <p className="text-md flex w-full">{Task.category}</p>
+          </div>
         </div>
+        <button className="cursor-pointer self-start">
+          <EllipsisVertical size={20} />
+        </button>
       </div>
     </li>
   );
