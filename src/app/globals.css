@@ -4,6 +4,7 @@
 @theme inline {
   --color-background: #000000;
   --color-foreground: #0d0d11;
+  --color-side-nav-background: #07070a;
   --color-border: #1e1b4b;
   --color-input-background: #050507;
   --color-input-border-ring: #3b82f633;
@@ -64,6 +65,9 @@
         hover:bg-hover hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]
           focus:outline-2 focus:outline-[#EAB308] focus:outline-offset-2 
           active:scale-95;
+  }
+  .nav-item-base {
+    @apply cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-muted-text border border-transparent hover:text-header-text hover:bg-white/3;
   }
 }
 

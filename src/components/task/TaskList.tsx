@@ -39,7 +39,7 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
             />
           </div>
 
-          <div className="flex flex-row justify-between h-10">
+          <div className="flex flex-row justify-between h-10 text-sm">
             <div className="flex flex-row gap-3 text-background">
               {CATEGORY_LABELS !== null &&
                 Object.entries(CATEGORY_LABELS).map(([cat, label]) => (
@@ -50,8 +50,9 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
             </div>
 
             <div className="flex flex-row gap-3 text-background">
-              <button className="flex-row px-1.5 gap-1.5 button-base rounded-xl">
-                Group by <strong> Category </strong>
+              <button className="flex flex-row px-1.5 gap-1.5 items-center button-base rounded-xl">
+                <p>Group by</p>
+                <p className="font-semibold"> Category</p>
               </button>
               <button className="cursor-pointer px-5 button-base rounded-xl">
                 Filter

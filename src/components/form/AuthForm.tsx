@@ -112,14 +112,14 @@ function AccountForm() {
               <input
                 type="email"
                 placeholder="Email Adress"
-                className="input-base"
+                className="input-base indent-2.5 py-2"
                 required
                 {...register("email")}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="input-base"
+                className="input-base py-2 indent-2.5"
                 autoComplete="off"
                 required
                 minLength={6}
@@ -129,7 +129,7 @@ function AccountForm() {
 
             <button
               type="submit"
-              className="cursor-pointer bg-primary text-background rounded-4xl h-12 text-lg flex items-center justify-center "
+              className="button-base rounded-4xl h-12 text-lg flex items-center justify-center "
             >
               {content.mode}
             </button>
