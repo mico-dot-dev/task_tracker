@@ -11,7 +11,6 @@ import {
   TaskFormModelBase,
 } from "@/src/types/task";
 import { category, tasks } from "@/src/generated/prisma";
-import { ca } from "zod/locales";
 import { revalidatePath } from "next/cache";
 
 async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
@@ -40,6 +39,7 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const user = await GetAuthUser();
+    console.log(user);
     if (!user.success) {
       return {
         success: false,
@@ -60,6 +60,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       completed: task.completed!,
       category: task.task_category as category,
     }));
+    console.dir(parsedTasks);
 
     return {
       success: true,
