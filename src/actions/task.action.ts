@@ -17,14 +17,13 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
+    console.log(data);
     if (error || !data.user) {
       return {
         success: false,
         error: "User not authenticated",
       };
     }
-
-    console.log(error);
 
     return {
       success: true,
