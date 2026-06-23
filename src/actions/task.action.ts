@@ -24,6 +24,8 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
       };
     }
 
+    console.log(error);
+
     return {
       success: true,
       data: { user: data.user.id },
