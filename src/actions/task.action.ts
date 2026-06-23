@@ -40,7 +40,7 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const user = await GetAuthUser();
-    console.log(user);
+    console.log("user: " + user);
     if (!user.success) {
       return {
         success: false,
