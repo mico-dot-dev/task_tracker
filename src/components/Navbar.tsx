@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Podium,
+  Trophy,
   LayoutDashboard,
   Clipboard,
   Package,
@@ -28,11 +28,10 @@ function Navbar() {
           {/* Sidebar content here */}
           <div className="flex items-center gap-3 mb-6">
             {/* Decorative Velvet Theme Logo Mark */}
-            <div className="rounded-lg bg-primary text-background p-0.5">
-              <Podium className="" size={36} strokeWidth={1.5} />
+            <div className="rounded-lg bg-primary text-background p-1">
+              <Trophy className="" size={32} strokeWidth={1.5} />
             </div>
-
-            <span className="text-header-text font-semibold tracking-wide text-md">
+            <span className="text-header-text font-semibold tracking-wider text-2xl ">
               TaskTracker
             </span>
           </div>

@@ -91,77 +91,53 @@ function TaskForm() {
     }
   }
 
-  function handleCancelEdit() {
-    try {
-      reset({
-        title: "",
-        description: "",
-        category: AVAILABLE_CATEGORIES[0],
-        completed: false,
-      });
-      router.replace("/tasks");
-    } catch (error) {}
-  }
-
   return (
-    <div className="w-1/2 mt-10 justify-items-center">
-      <div className="flex flex-col w-4/5 h-[95%] justify-center">
-        <p className="flex mb-10">Add a new task</p>
-        <form
-          onSubmit={handleSubmit(TaskSubmit)}
-          className="flex flex-col gap-10"
+    <form
+      onSubmit={handleSubmit(TaskSubmit)}
+      className="flex flex-col gap-10 text-base"
+    >
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="task-title">Task Title</label>
+          <input
+            {...register("title")}
+            required
+            id="task-title"
+            type="text"
+            placeholder="Task Title"
+            className="input-base p-2"
+          />
+        </div>
+        <label htmlFor="task-description">Task Description</label>
+        <textarea
+          {...register("description")}
+          required
+          id="task-description"
+          placeholder="Task Description"
+          className="input-base resize-none p-2 h-24"
+        />
+
+        <label htmlFor="task-category">Category</label>
+        <select
+          {...register("category")}
+          required
+          defaultValue={AVAILABLE_CATEGORIES[0]}
+          name="category"
+          id="task-category"
+          className="input-base p-2"
         >
-          <div className="flex flex-col gap-5">
-            <label htmlFor="task-title">Task Title</label>
-            <input
-              {...register("title")}
-              required
-              id="task-title"
-              type="text"
-              placeholder="Task Title"
-              className="input-base"
-            />
-            <label htmlFor="task-description">Task Description</label>
-            <input
-              {...register("description")}
-              required
-              id="task-description"
-              placeholder="Task Description"
-              type="text"
-              className="input-base"
-            />
-
-            <label htmlFor="task-category">Category</label>
-            <select
-              {...register("category")}
-              required
-              defaultValue={AVAILABLE_CATEGORIES[0]}
-              name="category"
-              id="task-category"
-              className="input-base"
-            >
-              {AVAILABLE_CATEGORIES.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button className="cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center ">
-            {taskId ? "Update Task" : "Add Task"}
-          </button>
-        </form>
-        {taskId && (
-          <button
-            className="mt-5 cursor-pointer bg-primary text-text-on-button rounded-4xl h-12 text-lg flex items-center justify-center "
-            onClick={handleCancelEdit}
-          >
-            Cancel Edit
-          </button>
-        )}
+          {AVAILABLE_CATEGORIES.map((category) => (
+            <option key={category} value={category} className="text-base">
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
-    </div>
+
+      <button className="button-base rounded-4xl py-2 text-lg flex items-center justify-center font-semibold">
+        {taskId ? "Update Task" : "Add Task"}
+      </button>
+    </form>
   );
 }
 
