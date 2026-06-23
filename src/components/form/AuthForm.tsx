@@ -112,7 +112,7 @@ function AccountForm() {
               <input
                 type="email"
                 placeholder="Email Adress"
-                className="input-base indent-2.5 py-2"
+                className="input-base indent-2.5 py-2 "
                 required
                 {...register("email")}
               />

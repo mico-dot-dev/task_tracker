@@ -1,18 +1,16 @@
-"use server";
-
 import React from "react";
 import { TaskListModel } from "@/src/types/task";
 import { GroupTasksByCategory, CATEGORY_LABELS } from "@/src/lib/task-util";
-import { Plus, Search } from "lucide-react";
 
 import TaskCard from "@/src/components/task/TaskCard";
+import { Search } from "lucide-react";
 
-async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
+function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
   const byCategory = GroupTasksByCategory(Tasks);
   const today = new Date().toUTCString().split(" ").slice(0, 4).join(" ");
 
   return (
-    <div className="flex flex-1 justify-items-center mt-10 mr-5">
+    <div className="flex flex-1 justify-items-center mt-10 mx-3">
       <div className="flex flex-col flex-1">
         <header className="mb-7">
           <p className="text-2xl font-bold text-primary-text">
@@ -23,8 +21,8 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
           </div>
         </header>
 
-        <section className="flex flex-col">
-          <div className="relative w-full flex-1 mb-3">
+        <section className="flex flex-col py-5 border-b border-primary mb-4">
+          <div className="flex relative flex-1 mb-4 ">
             {/* 1. Icon Container */}
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <Search className="h-5 w-5 text-muted-icon" aria-hidden="true" />
@@ -39,7 +37,7 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
             />
           </div>
 
-          <div className="flex flex-row justify-between h-10 text-sm">
+          <div className="flex flex-row justify-between h-10 text-sm  font-medium">
             <div className="flex flex-row gap-3 text-background">
               {CATEGORY_LABELS !== null &&
                 Object.entries(CATEGORY_LABELS).map(([cat, label]) => (
@@ -61,10 +59,8 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
           </div>
         </section>
 
-        <hr className="my-3 text-primary" />
-
         {/* tasks */}
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           {byCategory !== null &&
             byCategory.map(({ cat, label, tasks }) => (
               <ul
@@ -76,19 +72,6 @@ async function TaskList({ Tasks }: { Tasks: TaskListModel[] }) {
                 ))}
               </ul>
             ))}
-        </div>
-
-        <div
-          className="fixed bottom-5 right-5 
-          font-semibold text-sm tracking-wide lg:px-6 px-3 py-3 rounded-lg 
-          flex items-center gap-2
-            button-base
-        "
-        >
-          <button className="flex cursor-pointer">
-            <Plus className="" size={20} />
-            <p className="hidden lg:block">Add Task</p>
-          </button>
         </div>
       </div>
     </div>

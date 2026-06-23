@@ -28,11 +28,11 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
   }
 
   return (
-    <li className="bg-foreground border border-border rounded-md w-">
+    <li className="bg-foreground border border-border rounded-md">
       <div
         className={twJoin(
           "flex flex-row m-5",
-          Task.completed && "line-through text-gray-500",
+          Task.completed && "text-muted-text",
         )}
       >
         <button
@@ -45,10 +45,11 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
         </button>
 
         <div className="self-start flex flex-col ml-3 flex-1">
-          <p className="text-2xl flex w-full">{Task.title}</p>
-          <div className="flex flex-row">
-            <p className="text-md flex w-full">Due: June 15, 2026</p>
-            <p className="text-md flex w-full">{Task.category}</p>
+          <p className="text-base flex w-full">{Task.title}</p>
+          <p className="text-sm text-muted-text">{Task.description}</p>
+          <div className="flex flex-row text-sm justify-between mt-3">
+            <p className="">Due: June 15, 2026</p>
+            <p className="">{Task.category}</p>
           </div>
         </div>
         <button className="cursor-pointer self-start">

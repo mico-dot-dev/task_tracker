@@ -139,8 +139,6 @@ export async function UpdateTaskCompletion(taskID: string) {
       data: { completed: !task.completed },
     });
     revalidatePath("/(dashboard)/tasks");
-
-    console.log("Toggling completion for task:", taskID);
   } catch (error) {
     console.error("Error occurred while updating task completion:", error);
     throw new Error("Failed to update task completion");
