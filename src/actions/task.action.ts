@@ -40,8 +40,18 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const user = await GetAuthUser();
-    console.log("Get USer Tasks Hit");
-    console.log("user: " + user);
+
+    // TEMPORARY PROD DIAGNOSTIC LOG
+    console.log("PROD AUTH DEBUG:", {
+      success: user.success,
+      hasEnvUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL, // Replace with your auth provider's env variable
+      errorDetails: user || "None",
+    });
+
+    if (!user.success) {
+      return { success: false, error: "User not authenticated" };
+    }
+
     if (!user.success) {
       return {
         success: false,
