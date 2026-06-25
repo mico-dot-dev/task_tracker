@@ -17,7 +17,7 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
-    console.log(data);
+    console.log(error);
     if (error || !data.user) {
       return {
         success: false,
@@ -40,13 +40,6 @@ async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const user = await GetAuthUser();
-
-    // TEMPORARY PROD DIAGNOSTIC LOG
-    console.log("PROD AUTH DEBUG:", {
-      success: user.success,
-      hasEnvUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL, // Replace with your auth provider's env variable
-      errorDetails: user || "None",
-    });
 
     if (!user.success) {
       return { success: false, error: "User not authenticated" };
