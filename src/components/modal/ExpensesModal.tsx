@@ -2,12 +2,12 @@ import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import ExpenseForm from "@/src/components/form/ExpenseForm";
 
-type MyModalProps = {
+type ModalProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 };
 
-function ExpensesModal({ isOpen, setIsOpen }: MyModalProps) {
+function ExpensesModal({ isOpen, setIsOpen }: ModalProps) {
   return (
     <div>
       <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
