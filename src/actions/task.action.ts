@@ -1,10 +1,7 @@
 "use server";
 
 import { prisma } from "@/src/lib/prisma-client";
-import {
-  supabaseServer,
-  supabaseServerClient,
-} from "@/src/lib/supabase/server";
+import { supabaseServer } from "@/src/lib/supabase/server";
 import {
   TaskListModel,
   TaskFormSchema,
@@ -16,9 +13,9 @@ import {
 import { category, tasks } from "@/src/generated/prisma";
 import { revalidatePath } from "next/cache";
 
-async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
+export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
-    const supabase = await supabaseServerClient();
+    const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
     console.log(error);
     if (error || !data.user) {
