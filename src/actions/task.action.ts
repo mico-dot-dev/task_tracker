@@ -13,7 +13,7 @@ import {
 import { category, tasks } from "@/src/generated/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
+async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
