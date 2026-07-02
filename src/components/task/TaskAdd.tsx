@@ -23,7 +23,11 @@ function TaskAdd() {
         </button>
       </div>
 
-      <TaskFormModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+      <TaskFormModal
+        isOpen={modalOpen}
+        setIsOpen={setModalOpen}
+        content="task"
+      />
     </div>
   );
 }

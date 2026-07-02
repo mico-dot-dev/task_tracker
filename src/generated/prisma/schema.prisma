@@ -9,28 +9,48 @@ datasource db {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model tasks {
-  id            BigInt    @id @default(autoincrement())
-  created_at    DateTime  @default(now()) @db.Timestamptz(6)
-  description   String?   @default("")
-  completed     Boolean   @default(false)
-  completed_at  DateTime? @db.Date
-  title         String?
-  user_id       String    @db.Uuid
-  task_category category  @default(OTHER)
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model users {
   created_at DateTime @default(now()) @db.Timestamptz(6)
   email      String   @unique(map: "user_username_key")
   id         String   @id @unique @db.Uuid
 }
 
-enum category {
-  PRIORITY
-  TODAY
-  WEEK
-  OTHER
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model task {
+  id                BigInt          @id(map: "tasks_pkey") @default(autoincrement())
+  created_at        DateTime        @default(now()) @db.Timestamptz(6)
+  description       String?         @default("")
+  completed         Boolean         @default(false)
+  completed_at      DateTime?       @db.Date
+  title             String?
+  user_id           String          @db.Uuid
+  priority_level    Int             @default(0) @db.SmallInt
+  due_date          DateTime?       @db.Date
+  task_category_id  BigInt?
+  repeating_task_id BigInt?
+  repeating_task    repeating_task? @relation(fields: [repeating_task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  task_category     task_category?  @relation(fields: [task_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model task_category {
+  id         BigInt   @id(map: "cat_pkey") @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  name       String?
+  task       task[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model repeating_task {
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  task       task[]
+}
+
+enum DateRepeatType {
+  YEARLY
+  MONTHLY
+  DAILY
+  MANUAL
 }

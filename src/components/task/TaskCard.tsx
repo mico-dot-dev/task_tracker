@@ -2,7 +2,6 @@
 
 import React from "react";
 import { TaskListModel } from "@/src/types/task";
-import { category } from "@/src/generated/prisma";
 import { twJoin } from "tailwind-merge";
 import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";

@@ -1,13 +1,16 @@
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import TaskForm from "../form/TaskForm";
+import TaskCatForm from "../form/TaskCatForm";
 
 type ModalProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  content: "task" | "category";
 };
 
-function TaskModal({ isOpen, setIsOpen }: ModalProps) {
+function TaskModal({ isOpen, setIsOpen, content }: ModalProps) {
+  const cont = content === "task" ? <TaskForm /> : <TaskCatForm />;
   return (
     <div>
       <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -16,7 +19,6 @@ function TaskModal({ isOpen, setIsOpen }: ModalProps) {
           <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 animate-fade-in" />
 
           {/* Modal Box */}
-          {/* The centering can be improved */}
           <Dialog.Content
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
            bg-foreground border-2 border-border rounded-lg max-w-none lg:w-[25%] lg:max-w-[25%] w-full z-50 lg:h-[90%] h-full"
@@ -25,9 +27,7 @@ function TaskModal({ isOpen, setIsOpen }: ModalProps) {
               <p className="w-[90%] justify-self-center">Add New Task</p>
             </Dialog.Title>
 
-            <div className="w-[90%] justify-self-center">
-              <TaskForm />
-            </div>
+            <div className="w-[90%] justify-self-center">{cont}</div>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

@@ -120,7 +120,13 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TasksScalarFieldEnum = {
+exports.Prisma.UsersScalarFieldEnum = {
+  created_at: 'created_at',
+  email: 'email',
+  id: 'id'
+};
+
+exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   created_at: 'created_at',
   description: 'description',
@@ -128,13 +134,21 @@ exports.Prisma.TasksScalarFieldEnum = {
   completed_at: 'completed_at',
   title: 'title',
   user_id: 'user_id',
-  task_category: 'task_category'
+  priority_level: 'priority_level',
+  due_date: 'due_date',
+  task_category_id: 'task_category_id',
+  repeating_task_id: 'repeating_task_id'
 };
 
-exports.Prisma.UsersScalarFieldEnum = {
+exports.Prisma.Task_categoryScalarFieldEnum = {
+  id: 'id',
   created_at: 'created_at',
-  email: 'email',
-  id: 'id'
+  name: 'name'
+};
+
+exports.Prisma.Repeating_taskScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -151,16 +165,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.category = exports.$Enums.category = {
-  PRIORITY: 'PRIORITY',
-  TODAY: 'TODAY',
-  WEEK: 'WEEK',
-  OTHER: 'OTHER'
-};
+
 
 exports.Prisma.ModelName = {
-  tasks: 'tasks',
-  users: 'users'
+  users: 'users',
+  task: 'task',
+  task_category: 'task_category',
+  repeating_task: 'repeating_task'
 };
 
 /**

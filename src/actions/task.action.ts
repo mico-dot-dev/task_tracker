@@ -10,14 +10,14 @@ import {
   ActionResponse,
   TaskFormModelBase,
 } from "@/src/types/task";
-import { category, tasks } from "@/src/generated/prisma";
+import { task } from "@/src/generated/prisma";
 import { revalidatePath } from "next/cache";
 
 async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
-    console.log(error);
+
     if (error || !data.user) {
       return {
         success: false,
@@ -51,21 +51,19 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
         error: "User not authenticated",
       };
     }
-    const userTasks = await prisma.tasks.findMany({
+    const userTasks = await prisma.task.findMany({
       where: {
         user_id: user.data.user,
       },
       orderBy: { completed: "asc" },
     });
 
-    const parsedTasks: TaskListModel[] = userTasks.map((task: tasks) => ({
+    const parsedTasks: TaskListModel[] = userTasks.map((task: task) => ({
       id: task.id!.toString(),
       title: task.title!,
       description: task.description!,
       completed: task.completed!,
-      category: task.task_category as category,
     }));
-    console.dir(parsedTasks);
 
     return {
       success: true,
@@ -102,13 +100,12 @@ export async function CreateTask(
       };
     }
 
-    const newTask = await prisma.tasks.create({
+    const newTask = await prisma.task.create({
       data: {
         title: parsedTask.data.title!,
         description: parsedTask.data.description!,
         completed: parsedTask.data.completed!,
         user_id: user.data.user,
-        task_category: parsedTask.data.category,
       },
     });
 
@@ -119,7 +116,6 @@ export async function CreateTask(
         title: newTask.title!,
         description: newTask.description!,
         completed: newTask.completed!,
-        category: newTask.task_category as category,
       },
     };
   } catch (error) {
@@ -133,14 +129,14 @@ export async function UpdateTaskCompletion(taskID: string) {
     const tasknum = parseInt(taskID, 10);
     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
 
-    const task = await prisma.tasks.findUnique({
+    const task = await prisma.task.findUnique({
       select: { completed: true },
       where: { id: tasknum },
     });
 
     if (!task) throw new Error(`Task not found: ${taskID}`);
 
-    const res = await prisma.tasks.update({
+    const res = await prisma.task.update({
       where: { id: tasknum },
       data: { completed: !task.completed },
     });
@@ -156,14 +152,14 @@ export async function DeleteTask(taskID: string) {
     const tasknum = parseInt(taskID, 10);
     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
 
-    const task = await prisma.tasks.findUnique({
+    const task = await prisma.task.findUnique({
       select: { id: true },
       where: { id: tasknum },
     });
 
     if (!task) throw new Error(`Task not found: ${taskID}`);
 
-    await prisma.tasks.delete({
+    await prisma.task.delete({
       where: { id: tasknum },
     });
     revalidatePath("/(dashboard)/tasks");
@@ -183,7 +179,7 @@ export async function GetTaskByID(
     const tasknum = parseInt(taskID, 10);
     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
 
-    const task = await prisma.tasks.findUnique({
+    const task = await prisma.task.findUnique({
       where: { id: tasknum },
     });
 
@@ -196,7 +192,6 @@ export async function GetTaskByID(
         title: task.title!,
         description: task.description!,
         completed: task.completed!,
-        category: task.task_category as category,
       },
     };
   } catch (error) {
@@ -213,13 +208,12 @@ export async function UpdateTask(
 
     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${data.id}`);
 
-    const updatedTask = await prisma.tasks.update({
+    const updatedTask = await prisma.task.update({
       where: { id: tasknum },
       data: {
         title: data.title,
         description: data.description,
         completed: data.completed,
-        task_category: data.category,
       },
     });
     revalidatePath("/(dashboard)/tasks");
@@ -229,7 +223,6 @@ export async function UpdateTask(
         title: updatedTask.title!,
         description: updatedTask.description!,
         completed: updatedTask.completed!,
-        category: updatedTask.task_category as category,
       },
     };
   } catch (error) {

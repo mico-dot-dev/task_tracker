@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { category } from "@/src/generated/prisma";
 
 export const TaskSchema = z.object({
   title: z
@@ -11,7 +10,7 @@ export const TaskSchema = z.object({
     .max(255, "Description must be less than 255 characters")
     .optional(),
   completed: z.boolean().default(false),
-  category: z.nativeEnum(category).default(category.OTHER),
+  category: z.number().int().optional(),
 });
 
 export const TaskListSchema = TaskSchema.extend({

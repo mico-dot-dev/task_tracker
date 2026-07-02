@@ -1,33 +1,27 @@
 "use client";
 import React, { useEffect } from "react";
-import { AVAILABLE_CATEGORIES } from "@/src/lib/task-util";
 import { useForm } from "react-hook-form";
 import {
   TaskFormModelBase,
   TaskFormModelInput,
-  TaskFormSchema,
   TaskSchema,
   TaskFormModelUpdate,
   ActionResponse,
-  TaskListModel,
 } from "@/src/types/task";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 function TaskForm() {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
-  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<TaskFormModelBase>({
     resolver: zodResolver(TaskSchema),
     defaultValues: {
       title: "",
       completed: false,
-      category: AVAILABLE_CATEGORIES[0],
       description: "",
     },
   });
@@ -39,7 +33,6 @@ function TaskForm() {
           reset({
             title: "",
             description: "",
-            category: AVAILABLE_CATEGORIES[0],
             completed: false,
           });
           return;
@@ -118,20 +111,6 @@ function TaskForm() {
         />
 
         <label htmlFor="task-category">Category</label>
-        <select
-          {...register("category")}
-          required
-          defaultValue={AVAILABLE_CATEGORIES[0]}
-          name="category"
-          id="task-category"
-          className="input-base p-2"
-        >
-          {AVAILABLE_CATEGORIES.map((category) => (
-            <option key={category} value={category} className="text-base">
-              {category}
-            </option>
-          ))}
-        </select>
       </div>
 
       <button className="button-base rounded-4xl py-2 text-lg flex items-center justify-center font-semibold">
