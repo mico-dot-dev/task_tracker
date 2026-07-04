@@ -6,8 +6,8 @@ import {
   TaskFormModelInput,
   TaskSchema,
   TaskFormModelUpdate,
-  ActionResponse,
 } from "@/src/types/task";
+import { ActionResponse } from "@/src/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";

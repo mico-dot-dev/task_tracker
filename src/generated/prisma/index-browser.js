@@ -133,7 +133,6 @@ exports.Prisma.TaskScalarFieldEnum = {
   completed: 'completed',
   completed_at: 'completed_at',
   title: 'title',
-  user_id: 'user_id',
   priority_level: 'priority_level',
   due_date: 'due_date',
   task_category_id: 'task_category_id',
@@ -143,12 +142,15 @@ exports.Prisma.TaskScalarFieldEnum = {
 exports.Prisma.Task_categoryScalarFieldEnum = {
   id: 'id',
   created_at: 'created_at',
-  name: 'name'
+  title: 'title',
+  user_id: 'user_id'
 };
 
 exports.Prisma.Repeating_taskScalarFieldEnum = {
   id: 'id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  repeating_type: 'repeating_type',
+  date_repeat: 'date_repeat'
 };
 
 exports.Prisma.SortOrder = {
@@ -165,7 +167,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.DateRepeatType = exports.$Enums.DateRepeatType = {
+  YEARLY: 'YEARLY',
+  MONTHLY: 'MONTHLY',
+  DAILY: 'DAILY',
+  MANUAL: 'MANUAL'
+};
 
 exports.Prisma.ModelName = {
   users: 'users',

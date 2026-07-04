@@ -7,35 +7,12 @@ import {
   TaskFormSchema,
   TaskFormModelInput,
   TaskFormModelUpdate,
-  ActionResponse,
   TaskFormModelBase,
 } from "@/src/types/task";
+import { ActionResponse } from "@/src/types/auth";
+import { GetAuthUser } from "@/src/actions/auth.action";
 import { task } from "@/src/generated/prisma";
 import { revalidatePath } from "next/cache";
-
-async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
-  try {
-    const supabase = await supabaseServer();
-    const { data, error } = await supabase.auth.getUser();
-
-    if (error || !data.user) {
-      return {
-        success: false,
-        error: "User not authenticated",
-      };
-    }
-
-    return {
-      success: true,
-      data: { user: data.user.id },
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: "Failed to authenticate user",
-    };
-  }
-}
 
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
@@ -51,14 +28,16 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
         error: "User not authenticated",
       };
     }
-    const userTasks = await prisma.task.findMany({
-      where: {
-        user_id: user.data.user,
+    const rawTaskData = await prisma.task_category.findMany({
+      where: { user_id: user.data.user },
+      select: {
+        task: true, // Pulls the related task object
       },
-      orderBy: { completed: "asc" },
     });
 
-    const parsedTasks: TaskListModel[] = userTasks.map((task: task) => ({
+    const flattenedTasks: task[] = rawTaskData.flatMap((row) => row.task);
+
+    const parsedTasks: TaskListModel[] = flattenedTasks.map((task: task) => ({
       id: task.id!.toString(),
       title: task.title!,
       description: task.description!,
@@ -105,7 +84,6 @@ export async function CreateTask(
         title: parsedTask.data.title!,
         description: parsedTask.data.description!,
         completed: parsedTask.data.completed!,
-        user_id: user.data.user,
       },
     });
 

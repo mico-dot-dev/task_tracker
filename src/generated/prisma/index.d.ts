@@ -1156,6 +1156,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type UsersCountOutputType
+   */
+
+  export type UsersCountOutputType = {
+    task_category: number
+  }
+
+  export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task_category?: boolean | UsersCountOutputTypeCountTask_categoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsersCountOutputType
+     */
+    select?: UsersCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountTask_categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: task_categoryWhereInput
+  }
+
+
+  /**
    * Count Type Task_categoryCountOutputType
    */
 
@@ -1369,6 +1400,8 @@ export namespace Prisma {
     created_at?: boolean
     email?: boolean
     id?: boolean
+    task_category?: boolean | users$task_categoryArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1390,10 +1423,18 @@ export namespace Prisma {
   }
 
   export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"created_at" | "email" | "id", ExtArgs["result"]["users"]>
+  export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task_category?: boolean | users$task_categoryArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type usersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $usersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "users"
-    objects: {}
+    objects: {
+      task_category: Prisma.$task_categoryPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       created_at: Date
       email: string
@@ -1792,6 +1833,7 @@ export namespace Prisma {
    */
   export interface Prisma__usersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    task_category<T extends users$task_categoryArgs<ExtArgs> = {}>(args?: Subset<T, users$task_categoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$task_categoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1841,6 +1883,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where: usersWhereUniqueInput
@@ -1859,6 +1905,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where: usersWhereUniqueInput
@@ -1876,6 +1926,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * Filter, which users to fetch.
      */
@@ -1925,6 +1979,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where?: usersWhereInput
@@ -1972,6 +2030,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * Filter, which users to fetch.
      */
@@ -2021,6 +2083,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * The data needed to create a users.
      */
     data: XOR<usersCreateInput, usersUncheckedCreateInput>
@@ -2068,6 +2134,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * The data needed to update a users.
      */
@@ -2135,6 +2205,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * The filter to search for the users to update in case it exists.
      */
     where: usersWhereUniqueInput
@@ -2161,6 +2235,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter which users to delete.
      */
     where: usersWhereUniqueInput
@@ -2181,6 +2259,30 @@ export namespace Prisma {
   }
 
   /**
+   * users.task_category
+   */
+  export type users$task_categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the task_category
+     */
+    select?: task_categorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the task_category
+     */
+    omit?: task_categoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: task_categoryInclude<ExtArgs> | null
+    where?: task_categoryWhereInput
+    orderBy?: task_categoryOrderByWithRelationInput | task_categoryOrderByWithRelationInput[]
+    cursor?: task_categoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Task_categoryScalarFieldEnum | Task_categoryScalarFieldEnum[]
+  }
+
+  /**
    * users without action
    */
   export type usersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2192,6 +2294,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
   }
 
 
@@ -2228,7 +2334,6 @@ export namespace Prisma {
     completed: boolean | null
     completed_at: Date | null
     title: string | null
-    user_id: string | null
     priority_level: number | null
     due_date: Date | null
     task_category_id: bigint | null
@@ -2242,7 +2347,6 @@ export namespace Prisma {
     completed: boolean | null
     completed_at: Date | null
     title: string | null
-    user_id: string | null
     priority_level: number | null
     due_date: Date | null
     task_category_id: bigint | null
@@ -2256,7 +2360,6 @@ export namespace Prisma {
     completed: number
     completed_at: number
     title: number
-    user_id: number
     priority_level: number
     due_date: number
     task_category_id: number
@@ -2286,7 +2389,6 @@ export namespace Prisma {
     completed?: true
     completed_at?: true
     title?: true
-    user_id?: true
     priority_level?: true
     due_date?: true
     task_category_id?: true
@@ -2300,7 +2402,6 @@ export namespace Prisma {
     completed?: true
     completed_at?: true
     title?: true
-    user_id?: true
     priority_level?: true
     due_date?: true
     task_category_id?: true
@@ -2314,7 +2415,6 @@ export namespace Prisma {
     completed?: true
     completed_at?: true
     title?: true
-    user_id?: true
     priority_level?: true
     due_date?: true
     task_category_id?: true
@@ -2415,7 +2515,6 @@ export namespace Prisma {
     completed: boolean
     completed_at: Date | null
     title: string | null
-    user_id: string
     priority_level: number
     due_date: Date | null
     task_category_id: bigint | null
@@ -2448,7 +2547,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: boolean
     title?: boolean
-    user_id?: boolean
     priority_level?: boolean
     due_date?: boolean
     task_category_id?: boolean
@@ -2464,7 +2562,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: boolean
     title?: boolean
-    user_id?: boolean
     priority_level?: boolean
     due_date?: boolean
     task_category_id?: boolean
@@ -2480,7 +2577,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: boolean
     title?: boolean
-    user_id?: boolean
     priority_level?: boolean
     due_date?: boolean
     task_category_id?: boolean
@@ -2496,14 +2592,13 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: boolean
     title?: boolean
-    user_id?: boolean
     priority_level?: boolean
     due_date?: boolean
     task_category_id?: boolean
     repeating_task_id?: boolean
   }
 
-  export type taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "description" | "completed" | "completed_at" | "title" | "user_id" | "priority_level" | "due_date" | "task_category_id" | "repeating_task_id", ExtArgs["result"]["task"]>
+  export type taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "description" | "completed" | "completed_at" | "title" | "priority_level" | "due_date" | "task_category_id" | "repeating_task_id", ExtArgs["result"]["task"]>
   export type taskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     repeating_task?: boolean | task$repeating_taskArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
@@ -2530,7 +2625,6 @@ export namespace Prisma {
       completed: boolean
       completed_at: Date | null
       title: string | null
-      user_id: string
       priority_level: number
       due_date: Date | null
       task_category_id: bigint | null
@@ -2966,7 +3060,6 @@ export namespace Prisma {
     readonly completed: FieldRef<"task", 'Boolean'>
     readonly completed_at: FieldRef<"task", 'DateTime'>
     readonly title: FieldRef<"task", 'String'>
-    readonly user_id: FieldRef<"task", 'String'>
     readonly priority_level: FieldRef<"task", 'Int'>
     readonly due_date: FieldRef<"task", 'DateTime'>
     readonly task_category_id: FieldRef<"task", 'BigInt'>
@@ -3194,7 +3287,7 @@ export namespace Prisma {
     /**
      * The data needed to create a task.
      */
-    data: XOR<taskCreateInput, taskUncheckedCreateInput>
+    data?: XOR<taskCreateInput, taskUncheckedCreateInput>
   }
 
   /**
@@ -3451,19 +3544,22 @@ export namespace Prisma {
   export type Task_categoryMinAggregateOutputType = {
     id: bigint | null
     created_at: Date | null
-    name: string | null
+    title: string | null
+    user_id: string | null
   }
 
   export type Task_categoryMaxAggregateOutputType = {
     id: bigint | null
     created_at: Date | null
-    name: string | null
+    title: string | null
+    user_id: string | null
   }
 
   export type Task_categoryCountAggregateOutputType = {
     id: number
     created_at: number
-    name: number
+    title: number
+    user_id: number
     _all: number
   }
 
@@ -3479,19 +3575,22 @@ export namespace Prisma {
   export type Task_categoryMinAggregateInputType = {
     id?: true
     created_at?: true
-    name?: true
+    title?: true
+    user_id?: true
   }
 
   export type Task_categoryMaxAggregateInputType = {
     id?: true
     created_at?: true
-    name?: true
+    title?: true
+    user_id?: true
   }
 
   export type Task_categoryCountAggregateInputType = {
     id?: true
     created_at?: true
-    name?: true
+    title?: true
+    user_id?: true
     _all?: true
   }
 
@@ -3584,7 +3683,8 @@ export namespace Prisma {
   export type Task_categoryGroupByOutputType = {
     id: bigint
     created_at: Date
-    name: string | null
+    title: string | null
+    user_id: string
     _count: Task_categoryCountAggregateOutputType | null
     _avg: Task_categoryAvgAggregateOutputType | null
     _sum: Task_categorySumAggregateOutputType | null
@@ -3609,46 +3709,60 @@ export namespace Prisma {
   export type task_categorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
-    name?: boolean
+    title?: boolean
+    user_id?: boolean
     task?: boolean | task_category$taskArgs<ExtArgs>
+    users?: boolean | usersDefaultArgs<ExtArgs>
     _count?: boolean | Task_categoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task_category"]>
 
   export type task_categorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
-    name?: boolean
+    title?: boolean
+    user_id?: boolean
+    users?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task_category"]>
 
   export type task_categorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
-    name?: boolean
+    title?: boolean
+    user_id?: boolean
+    users?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task_category"]>
 
   export type task_categorySelectScalar = {
     id?: boolean
     created_at?: boolean
-    name?: boolean
+    title?: boolean
+    user_id?: boolean
   }
 
-  export type task_categoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "name", ExtArgs["result"]["task_category"]>
+  export type task_categoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "title" | "user_id", ExtArgs["result"]["task_category"]>
   export type task_categoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     task?: boolean | task_category$taskArgs<ExtArgs>
+    users?: boolean | usersDefaultArgs<ExtArgs>
     _count?: boolean | Task_categoryCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type task_categoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type task_categoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type task_categoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | usersDefaultArgs<ExtArgs>
+  }
+  export type task_categoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | usersDefaultArgs<ExtArgs>
+  }
 
   export type $task_categoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "task_category"
     objects: {
       task: Prisma.$taskPayload<ExtArgs>[]
+      users: Prisma.$usersPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       created_at: Date
-      name: string | null
+      title: string | null
+      user_id: string
     }, ExtArgs["result"]["task_category"]>
     composites: {}
   }
@@ -4044,6 +4158,7 @@ export namespace Prisma {
   export interface Prisma__task_categoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     task<T extends task_category$taskArgs<ExtArgs> = {}>(args?: Subset<T, task_category$taskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$taskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4075,7 +4190,8 @@ export namespace Prisma {
   interface task_categoryFieldRefs {
     readonly id: FieldRef<"task_category", 'BigInt'>
     readonly created_at: FieldRef<"task_category", 'DateTime'>
-    readonly name: FieldRef<"task_category", 'String'>
+    readonly title: FieldRef<"task_category", 'String'>
+    readonly user_id: FieldRef<"task_category", 'String'>
   }
     
 
@@ -4299,7 +4415,7 @@ export namespace Prisma {
     /**
      * The data needed to create a task_category.
      */
-    data?: XOR<task_categoryCreateInput, task_categoryUncheckedCreateInput>
+    data: XOR<task_categoryCreateInput, task_categoryUncheckedCreateInput>
   }
 
   /**
@@ -4330,6 +4446,10 @@ export namespace Prisma {
      */
     data: task_categoryCreateManyInput | task_categoryCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: task_categoryIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4400,6 +4520,10 @@ export namespace Prisma {
      * Limit how many task_categories to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: task_categoryIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4525,50 +4649,66 @@ export namespace Prisma {
 
   export type Repeating_taskAvgAggregateOutputType = {
     id: number | null
+    date_repeat: number | null
   }
 
   export type Repeating_taskSumAggregateOutputType = {
     id: bigint | null
+    date_repeat: number | null
   }
 
   export type Repeating_taskMinAggregateOutputType = {
     id: bigint | null
     created_at: Date | null
+    repeating_type: $Enums.DateRepeatType | null
+    date_repeat: number | null
   }
 
   export type Repeating_taskMaxAggregateOutputType = {
     id: bigint | null
     created_at: Date | null
+    repeating_type: $Enums.DateRepeatType | null
+    date_repeat: number | null
   }
 
   export type Repeating_taskCountAggregateOutputType = {
     id: number
     created_at: number
+    repeating_type: number
+    date_repeat: number
     _all: number
   }
 
 
   export type Repeating_taskAvgAggregateInputType = {
     id?: true
+    date_repeat?: true
   }
 
   export type Repeating_taskSumAggregateInputType = {
     id?: true
+    date_repeat?: true
   }
 
   export type Repeating_taskMinAggregateInputType = {
     id?: true
     created_at?: true
+    repeating_type?: true
+    date_repeat?: true
   }
 
   export type Repeating_taskMaxAggregateInputType = {
     id?: true
     created_at?: true
+    repeating_type?: true
+    date_repeat?: true
   }
 
   export type Repeating_taskCountAggregateInputType = {
     id?: true
     created_at?: true
+    repeating_type?: true
+    date_repeat?: true
     _all?: true
   }
 
@@ -4661,6 +4801,8 @@ export namespace Prisma {
   export type Repeating_taskGroupByOutputType = {
     id: bigint
     created_at: Date
+    repeating_type: $Enums.DateRepeatType | null
+    date_repeat: number | null
     _count: Repeating_taskCountAggregateOutputType | null
     _avg: Repeating_taskAvgAggregateOutputType | null
     _sum: Repeating_taskSumAggregateOutputType | null
@@ -4685,6 +4827,8 @@ export namespace Prisma {
   export type repeating_taskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
+    repeating_type?: boolean
+    date_repeat?: boolean
     task?: boolean | repeating_task$taskArgs<ExtArgs>
     _count?: boolean | Repeating_taskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["repeating_task"]>
@@ -4692,19 +4836,25 @@ export namespace Prisma {
   export type repeating_taskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
+    repeating_type?: boolean
+    date_repeat?: boolean
   }, ExtArgs["result"]["repeating_task"]>
 
   export type repeating_taskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     created_at?: boolean
+    repeating_type?: boolean
+    date_repeat?: boolean
   }, ExtArgs["result"]["repeating_task"]>
 
   export type repeating_taskSelectScalar = {
     id?: boolean
     created_at?: boolean
+    repeating_type?: boolean
+    date_repeat?: boolean
   }
 
-  export type repeating_taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at", ExtArgs["result"]["repeating_task"]>
+  export type repeating_taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "repeating_type" | "date_repeat", ExtArgs["result"]["repeating_task"]>
   export type repeating_taskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     task?: boolean | repeating_task$taskArgs<ExtArgs>
     _count?: boolean | Repeating_taskCountOutputTypeDefaultArgs<ExtArgs>
@@ -4720,6 +4870,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       created_at: Date
+      repeating_type: $Enums.DateRepeatType | null
+      date_repeat: number | null
     }, ExtArgs["result"]["repeating_task"]>
     composites: {}
   }
@@ -5146,6 +5298,8 @@ export namespace Prisma {
   interface repeating_taskFieldRefs {
     readonly id: FieldRef<"repeating_task", 'BigInt'>
     readonly created_at: FieldRef<"repeating_task", 'DateTime'>
+    readonly repeating_type: FieldRef<"repeating_task", 'DateRepeatType'>
+    readonly date_repeat: FieldRef<"repeating_task", 'Int'>
   }
     
 
@@ -5611,7 +5765,6 @@ export namespace Prisma {
     completed: 'completed',
     completed_at: 'completed_at',
     title: 'title',
-    user_id: 'user_id',
     priority_level: 'priority_level',
     due_date: 'due_date',
     task_category_id: 'task_category_id',
@@ -5624,7 +5777,8 @@ export namespace Prisma {
   export const Task_categoryScalarFieldEnum: {
     id: 'id',
     created_at: 'created_at',
-    name: 'name'
+    title: 'title',
+    user_id: 'user_id'
   };
 
   export type Task_categoryScalarFieldEnum = (typeof Task_categoryScalarFieldEnum)[keyof typeof Task_categoryScalarFieldEnum]
@@ -5632,7 +5786,9 @@ export namespace Prisma {
 
   export const Repeating_taskScalarFieldEnum: {
     id: 'id',
-    created_at: 'created_at'
+    created_at: 'created_at',
+    repeating_type: 'repeating_type',
+    date_repeat: 'date_repeat'
   };
 
   export type Repeating_taskScalarFieldEnum = (typeof Repeating_taskScalarFieldEnum)[keyof typeof Repeating_taskScalarFieldEnum]
@@ -5731,6 +5887,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateRepeatType'
+   */
+  export type EnumDateRepeatTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateRepeatType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateRepeatType[]'
+   */
+  export type ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateRepeatType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -5754,12 +5924,14 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"users"> | Date | string
     email?: StringFilter<"users"> | string
     id?: UuidFilter<"users"> | string
+    task_category?: Task_categoryListRelationFilter
   }
 
   export type usersOrderByWithRelationInput = {
     created_at?: SortOrder
     email?: SortOrder
     id?: SortOrder
+    task_category?: task_categoryOrderByRelationAggregateInput
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -5769,6 +5941,7 @@ export namespace Prisma {
     OR?: usersWhereInput[]
     NOT?: usersWhereInput | usersWhereInput[]
     created_at?: DateTimeFilter<"users"> | Date | string
+    task_category?: Task_categoryListRelationFilter
   }, "id" | "email" | "id">
 
   export type usersOrderByWithAggregationInput = {
@@ -5799,7 +5972,6 @@ export namespace Prisma {
     completed?: BoolFilter<"task"> | boolean
     completed_at?: DateTimeNullableFilter<"task"> | Date | string | null
     title?: StringNullableFilter<"task"> | string | null
-    user_id?: UuidFilter<"task"> | string
     priority_level?: IntFilter<"task"> | number
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
@@ -5815,7 +5987,6 @@ export namespace Prisma {
     completed?: SortOrder
     completed_at?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
-    user_id?: SortOrder
     priority_level?: SortOrder
     due_date?: SortOrderInput | SortOrder
     task_category_id?: SortOrderInput | SortOrder
@@ -5834,7 +6005,6 @@ export namespace Prisma {
     completed?: BoolFilter<"task"> | boolean
     completed_at?: DateTimeNullableFilter<"task"> | Date | string | null
     title?: StringNullableFilter<"task"> | string | null
-    user_id?: UuidFilter<"task"> | string
     priority_level?: IntFilter<"task"> | number
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
@@ -5850,7 +6020,6 @@ export namespace Prisma {
     completed?: SortOrder
     completed_at?: SortOrderInput | SortOrder
     title?: SortOrderInput | SortOrder
-    user_id?: SortOrder
     priority_level?: SortOrder
     due_date?: SortOrderInput | SortOrder
     task_category_id?: SortOrderInput | SortOrder
@@ -5872,7 +6041,6 @@ export namespace Prisma {
     completed?: BoolWithAggregatesFilter<"task"> | boolean
     completed_at?: DateTimeNullableWithAggregatesFilter<"task"> | Date | string | null
     title?: StringNullableWithAggregatesFilter<"task"> | string | null
-    user_id?: UuidWithAggregatesFilter<"task"> | string
     priority_level?: IntWithAggregatesFilter<"task"> | number
     due_date?: DateTimeNullableWithAggregatesFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableWithAggregatesFilter<"task"> | bigint | number | null
@@ -5885,15 +6053,19 @@ export namespace Prisma {
     NOT?: task_categoryWhereInput | task_categoryWhereInput[]
     id?: BigIntFilter<"task_category"> | bigint | number
     created_at?: DateTimeFilter<"task_category"> | Date | string
-    name?: StringNullableFilter<"task_category"> | string | null
+    title?: StringNullableFilter<"task_category"> | string | null
+    user_id?: UuidFilter<"task_category"> | string
     task?: TaskListRelationFilter
+    users?: XOR<UsersScalarRelationFilter, usersWhereInput>
   }
 
   export type task_categoryOrderByWithRelationInput = {
     id?: SortOrder
     created_at?: SortOrder
-    name?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     task?: taskOrderByRelationAggregateInput
+    users?: usersOrderByWithRelationInput
   }
 
   export type task_categoryWhereUniqueInput = Prisma.AtLeast<{
@@ -5902,14 +6074,17 @@ export namespace Prisma {
     OR?: task_categoryWhereInput[]
     NOT?: task_categoryWhereInput | task_categoryWhereInput[]
     created_at?: DateTimeFilter<"task_category"> | Date | string
-    name?: StringNullableFilter<"task_category"> | string | null
+    title?: StringNullableFilter<"task_category"> | string | null
+    user_id?: UuidFilter<"task_category"> | string
     task?: TaskListRelationFilter
+    users?: XOR<UsersScalarRelationFilter, usersWhereInput>
   }, "id">
 
   export type task_categoryOrderByWithAggregationInput = {
     id?: SortOrder
     created_at?: SortOrder
-    name?: SortOrderInput | SortOrder
+    title?: SortOrderInput | SortOrder
+    user_id?: SortOrder
     _count?: task_categoryCountOrderByAggregateInput
     _avg?: task_categoryAvgOrderByAggregateInput
     _max?: task_categoryMaxOrderByAggregateInput
@@ -5923,7 +6098,8 @@ export namespace Prisma {
     NOT?: task_categoryScalarWhereWithAggregatesInput | task_categoryScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"task_category"> | bigint | number
     created_at?: DateTimeWithAggregatesFilter<"task_category"> | Date | string
-    name?: StringNullableWithAggregatesFilter<"task_category"> | string | null
+    title?: StringNullableWithAggregatesFilter<"task_category"> | string | null
+    user_id?: UuidWithAggregatesFilter<"task_category"> | string
   }
 
   export type repeating_taskWhereInput = {
@@ -5932,12 +6108,16 @@ export namespace Prisma {
     NOT?: repeating_taskWhereInput | repeating_taskWhereInput[]
     id?: BigIntFilter<"repeating_task"> | bigint | number
     created_at?: DateTimeFilter<"repeating_task"> | Date | string
+    repeating_type?: EnumDateRepeatTypeNullableFilter<"repeating_task"> | $Enums.DateRepeatType | null
+    date_repeat?: IntNullableFilter<"repeating_task"> | number | null
     task?: TaskListRelationFilter
   }
 
   export type repeating_taskOrderByWithRelationInput = {
     id?: SortOrder
     created_at?: SortOrder
+    repeating_type?: SortOrderInput | SortOrder
+    date_repeat?: SortOrderInput | SortOrder
     task?: taskOrderByRelationAggregateInput
   }
 
@@ -5947,12 +6127,16 @@ export namespace Prisma {
     OR?: repeating_taskWhereInput[]
     NOT?: repeating_taskWhereInput | repeating_taskWhereInput[]
     created_at?: DateTimeFilter<"repeating_task"> | Date | string
+    repeating_type?: EnumDateRepeatTypeNullableFilter<"repeating_task"> | $Enums.DateRepeatType | null
+    date_repeat?: IntNullableFilter<"repeating_task"> | number | null
     task?: TaskListRelationFilter
   }, "id">
 
   export type repeating_taskOrderByWithAggregationInput = {
     id?: SortOrder
     created_at?: SortOrder
+    repeating_type?: SortOrderInput | SortOrder
+    date_repeat?: SortOrderInput | SortOrder
     _count?: repeating_taskCountOrderByAggregateInput
     _avg?: repeating_taskAvgOrderByAggregateInput
     _max?: repeating_taskMaxOrderByAggregateInput
@@ -5966,30 +6150,36 @@ export namespace Prisma {
     NOT?: repeating_taskScalarWhereWithAggregatesInput | repeating_taskScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"repeating_task"> | bigint | number
     created_at?: DateTimeWithAggregatesFilter<"repeating_task"> | Date | string
+    repeating_type?: EnumDateRepeatTypeNullableWithAggregatesFilter<"repeating_task"> | $Enums.DateRepeatType | null
+    date_repeat?: IntNullableWithAggregatesFilter<"repeating_task"> | number | null
   }
 
   export type usersCreateInput = {
     created_at?: Date | string
     email: string
     id: string
+    task_category?: task_categoryCreateNestedManyWithoutUsersInput
   }
 
   export type usersUncheckedCreateInput = {
     created_at?: Date | string
     email: string
     id: string
+    task_category?: task_categoryUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type usersUpdateInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
+    task_category?: task_categoryUpdateManyWithoutUsersNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     email?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
+    task_category?: task_categoryUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type usersCreateManyInput = {
@@ -6017,7 +6207,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     repeating_task?: repeating_taskCreateNestedOneWithoutTaskInput
@@ -6031,7 +6220,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
@@ -6045,7 +6233,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_task?: repeating_taskUpdateOneWithoutTaskNestedInput
@@ -6059,7 +6246,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -6073,7 +6259,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
@@ -6087,7 +6272,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -6099,7 +6283,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -6109,86 +6292,106 @@ export namespace Prisma {
   export type task_categoryCreateInput = {
     id?: bigint | number
     created_at?: Date | string
-    name?: string | null
+    title?: string | null
     task?: taskCreateNestedManyWithoutTask_categoryInput
+    users: usersCreateNestedOneWithoutTask_categoryInput
   }
 
   export type task_categoryUncheckedCreateInput = {
     id?: bigint | number
     created_at?: Date | string
-    name?: string | null
+    title?: string | null
+    user_id: string
     task?: taskUncheckedCreateNestedManyWithoutTask_categoryInput
   }
 
   export type task_categoryUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     task?: taskUpdateManyWithoutTask_categoryNestedInput
+    users?: usersUpdateOneRequiredWithoutTask_categoryNestedInput
   }
 
   export type task_categoryUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: StringFieldUpdateOperationsInput | string
     task?: taskUncheckedUpdateManyWithoutTask_categoryNestedInput
   }
 
   export type task_categoryCreateManyInput = {
     id?: bigint | number
     created_at?: Date | string
-    name?: string | null
+    title?: string | null
+    user_id: string
   }
 
   export type task_categoryUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type task_categoryUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type repeating_taskCreateInput = {
     id?: bigint | number
     created_at?: Date | string
+    repeating_type?: $Enums.DateRepeatType | null
+    date_repeat?: number | null
     task?: taskCreateNestedManyWithoutRepeating_taskInput
   }
 
   export type repeating_taskUncheckedCreateInput = {
     id?: bigint | number
     created_at?: Date | string
+    repeating_type?: $Enums.DateRepeatType | null
+    date_repeat?: number | null
     task?: taskUncheckedCreateNestedManyWithoutRepeating_taskInput
   }
 
   export type repeating_taskUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
     task?: taskUpdateManyWithoutRepeating_taskNestedInput
   }
 
   export type repeating_taskUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
     task?: taskUncheckedUpdateManyWithoutRepeating_taskNestedInput
   }
 
   export type repeating_taskCreateManyInput = {
     id?: bigint | number
     created_at?: Date | string
+    repeating_type?: $Enums.DateRepeatType | null
+    date_repeat?: number | null
   }
 
   export type repeating_taskUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type repeating_taskUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -6227,6 +6430,16 @@ export namespace Prisma {
     gte?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type Task_categoryListRelationFilter = {
+    every?: task_categoryWhereInput
+    some?: task_categoryWhereInput
+    none?: task_categoryWhereInput
+  }
+
+  export type task_categoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type usersCountOrderByAggregateInput = {
@@ -6380,7 +6593,6 @@ export namespace Prisma {
     completed?: SortOrder
     completed_at?: SortOrder
     title?: SortOrder
-    user_id?: SortOrder
     priority_level?: SortOrder
     due_date?: SortOrder
     task_category_id?: SortOrder
@@ -6401,7 +6613,6 @@ export namespace Prisma {
     completed?: SortOrder
     completed_at?: SortOrder
     title?: SortOrder
-    user_id?: SortOrder
     priority_level?: SortOrder
     due_date?: SortOrder
     task_category_id?: SortOrder
@@ -6415,7 +6626,6 @@ export namespace Prisma {
     completed?: SortOrder
     completed_at?: SortOrder
     title?: SortOrder
-    user_id?: SortOrder
     priority_level?: SortOrder
     due_date?: SortOrder
     task_category_id?: SortOrder
@@ -6523,6 +6733,11 @@ export namespace Prisma {
     none?: taskWhereInput
   }
 
+  export type UsersScalarRelationFilter = {
+    is?: usersWhereInput
+    isNot?: usersWhereInput
+  }
+
   export type taskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -6530,7 +6745,8 @@ export namespace Prisma {
   export type task_categoryCountOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
+    user_id?: SortOrder
   }
 
   export type task_categoryAvgOrderByAggregateInput = {
@@ -6540,40 +6756,108 @@ export namespace Prisma {
   export type task_categoryMaxOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
+    user_id?: SortOrder
   }
 
   export type task_categoryMinOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
-    name?: SortOrder
+    title?: SortOrder
+    user_id?: SortOrder
   }
 
   export type task_categorySumOrderByAggregateInput = {
     id?: SortOrder
   }
 
+  export type EnumDateRepeatTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.DateRepeatType | EnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel> | $Enums.DateRepeatType | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type repeating_taskCountOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
+    repeating_type?: SortOrder
+    date_repeat?: SortOrder
   }
 
   export type repeating_taskAvgOrderByAggregateInput = {
     id?: SortOrder
+    date_repeat?: SortOrder
   }
 
   export type repeating_taskMaxOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
+    repeating_type?: SortOrder
+    date_repeat?: SortOrder
   }
 
   export type repeating_taskMinOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
+    repeating_type?: SortOrder
+    date_repeat?: SortOrder
   }
 
   export type repeating_taskSumOrderByAggregateInput = {
     id?: SortOrder
+    date_repeat?: SortOrder
+  }
+
+  export type EnumDateRepeatTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DateRepeatType | EnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDateRepeatTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.DateRepeatType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type task_categoryCreateNestedManyWithoutUsersInput = {
+    create?: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput> | task_categoryCreateWithoutUsersInput[] | task_categoryUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: task_categoryCreateOrConnectWithoutUsersInput | task_categoryCreateOrConnectWithoutUsersInput[]
+    createMany?: task_categoryCreateManyUsersInputEnvelope
+    connect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+  }
+
+  export type task_categoryUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput> | task_categoryCreateWithoutUsersInput[] | task_categoryUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: task_categoryCreateOrConnectWithoutUsersInput | task_categoryCreateOrConnectWithoutUsersInput[]
+    createMany?: task_categoryCreateManyUsersInputEnvelope
+    connect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -6582,6 +6866,34 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type task_categoryUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput> | task_categoryCreateWithoutUsersInput[] | task_categoryUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: task_categoryCreateOrConnectWithoutUsersInput | task_categoryCreateOrConnectWithoutUsersInput[]
+    upsert?: task_categoryUpsertWithWhereUniqueWithoutUsersInput | task_categoryUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: task_categoryCreateManyUsersInputEnvelope
+    set?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    disconnect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    delete?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    connect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    update?: task_categoryUpdateWithWhereUniqueWithoutUsersInput | task_categoryUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: task_categoryUpdateManyWithWhereWithoutUsersInput | task_categoryUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: task_categoryScalarWhereInput | task_categoryScalarWhereInput[]
+  }
+
+  export type task_categoryUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput> | task_categoryCreateWithoutUsersInput[] | task_categoryUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: task_categoryCreateOrConnectWithoutUsersInput | task_categoryCreateOrConnectWithoutUsersInput[]
+    upsert?: task_categoryUpsertWithWhereUniqueWithoutUsersInput | task_categoryUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: task_categoryCreateManyUsersInputEnvelope
+    set?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    disconnect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    delete?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    connect?: task_categoryWhereUniqueInput | task_categoryWhereUniqueInput[]
+    update?: task_categoryUpdateWithWhereUniqueWithoutUsersInput | task_categoryUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: task_categoryUpdateManyWithWhereWithoutUsersInput | task_categoryUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: task_categoryScalarWhereInput | task_categoryScalarWhereInput[]
   }
 
   export type repeating_taskCreateNestedOneWithoutTaskInput = {
@@ -6659,6 +6971,12 @@ export namespace Prisma {
     connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
   }
 
+  export type usersCreateNestedOneWithoutTask_categoryInput = {
+    create?: XOR<usersCreateWithoutTask_categoryInput, usersUncheckedCreateWithoutTask_categoryInput>
+    connectOrCreate?: usersCreateOrConnectWithoutTask_categoryInput
+    connect?: usersWhereUniqueInput
+  }
+
   export type taskUncheckedCreateNestedManyWithoutTask_categoryInput = {
     create?: XOR<taskCreateWithoutTask_categoryInput, taskUncheckedCreateWithoutTask_categoryInput> | taskCreateWithoutTask_categoryInput[] | taskUncheckedCreateWithoutTask_categoryInput[]
     connectOrCreate?: taskCreateOrConnectWithoutTask_categoryInput | taskCreateOrConnectWithoutTask_categoryInput[]
@@ -6678,6 +6996,14 @@ export namespace Prisma {
     update?: taskUpdateWithWhereUniqueWithoutTask_categoryInput | taskUpdateWithWhereUniqueWithoutTask_categoryInput[]
     updateMany?: taskUpdateManyWithWhereWithoutTask_categoryInput | taskUpdateManyWithWhereWithoutTask_categoryInput[]
     deleteMany?: taskScalarWhereInput | taskScalarWhereInput[]
+  }
+
+  export type usersUpdateOneRequiredWithoutTask_categoryNestedInput = {
+    create?: XOR<usersCreateWithoutTask_categoryInput, usersUncheckedCreateWithoutTask_categoryInput>
+    connectOrCreate?: usersCreateOrConnectWithoutTask_categoryInput
+    upsert?: usersUpsertWithoutTask_categoryInput
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutTask_categoryInput, usersUpdateWithoutTask_categoryInput>, usersUncheckedUpdateWithoutTask_categoryInput>
   }
 
   export type taskUncheckedUpdateManyWithoutTask_categoryNestedInput = {
@@ -6706,6 +7032,18 @@ export namespace Prisma {
     connectOrCreate?: taskCreateOrConnectWithoutRepeating_taskInput | taskCreateOrConnectWithoutRepeating_taskInput[]
     createMany?: taskCreateManyRepeating_taskInputEnvelope
     connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+  }
+
+  export type NullableEnumDateRepeatTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DateRepeatType | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type taskUpdateManyWithoutRepeating_taskNestedInput = {
@@ -7000,14 +7338,101 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumDateRepeatTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.DateRepeatType | EnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel> | $Enums.DateRepeatType | null
+  }
+
+  export type NestedEnumDateRepeatTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DateRepeatType | EnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DateRepeatType[] | ListEnumDateRepeatTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDateRepeatTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.DateRepeatType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type task_categoryCreateWithoutUsersInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    title?: string | null
+    task?: taskCreateNestedManyWithoutTask_categoryInput
+  }
+
+  export type task_categoryUncheckedCreateWithoutUsersInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    title?: string | null
+    task?: taskUncheckedCreateNestedManyWithoutTask_categoryInput
+  }
+
+  export type task_categoryCreateOrConnectWithoutUsersInput = {
+    where: task_categoryWhereUniqueInput
+    create: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput>
+  }
+
+  export type task_categoryCreateManyUsersInputEnvelope = {
+    data: task_categoryCreateManyUsersInput | task_categoryCreateManyUsersInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type task_categoryUpsertWithWhereUniqueWithoutUsersInput = {
+    where: task_categoryWhereUniqueInput
+    update: XOR<task_categoryUpdateWithoutUsersInput, task_categoryUncheckedUpdateWithoutUsersInput>
+    create: XOR<task_categoryCreateWithoutUsersInput, task_categoryUncheckedCreateWithoutUsersInput>
+  }
+
+  export type task_categoryUpdateWithWhereUniqueWithoutUsersInput = {
+    where: task_categoryWhereUniqueInput
+    data: XOR<task_categoryUpdateWithoutUsersInput, task_categoryUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type task_categoryUpdateManyWithWhereWithoutUsersInput = {
+    where: task_categoryScalarWhereInput
+    data: XOR<task_categoryUpdateManyMutationInput, task_categoryUncheckedUpdateManyWithoutUsersInput>
+  }
+
+  export type task_categoryScalarWhereInput = {
+    AND?: task_categoryScalarWhereInput | task_categoryScalarWhereInput[]
+    OR?: task_categoryScalarWhereInput[]
+    NOT?: task_categoryScalarWhereInput | task_categoryScalarWhereInput[]
+    id?: BigIntFilter<"task_category"> | bigint | number
+    created_at?: DateTimeFilter<"task_category"> | Date | string
+    title?: StringNullableFilter<"task_category"> | string | null
+    user_id?: UuidFilter<"task_category"> | string
+  }
+
   export type repeating_taskCreateWithoutTaskInput = {
     id?: bigint | number
     created_at?: Date | string
+    repeating_type?: $Enums.DateRepeatType | null
+    date_repeat?: number | null
   }
 
   export type repeating_taskUncheckedCreateWithoutTaskInput = {
     id?: bigint | number
     created_at?: Date | string
+    repeating_type?: $Enums.DateRepeatType | null
+    date_repeat?: number | null
   }
 
   export type repeating_taskCreateOrConnectWithoutTaskInput = {
@@ -7018,13 +7443,15 @@ export namespace Prisma {
   export type task_categoryCreateWithoutTaskInput = {
     id?: bigint | number
     created_at?: Date | string
-    name?: string | null
+    title?: string | null
+    users: usersCreateNestedOneWithoutTask_categoryInput
   }
 
   export type task_categoryUncheckedCreateWithoutTaskInput = {
     id?: bigint | number
     created_at?: Date | string
-    name?: string | null
+    title?: string | null
+    user_id: string
   }
 
   export type task_categoryCreateOrConnectWithoutTaskInput = {
@@ -7046,11 +7473,15 @@ export namespace Prisma {
   export type repeating_taskUpdateWithoutTaskInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type repeating_taskUncheckedUpdateWithoutTaskInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    date_repeat?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type task_categoryUpsertWithoutTaskInput = {
@@ -7067,13 +7498,15 @@ export namespace Prisma {
   export type task_categoryUpdateWithoutTaskInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    users?: usersUpdateOneRequiredWithoutTask_categoryNestedInput
   }
 
   export type task_categoryUncheckedUpdateWithoutTaskInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    user_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type taskCreateWithoutTask_categoryInput = {
@@ -7083,7 +7516,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     repeating_task?: repeating_taskCreateNestedOneWithoutTaskInput
@@ -7096,7 +7528,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     repeating_task_id?: bigint | number | null
@@ -7110,6 +7541,23 @@ export namespace Prisma {
   export type taskCreateManyTask_categoryInputEnvelope = {
     data: taskCreateManyTask_categoryInput | taskCreateManyTask_categoryInput[]
     skipDuplicates?: boolean
+  }
+
+  export type usersCreateWithoutTask_categoryInput = {
+    created_at?: Date | string
+    email: string
+    id: string
+  }
+
+  export type usersUncheckedCreateWithoutTask_categoryInput = {
+    created_at?: Date | string
+    email: string
+    id: string
+  }
+
+  export type usersCreateOrConnectWithoutTask_categoryInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutTask_categoryInput, usersUncheckedCreateWithoutTask_categoryInput>
   }
 
   export type taskUpsertWithWhereUniqueWithoutTask_categoryInput = {
@@ -7138,11 +7586,33 @@ export namespace Prisma {
     completed?: BoolFilter<"task"> | boolean
     completed_at?: DateTimeNullableFilter<"task"> | Date | string | null
     title?: StringNullableFilter<"task"> | string | null
-    user_id?: UuidFilter<"task"> | string
     priority_level?: IntFilter<"task"> | number
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
     repeating_task_id?: BigIntNullableFilter<"task"> | bigint | number | null
+  }
+
+  export type usersUpsertWithoutTask_categoryInput = {
+    update: XOR<usersUpdateWithoutTask_categoryInput, usersUncheckedUpdateWithoutTask_categoryInput>
+    create: XOR<usersCreateWithoutTask_categoryInput, usersUncheckedCreateWithoutTask_categoryInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutTask_categoryInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutTask_categoryInput, usersUncheckedUpdateWithoutTask_categoryInput>
+  }
+
+  export type usersUpdateWithoutTask_categoryInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type usersUncheckedUpdateWithoutTask_categoryInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
   }
 
   export type taskCreateWithoutRepeating_taskInput = {
@@ -7152,7 +7622,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     task_category?: task_categoryCreateNestedOneWithoutTaskInput
@@ -7165,7 +7634,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
@@ -7197,6 +7665,32 @@ export namespace Prisma {
     data: XOR<taskUpdateManyMutationInput, taskUncheckedUpdateManyWithoutRepeating_taskInput>
   }
 
+  export type task_categoryCreateManyUsersInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    title?: string | null
+  }
+
+  export type task_categoryUpdateWithoutUsersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    task?: taskUpdateManyWithoutTask_categoryNestedInput
+  }
+
+  export type task_categoryUncheckedUpdateWithoutUsersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    task?: taskUncheckedUpdateManyWithoutTask_categoryNestedInput
+  }
+
+  export type task_categoryUncheckedUpdateManyWithoutUsersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type taskCreateManyTask_categoryInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -7204,7 +7698,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     repeating_task_id?: bigint | number | null
@@ -7217,7 +7710,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_task?: repeating_taskUpdateOneWithoutTaskNestedInput
@@ -7230,7 +7722,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_task_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -7243,7 +7734,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_task_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -7256,7 +7746,6 @@ export namespace Prisma {
     completed?: boolean
     completed_at?: Date | string | null
     title?: string | null
-    user_id: string
     priority_level?: number
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
@@ -7269,7 +7758,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category?: task_categoryUpdateOneWithoutTaskNestedInput
@@ -7282,7 +7770,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -7295,7 +7782,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    user_id?: StringFieldUpdateOperationsInput | string
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
