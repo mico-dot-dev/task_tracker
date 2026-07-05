@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/src/lib/prisma-client";
-import { supabaseServer } from "@/src/lib/supabase/server";
 import {
   TaskListModel,
   TaskFormSchema,
@@ -31,7 +30,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
     const rawTaskData = await prisma.task_category.findMany({
       where: { user_id: user.data.user },
       select: {
-        task: true, // Pulls the related task object
+        task: true,
       },
     });
 

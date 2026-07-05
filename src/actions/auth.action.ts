@@ -1,5 +1,4 @@
 "use server";
-import { prisma } from "@/src/lib/prisma-client";
 import { supabaseServer } from "../lib/supabase/server";
 import { AuthModel, ActionResponse } from "@/src/types/auth";
 
