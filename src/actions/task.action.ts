@@ -41,6 +41,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       title: task.title!,
       description: task.description!,
       completed: task.completed!,
+      category_id: Number(task.task_category_id!),
     }));
 
     return {
@@ -93,6 +94,7 @@ export async function CreateTask(
         title: newTask.title!,
         description: newTask.description!,
         completed: newTask.completed!,
+        category_id: Number(newTask.task_category_id!),
       },
     };
   } catch (error) {
@@ -169,6 +171,7 @@ export async function GetTaskByID(
         title: task.title!,
         description: task.description!,
         completed: task.completed!,
+        category_id: Number(task.task_category_id!),
       },
     };
   } catch (error) {
@@ -200,6 +203,7 @@ export async function UpdateTask(
         title: updatedTask.title!,
         description: updatedTask.description!,
         completed: updatedTask.completed!,
+        category_id: Number(updatedTask.task_category_id!),
       },
     };
   } catch (error) {

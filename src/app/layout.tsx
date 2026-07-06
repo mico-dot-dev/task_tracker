@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Task Tracker",
-  description: "A simple task tracking application built with Next.js",
+  title: "Mico Personal Help System ",
+  description: "A self help system for personal growth and development.",
 };
 
 export default function RootLayout({

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   TaskFormModelBase,
@@ -12,10 +12,38 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
+import { GetUserCategory } from "@/src/actions/category.action";
+import { CategoryModel } from "@/src/types/category";
 
 function TaskForm() {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
+  const [userCategories, setUserCategories] = useState<CategoryModel[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function initializeData() {
+      setLoading(true);
+      try {
+        const categoryPromise = await GetUserCategory();
+        const taskPromise = taskId
+          ? await GetTaskByID(taskId)
+          : Promise.resolve(null);
+        const [categories, taskData] = await Promise.all([
+          categoryPromise,
+          taskPromise,
+        ]);
+        if (categories.success && categories.data) {
+          setUserCategories(categories.data || []);
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    initializeData();
+  }, []);
 
   const { register, handleSubmit, reset } = useForm<TaskFormModelBase>({
     resolver: zodResolver(TaskSchema),
@@ -23,34 +51,27 @@ function TaskForm() {
       title: "",
       completed: false,
       description: "",
+      category_id: 0,
     },
   });
 
-  useEffect(() => {
-    async function fetchTaskData(id: string) {
-      try {
-        if (!taskId) {
-          reset({
-            title: "",
-            description: "",
-            completed: false,
-          });
-          return;
-        }
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    );
+  }
 
-        const res = await GetTaskByID(id);
-        if (res.success && res.data) {
-          reset(res.data);
-          return;
-        }
-      } catch (error) {
-        console.error("Error occurred while fetching task data:", error);
-      }
-    }
-    if (taskId) {
-      fetchTaskData(taskId);
-    }
-  }, [taskId, reset]);
+  if (userCategories.length === 0) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p className="text-red-500">
+          You need to create a category before adding tasks.
+        </p>
+      </div>
+    );
+  }
 
   async function TaskSubmit(data: TaskFormModelBase) {
     try {

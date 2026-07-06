@@ -3,7 +3,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateTask } from "@/src/actions/category.action";
+import { CreateCategory } from "@/src/actions/category.action";
 import { CategorySchema, CategoryModel } from "@/src/types/category";
 import Swal from "sweetalert2";
 
@@ -16,7 +16,7 @@ function TaskCatForm() {
   });
 
   async function CategorySubmit(data: CategoryModel) {
-    const res = await CreateTask(data);
+    const res = await CreateCategory(data);
     if (res.success) {
       reset();
       Swal.fire({

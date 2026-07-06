@@ -10,7 +10,7 @@ export const TaskSchema = z.object({
     .max(255, "Description must be less than 255 characters")
     .optional(),
   completed: z.boolean().default(false),
-  category: z.number().int().optional(),
+  category_id: z.number().int(),
 });
 
 export const TaskListSchema = TaskSchema.extend({
