@@ -19,18 +19,17 @@ model users {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model task {
-  id                BigInt          @id(map: "tasks_pkey") @default(autoincrement())
-  created_at        DateTime        @default(now()) @db.Timestamptz(6)
-  description       String?         @default("")
-  completed         Boolean         @default(false)
-  completed_at      DateTime?       @db.Date
-  title             String?
-  priority_level    Int             @default(0) @db.SmallInt
-  due_date          DateTime?       @db.Date
-  task_category_id  BigInt?
-  repeating_task_id BigInt?
-  repeating_task    repeating_task? @relation(fields: [repeating_task_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  task_category     task_category?  @relation(fields: [task_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               BigInt          @id(map: "tasks_pkey") @default(autoincrement())
+  created_at       DateTime        @default(now()) @db.Timestamptz(6)
+  description      String?         @default("")
+  completed        Boolean         @default(false)
+  completed_at     DateTime?       @db.Date
+  title            String?
+  priority_level   Int             @default(0) @db.SmallInt
+  due_date         DateTime?       @db.Timestamptz(6)
+  task_category_id BigInt?
+  repeating_type   DateRepeatType?
+  task_category    task_category?  @relation(fields: [task_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -43,18 +42,10 @@ model task_category {
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model repeating_task {
-  id             BigInt          @id @default(autoincrement())
-  created_at     DateTime        @default(now()) @db.Timestamptz(6)
-  repeating_type DateRepeatType?
-  date_repeat    Int?            @db.SmallInt
-  task           task[]
-}
-
 enum DateRepeatType {
   YEARLY
   MONTHLY
   DAILY
   MANUAL
+  BIWEEKLY
 }

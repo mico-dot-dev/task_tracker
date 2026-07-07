@@ -10,7 +10,12 @@ type ModalProps = {
 };
 
 function TaskModal({ isOpen, setIsOpen, content }: ModalProps) {
-  const cont = content === "task" ? <TaskForm /> : <TaskCatForm />;
+  const cont =
+    content === "task" ? (
+      <TaskForm closeModal={setIsOpen} />
+    ) : (
+      <TaskCatForm closeModal={setIsOpen} />
+    );
   return (
     <div>
       <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>

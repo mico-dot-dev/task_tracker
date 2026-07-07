@@ -28,21 +28,36 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       };
     }
     const rawTaskData = await prisma.task_category.findMany({
-      where: { user_id: user.data.user },
+      where: { user_id: user.data.user, title: { not: null } },
       select: {
+        title: true,
         task: true,
+      },
+      orderBy: {
+        title: "asc",
       },
     });
 
-    const flattenedTasks: task[] = rawTaskData.flatMap((row) => row.task);
+    const flattenedTasks: TaskListModel[] = rawTaskData.flatMap(
+      (TaskListModel) =>
+        TaskListModel.task.map((task) => ({
+          id: task.id!.toString()!,
+          title: task.title!,
+          description: task.description!,
+          completed: task.completed!,
+          category: TaskListModel.title!,
+        })),
+    );
 
-    const parsedTasks: TaskListModel[] = flattenedTasks.map((task: task) => ({
-      id: task.id!.toString(),
-      title: task.title!,
-      description: task.description!,
-      completed: task.completed!,
-      category_id: Number(task.task_category_id!),
-    }));
+    const parsedTasks: TaskListModel[] = flattenedTasks.map(
+      (task: TaskListModel) => ({
+        id: task.id!.toString(),
+        title: task.title!,
+        description: task.description!,
+        completed: task.completed!,
+        category: task.category!,
+      }),
+    );
 
     return {
       success: true,
@@ -69,14 +84,8 @@ export async function CreateTask(
     const parsedTask = TaskFormSchema.safeParse(data);
 
     if (!parsedTask.success) {
-      return {
-        success: false,
-        error: "Validation failed.",
-        fieldErrors: parsedTask.error.flatten().fieldErrors as Record<
-          string,
-          string[]
-        >,
-      };
+      console.error("Invalid task data:", parsedTask.error);
+      throw new Error("Invalid task data: " + JSON.stringify(parsedTask.error));
     }
 
     const newTask = await prisma.task.create({
@@ -84,6 +93,7 @@ export async function CreateTask(
         title: parsedTask.data.title!,
         description: parsedTask.data.description!,
         completed: parsedTask.data.completed!,
+        task_category_id: parsedTask.data.category_id,
       },
     });
 
@@ -94,7 +104,6 @@ export async function CreateTask(
         title: newTask.title!,
         description: newTask.description!,
         completed: newTask.completed!,
-        category_id: Number(newTask.task_category_id!),
       },
     };
   } catch (error) {
@@ -154,7 +163,6 @@ export async function GetTaskByID(
   taskID: string,
 ): Promise<ActionResponse<TaskListModel>> {
   try {
-    console.log("Fetching task by ID:", taskID);
     const tasknum = parseInt(taskID, 10);
     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
 
@@ -171,7 +179,7 @@ export async function GetTaskByID(
         title: task.title!,
         description: task.description!,
         completed: task.completed!,
-        category_id: Number(task.task_category_id!),
+        category: "",
       },
     };
   } catch (error) {
@@ -203,7 +211,6 @@ export async function UpdateTask(
         title: updatedTask.title!,
         description: updatedTask.description!,
         completed: updatedTask.completed!,
-        category_id: Number(updatedTask.task_category_id!),
       },
     };
   } catch (error) {

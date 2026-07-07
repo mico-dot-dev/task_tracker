@@ -10,15 +10,16 @@ export const TaskSchema = z.object({
     .max(255, "Description must be less than 255 characters")
     .optional(),
   completed: z.boolean().default(false),
-  category_id: z.number().int(),
 });
 
 export const TaskListSchema = TaskSchema.extend({
   id: z.string(),
+  category: z.string(),
 });
 
 export const TaskFormSchema = TaskSchema.extend({
   user_id: z.string(),
+  category_id: z.number().int(),
 });
 
 export type TaskListModel = z.infer<typeof TaskListSchema>;

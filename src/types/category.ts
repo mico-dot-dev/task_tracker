@@ -7,4 +7,9 @@ export const CategorySchema = z.object({
     .max(100, { message: "Category name must be at most 100 characters long" }),
 });
 
-export type CategoryModel = z.input<typeof CategorySchema>;
+export const CategoryListSchema = CategorySchema.extend({
+  id: z.number().int(),
+});
+
+export type CategoryFormModel = z.input<typeof CategorySchema>;
+export type CategoryListModel = z.input<typeof CategoryListSchema>;

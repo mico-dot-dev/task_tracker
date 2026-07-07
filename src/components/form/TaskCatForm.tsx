@@ -4,10 +4,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateCategory } from "@/src/actions/category.action";
-import { CategorySchema, CategoryModel } from "@/src/types/category";
+import { CategorySchema, CategoryFormModel } from "@/src/types/category";
 import Swal from "sweetalert2";
 
-function TaskCatForm() {
+function TaskCatForm(closeModal: { closeModal: (open: boolean) => void }) {
   const { register, handleSubmit, reset } = useForm({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
@@ -15,10 +15,12 @@ function TaskCatForm() {
     },
   });
 
-  async function CategorySubmit(data: CategoryModel) {
+  async function CategorySubmit(data: CategoryFormModel) {
     const res = await CreateCategory(data);
+
     if (res.success) {
       reset();
+      closeModal.closeModal(false);
       Swal.fire({
         icon: "success",
         title: "Category Created",

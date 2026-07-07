@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import {
   TaskFormModelBase,
   TaskFormModelInput,
-  TaskSchema,
+  TaskFormSchema,
   TaskFormModelUpdate,
 } from "@/src/types/task";
 import { ActionResponse } from "@/src/types/auth";
@@ -13,13 +13,24 @@ import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
 import { GetUserCategory } from "@/src/actions/category.action";
-import { CategoryModel } from "@/src/types/category";
+import { CategoryListModel } from "@/src/types/category";
 
-function TaskForm() {
+function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
-  const [userCategories, setUserCategories] = useState<CategoryModel[]>([]);
+  const [userCategories, setUserCategories] = useState<CategoryListModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { register, handleSubmit, reset } = useForm<TaskFormModelInput>({
+    resolver: zodResolver(TaskFormSchema),
+    defaultValues: {
+      user_id: "",
+      title: "",
+      completed: false,
+      description: "",
+      category_id: 0,
+    },
+  });
 
   useEffect(() => {
     async function initializeData() {
@@ -35,6 +46,9 @@ function TaskForm() {
         ]);
         if (categories.success && categories.data) {
           setUserCategories(categories.data || []);
+          reset({
+            category_id: categories.data.length > 0 ? categories.data[0].id : 0,
+          });
         }
       } catch (error) {
       } finally {
@@ -44,16 +58,6 @@ function TaskForm() {
 
     initializeData();
   }, []);
-
-  const { register, handleSubmit, reset } = useForm<TaskFormModelBase>({
-    resolver: zodResolver(TaskSchema),
-    defaultValues: {
-      title: "",
-      completed: false,
-      description: "",
-      category_id: 0,
-    },
-  });
 
   if (loading) {
     return (
@@ -66,36 +70,29 @@ function TaskForm() {
   if (userCategories.length === 0) {
     return (
       <div className="flex flex-col gap-3">
-        <p className="text-red-500">
+        <p className="text-muted-text">
           You need to create a category before adding tasks.
         </p>
       </div>
     );
   }
 
-  async function TaskSubmit(data: TaskFormModelBase) {
+  async function TaskSubmit(data: TaskFormModelInput) {
     try {
       let res: ActionResponse<TaskFormModelBase>;
-      if (taskId) {
-        const updateData: TaskFormModelUpdate = {
-          ...data,
-          id: taskId,
-        };
-        res = await UpdateTask(updateData);
-      } else {
-        const createData: TaskFormModelInput = {
-          ...data,
-          user_id: "",
-        };
-        res = await CreateTask(createData);
-      }
+
+      const createData: TaskFormModelInput = {
+        ...data,
+        user_id: "",
+      };
+      res = await CreateTask(createData);
 
       if (!res.success) {
         throw new Error(
           res.error || "An error occurred while saving the task.",
         );
       }
-
+      closeModal.closeModal(false);
       Swal.fire({
         icon: "success",
         title: "Task Added Successfully",
@@ -132,9 +129,21 @@ function TaskForm() {
         />
 
         <label htmlFor="task-category">Category</label>
+        <select
+          {...(register("category_id"), { valueasnumber: "true" })}
+          id="task-category"
+          className="input-base p-2"
+          required
+        >
+          {userCategories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.title}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <button className="button-base rounded-4xl py-2 text-lg flex items-center justify-center font-semibold">
+      <button className="button-base rounded-4xl py-1.5 text-lg flex items-center justify-center font-semibold">
         {taskId ? "Update Task" : "Add Task"}
       </button>
     </form>

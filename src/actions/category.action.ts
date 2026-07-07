@@ -2,11 +2,11 @@
 
 import { GetAuthUser } from "@/src/actions/auth.action";
 import { ActionResponse } from "@/src/types/auth";
-import { CategoryModel } from "@/src/types/category";
+import { CategoryFormModel, CategoryListModel } from "@/src/types/category";
 import { prisma } from "@/src/lib/prisma-client";
 
 export async function GetUserCategory(): Promise<
-  ActionResponse<CategoryModel[]>
+  ActionResponse<CategoryListModel[]>
 > {
   try {
     const user = await GetAuthUser();
@@ -18,6 +18,9 @@ export async function GetUserCategory(): Promise<
       where: {
         user_id: user.data.user,
       },
+      orderBy: {
+        title: "asc",
+      },
     });
 
     if (categories[0] === undefined) {
@@ -27,9 +30,12 @@ export async function GetUserCategory(): Promise<
       };
     }
 
-    const parsedCategories: CategoryModel[] = categories.map((category) => ({
-      title: category.title || "",
-    }));
+    const parsedCategories: CategoryListModel[] = categories.map(
+      (category) => ({
+        id: Number(category.id),
+        title: category.title || "",
+      }),
+    );
 
     return {
       success: true,
@@ -42,8 +48,8 @@ export async function GetUserCategory(): Promise<
 }
 
 export async function CreateCategory(
-  data: CategoryModel,
-): Promise<ActionResponse<CategoryModel>> {
+  data: CategoryFormModel,
+): Promise<ActionResponse<CategoryFormModel>> {
   try {
     const user = await GetAuthUser();
     if (!user.success) {
