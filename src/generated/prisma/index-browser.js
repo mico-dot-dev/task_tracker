@@ -146,6 +146,47 @@ exports.Prisma.Task_categoryScalarFieldEnum = {
   user_id: 'user_id'
 };
 
+exports.Prisma.Bill_expenseScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  expense_id: 'expense_id',
+  repeating_type: 'repeating_type',
+  running_bill: 'running_bill'
+};
+
+exports.Prisma.ExpenseScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  name: 'name',
+  description: 'description',
+  expense_type: 'expense_type',
+  user_id: 'user_id'
+};
+
+exports.Prisma.StockScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  curr_amount: 'curr_amount',
+  min_amount: 'min_amount',
+  expense_id: 'expense_id'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  expense_id: 'expense_id',
+  amount: 'amount',
+  price: 'price',
+  status: 'status'
+};
+
+exports.Prisma.Transportation_expenseScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  expense_id: 'expense_id',
+  cost_list: 'cost_list'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -168,10 +209,21 @@ exports.DateRepeatType = exports.$Enums.DateRepeatType = {
   BIWEEKLY: 'BIWEEKLY'
 };
 
+exports.TransactionStatus = exports.$Enums.TransactionStatus = {
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED',
+  PENDING: 'PENDING'
+};
+
 exports.Prisma.ModelName = {
   users: 'users',
   task: 'task',
-  task_category: 'task_category'
+  task_category: 'task_category',
+  bill_expense: 'bill_expense',
+  expense: 'expense',
+  stock: 'stock',
+  transaction: 'transaction',
+  transportation_expense: 'transportation_expense'
 };
 
 /**
