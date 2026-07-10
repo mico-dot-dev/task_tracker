@@ -122,7 +122,6 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
         <label htmlFor="task-description">Task Description</label>
         <textarea
           {...register("description")}
-          required
           id="task-description"
           placeholder="Task Description"
           className="input-base resize-none p-2 h-24"

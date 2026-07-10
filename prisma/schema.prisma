@@ -48,6 +48,70 @@ model task_category {
   @@schema("public")
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model bill_expense {
+  id             BigInt          @id @default(autoincrement())
+  created_at     DateTime        @default(now()) @db.Timestamptz(6)
+  expense_id     BigInt
+  repeating_type DateRepeatType?
+  running_bill   Int?            @db.SmallInt
+  expense        expense         @relation(fields: [expense_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model expense {
+  id                     BigInt                   @id @default(autoincrement())
+  created_at             DateTime                 @default(now()) @db.Timestamptz(6)
+  name                   String?
+  description            String?
+  expense_type           String?
+  user_id                String?                  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bill_expense           bill_expense[]
+  stock                  stock[]
+  transaction            transaction[]
+  transportation_expense transportation_expense[]
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model stock {
+  id          BigInt   @id @default(autoincrement())
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  curr_amount Int?     @db.SmallInt
+  min_amount  Int      @db.SmallInt
+  expense_id  BigInt?
+  expense     expense? @relation(fields: [expense_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model transaction {
+  id         BigInt             @id @default(autoincrement())
+  created_at DateTime           @default(now()) @db.Timestamptz(6)
+  expense_id BigInt?
+  amount     Int?
+  price      Float?
+  status     TransactionStatus?
+  expense    expense?           @relation(fields: [expense_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model transportation_expense {
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  expense_id BigInt?
+  cost_list  Int[]    @db.SmallInt
+  expense    expense? @relation(fields: [expense_id], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -210,70 +274,6 @@ model task_category {
 // model webauthn_credentials {
 // @@schema("auth")
 // }
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model bill_expense {
-  id             BigInt          @id @default(autoincrement())
-  created_at     DateTime        @default(now()) @db.Timestamptz(6)
-  expense_id     BigInt
-  repeating_type DateRepeatType?
-  running_bill   Int?            @db.SmallInt
-  expense        expense         @relation(fields: [expense_id], references: [id], onDelete: Cascade)
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model expense {
-  id                     BigInt                   @id @default(autoincrement())
-  created_at             DateTime                 @default(now()) @db.Timestamptz(6)
-  name                   String?
-  description            String?
-  expense_type           String?
-  user_id                String?                  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  bill_expense           bill_expense[]
-  stock                  stock[]
-  transaction            transaction[]
-  transportation_expense transportation_expense[]
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model stock {
-  id          BigInt   @id @default(autoincrement())
-  created_at  DateTime @default(now()) @db.Timestamptz(6)
-  curr_amount Int?     @db.SmallInt
-  min_amount  Int      @db.SmallInt
-  expense_id  BigInt?
-  expense     expense? @relation(fields: [expense_id], references: [id], onDelete: Cascade)
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model transaction {
-  id         BigInt             @id @default(autoincrement())
-  created_at DateTime           @default(now()) @db.Timestamptz(6)
-  expense_id BigInt?
-  amount     Int?
-  price      Float?
-  status     TransactionStatus?
-  expense    expense?           @relation(fields: [expense_id], references: [id], onDelete: Cascade)
-
-  @@schema("public")
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model transportation_expense {
-  id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  expense_id BigInt?
-  cost_list  Int[]    @db.SmallInt
-  expense    expense? @relation(fields: [expense_id], references: [id], onDelete: Cascade)
-
-  @@schema("public")
-}
 
 enum DateRepeatType {
   YEARLY

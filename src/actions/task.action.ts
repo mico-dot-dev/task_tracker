@@ -10,7 +10,6 @@ import {
 } from "@/src/types/task";
 import { ActionResponse } from "@/src/types/auth";
 import { GetAuthUser } from "@/src/actions/auth.action";
-import { task } from "@/src/generated/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
@@ -28,7 +27,7 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       };
     }
     const rawTaskData = await prisma.task_category.findMany({
-      where: { user_id: user.data.user, title: { not: null } },
+      where: { user_id: user.data.user },
       select: {
         title: true,
         task: true,
