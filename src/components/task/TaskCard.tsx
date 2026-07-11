@@ -46,7 +46,7 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
         <div className="self-start flex flex-col ml-3 flex-1">
           <p className="text-base flex w-full">{Task.title}</p>
           <p className="text-sm text-muted-text">{Task.description}</p>
-          <div className="flex flex-row text-sm justify-between mt-3">
+          <div className="flex lg:flex-row text-sm justify-between mt-3 md:flex-col">
             <p className="">Due: June 15, 2026</p>
             <p className="">{Task.category}</p>
           </div>

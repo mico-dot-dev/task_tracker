@@ -15,7 +15,11 @@ import { useSearchParams } from "next/navigation";
 import { GetUserCategory } from "@/src/actions/category.action";
 import { CategoryListModel } from "@/src/types/category";
 
-function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
+interface TaskFormProps {
+  closeModal: (open: boolean) => void;
+}
+
+function TaskForm({ closeModal }: TaskFormProps) {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
   const [userCategories, setUserCategories] = useState<CategoryListModel[]>([]);
@@ -24,7 +28,6 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
   const { register, handleSubmit, reset } = useForm<TaskFormModelInput>({
     resolver: zodResolver(TaskFormSchema),
     defaultValues: {
-      user_id: "",
       title: "",
       completed: false,
       description: "",
@@ -36,14 +39,15 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
     async function initializeData() {
       setLoading(true);
       try {
-        const categoryPromise = await GetUserCategory();
+        const categoryPromise = GetUserCategory();
         const taskPromise = taskId
-          ? await GetTaskByID(taskId)
+          ? GetTaskByID(taskId)
           : Promise.resolve(null);
         const [categories, taskData] = await Promise.all([
           categoryPromise,
           taskPromise,
         ]);
+
         if (categories.success && categories.data) {
           setUserCategories(categories.data || []);
           reset({
@@ -83,7 +87,6 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
 
       const createData: TaskFormModelInput = {
         ...data,
-        user_id: "",
       };
       res = await CreateTask(createData);
 
@@ -92,7 +95,7 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
           res.error || "An error occurred while saving the task.",
         );
       }
-      closeModal.closeModal(false);
+      closeModal(false);
       Swal.fire({
         icon: "success",
         title: "Task Added Successfully",
@@ -129,7 +132,7 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
 
         <label htmlFor="task-category">Category</label>
         <select
-          {...(register("category_id"), { valueasnumber: "true" })}
+          {...register("category_id", { valueAsNumber: true })}
           id="task-category"
           className="input-base p-2"
           required
@@ -142,7 +145,10 @@ function TaskForm(closeModal: { closeModal: (open: boolean) => void }) {
         </select>
       </div>
 
-      <button className="button-base rounded-4xl py-1.5 text-lg flex items-center justify-center font-semibold">
+      <button
+        type="submit"
+        className="button-base rounded-4xl py-1.5 text-lg flex items-center justify-center font-semibold"
+      >
         {taskId ? "Update Task" : "Add Task"}
       </button>
     </form>

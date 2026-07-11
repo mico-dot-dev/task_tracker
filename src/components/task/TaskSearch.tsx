@@ -12,6 +12,8 @@ function TaskSearch() {
       <input
         type="text"
         placeholder="Search a task..."
+        id="task-search"
+        name="task-search"
         className=" w-full 
               py-2 pl-10 pr-4 text-sm 
               input-base"

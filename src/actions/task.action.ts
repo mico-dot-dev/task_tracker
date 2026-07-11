@@ -11,6 +11,7 @@ import {
 import { ActionResponse } from "@/src/types/auth";
 import { GetAuthUser } from "@/src/actions/auth.action";
 import { revalidatePath } from "next/cache";
+import { DateRepeatType } from "@/src/generated/prisma";
 
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
@@ -37,15 +38,31 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       },
     });
 
+    if (!rawTaskData) {
+      return {
+        success: false,
+        error: "No tasks found for the user",
+      };
+    }
+
     const flattenedTasks: TaskListModel[] = rawTaskData.flatMap(
       (TaskListModel) =>
-        TaskListModel.task.map((task) => ({
-          id: task.id!.toString()!,
-          title: task.title!,
-          description: task.description!,
-          completed: task.completed!,
-          category: TaskListModel.title!,
-        })),
+        TaskListModel.task.map((task) => {
+          const isValidEnum = Object.values(DateRepeatType).includes(
+            task.repeating_type as DateRepeatType,
+          );
+          return {
+            id: task.id!.toString()!,
+            title: task.title!,
+            description: task.description!,
+            completed: task.completed!,
+            category: TaskListModel.title!,
+            priority_level: 0,
+            repeating_type: isValidEnum
+              ? (task.repeating_type as DateRepeatType)
+              : DateRepeatType.MANUAL, // Default to Manual if not valid
+          };
+        }),
     );
 
     const parsedTasks: TaskListModel[] = flattenedTasks.map(
@@ -55,6 +72,8 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
         description: task.description!,
         completed: task.completed!,
         category: task.category!,
+        priority_level: task.priority_level!,
+        repeating_type: task.repeating_type,
       }),
     );
 
@@ -93,6 +112,8 @@ export async function CreateTask(
         description: parsedTask.data.description!,
         completed: parsedTask.data.completed!,
         task_category_id: parsedTask.data.category_id,
+        priority_level: 0,
+        repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
       },
     });
 
@@ -103,6 +124,8 @@ export async function CreateTask(
         title: newTask.title!,
         description: newTask.description!,
         completed: newTask.completed!,
+        priority_level: newTask.priority_level!,
+        repeating_type: newTask.repeating_type!,
       },
     };
   } catch (error) {
@@ -179,6 +202,8 @@ export async function GetTaskByID(
         description: task.description!,
         completed: task.completed!,
         category: "",
+        priority_level: 0,
+        repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
       },
     };
   } catch (error) {
@@ -210,6 +235,8 @@ export async function UpdateTask(
         title: updatedTask.title!,
         description: updatedTask.description!,
         completed: updatedTask.completed!,
+        priority_level: 0,
+        repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
       },
     };
   } catch (error) {

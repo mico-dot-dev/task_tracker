@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DateRepeatType } from "@/src/generated/prisma";
 
 export const TaskSchema = z.object({
   title: z
@@ -10,6 +11,11 @@ export const TaskSchema = z.object({
     .max(255, "Description must be less than 255 characters")
     .optional(),
   completed: z.boolean().default(false),
+  priority_level: z.number().int().min(1).max(5),
+  due_date: z.string().optional(),
+  repeating_type: DateRepeatType
+    ? z.nativeEnum(DateRepeatType)
+    : z.string().optional(),
 });
 
 export const TaskListSchema = TaskSchema.extend({
@@ -18,7 +24,6 @@ export const TaskListSchema = TaskSchema.extend({
 });
 
 export const TaskFormSchema = TaskSchema.extend({
-  user_id: z.string(),
   category_id: z.number().int(),
 });
 

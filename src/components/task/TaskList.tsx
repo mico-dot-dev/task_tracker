@@ -4,7 +4,6 @@ import TaskCard from "@/src/components/task/TaskCard";
 
 async function TaskList() {
   const tasks = await GetUserTasks();
-  console.dir(tasks);
 
   if (!tasks.success) {
     return <p>Task Data Not Found</p>;
