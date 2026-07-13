@@ -11,11 +11,9 @@ export const TaskSchema = z.object({
     .max(255, "Description must be less than 255 characters")
     .optional(),
   completed: z.boolean().default(false),
-  priority_level: z.number().int().min(1).max(5),
-  due_date: z.string().optional(),
-  repeating_type: DateRepeatType
-    ? z.nativeEnum(DateRepeatType)
-    : z.string().optional(),
+  priority_level: z.number().int().min(0).max(5).default(0),
+  due_date: z.date().optional(),
+  repeating_type: z.nativeEnum(DateRepeatType),
 });
 
 export const TaskListSchema = TaskSchema.extend({

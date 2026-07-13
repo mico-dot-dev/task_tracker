@@ -106,14 +106,17 @@ export async function CreateTask(
       throw new Error("Invalid task data: " + JSON.stringify(parsedTask.error));
     }
 
+    const task: TaskFormModelInput = parsedTask.data;
+
     const newTask = await prisma.task.create({
       data: {
-        title: parsedTask.data.title!,
-        description: parsedTask.data.description!,
-        completed: parsedTask.data.completed!,
-        task_category_id: parsedTask.data.category_id,
-        priority_level: 0,
-        repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
+        title: task.title!,
+        description: task.description!,
+        completed: task.completed!,
+        task_category_id: task.category_id,
+        priority_level: task.priority_level,
+        repeating_type: task.repeating_type!,
+        due_date: task.due_date,
       },
     });
 
