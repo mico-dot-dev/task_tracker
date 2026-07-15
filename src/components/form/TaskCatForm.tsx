@@ -7,7 +7,11 @@ import { CreateCategory } from "@/src/actions/category.action";
 import { CategorySchema, CategoryFormModel } from "@/src/types/category";
 import Swal from "sweetalert2";
 
-function TaskCatForm(closeModal: { closeModal: (open: boolean) => void }) {
+interface AddFormProps {
+  closeModal: () => void;
+}
+
+function TaskCatForm({ closeModal }: AddFormProps) {
   const { register, handleSubmit, reset } = useForm({
     resolver: zodResolver(CategorySchema),
     defaultValues: {
@@ -20,7 +24,7 @@ function TaskCatForm(closeModal: { closeModal: (open: boolean) => void }) {
 
     if (res.success) {
       reset();
-      closeModal.closeModal(false);
+      closeModal();
       Swal.fire({
         icon: "success",
         title: "Category Created",

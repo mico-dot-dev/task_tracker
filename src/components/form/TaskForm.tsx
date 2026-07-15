@@ -17,7 +17,7 @@ import { CategoryListModel } from "@/src/types/category";
 import { DateRepeatType } from "@/src/generated/prisma";
 
 interface TaskFormProps {
-  closeModal: (open: boolean) => void;
+  closeModal: () => void;
 }
 
 function TaskForm({ closeModal }: TaskFormProps) {
@@ -118,7 +118,7 @@ function TaskForm({ closeModal }: TaskFormProps) {
           res.error || "An error occurred while saving the task.",
         );
       }
-      closeModal(false);
+      closeModal();
       Swal.fire({
         icon: "success",
         title: "Task Added Successfully",

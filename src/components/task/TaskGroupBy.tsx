@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
-import TaskFormModal from "../modal/TaskFormModal";
+import AddCategoryModal from "../AddFormModal/AddFormModal";
 import { CategoryListModel } from "@/src/types/category";
 import { GetUserCategory } from "@/src/actions/category.action";
 
@@ -50,10 +50,10 @@ function TaskGroupBy() {
           </button>
         </div>
       </div>
-      <TaskFormModal
+      <AddCategoryModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
-        content="category"
+        content="task_category"
       />
     </>
   );

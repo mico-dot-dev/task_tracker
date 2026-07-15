@@ -3,7 +3,7 @@ import React, { Suspense, use } from "react";
 import TaskList from "@/src/components/task/TaskList";
 import TaskSearch from "@/src/components/task/TaskSearch";
 import TaskGroupBy from "@/src/components/task/TaskGroupBy";
-import TaskAdd from "@/src/components/task/TaskAdd";
+import TaskAdd from "@/src/components/AddButton/AddButton";
 
 async function page() {
   return (
@@ -25,7 +25,7 @@ async function page() {
           </Suspense>
         </div>
       </div>
-      <TaskAdd />
+      <TaskAdd content="task" />
     </div>
   );
 }

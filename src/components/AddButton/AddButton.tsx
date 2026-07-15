@@ -1,9 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
-import TaskFormModal from "../modal/TaskFormModal";
+import AddFormModal from "../AddFormModal/AddFormModal";
+import { ContentType } from "../AddFormModal/config";
 
-function TaskAdd() {
+interface AddButtonProps {
+  content: ContentType;
+}
+
+function AddButton({ content }: AddButtonProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -19,17 +24,17 @@ function TaskAdd() {
           onClick={() => setModalOpen(true)}
         >
           <Plus className="" size={20} />
-          <p className="hidden lg:block">Add Task</p>
+          <p className="hidden lg:block capitalize">Add {content}</p>
         </button>
       </div>
 
-      <TaskFormModal
+      <AddFormModal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
-        content="task"
+        content={content}
       />
     </div>
   );
 }
 
-export default TaskAdd;
+export default AddButton;
