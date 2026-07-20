@@ -16,11 +16,11 @@ import { GetUserCategory } from "@/src/actions/category.action";
 import { CategoryListModel } from "@/src/types/category";
 import { DateRepeatType } from "@/src/generated/prisma";
 
-interface TaskFormProps {
+interface AddFormProps {
   closeModal: () => void;
 }
 
-function TaskForm({ closeModal }: TaskFormProps) {
+function TaskForm({ closeModal }: AddFormProps) {
   const searchParams = useSearchParams();
   const taskId = searchParams.get("id");
   const [userCategories, setUserCategories] = useState<CategoryListModel[]>([]);

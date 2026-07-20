@@ -209,6 +209,14 @@ exports.DateRepeatType = exports.$Enums.DateRepeatType = {
   BIWEEKLY: 'BIWEEKLY'
 };
 
+exports.ExpenseType = exports.$Enums.ExpenseType = {
+  HOUSE: 'HOUSE',
+  PERSONAL: 'PERSONAL',
+  TRANSPORTATION: 'TRANSPORTATION',
+  GROCERY: 'GROCERY',
+  MISC: 'MISC'
+};
+
 exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   PAID: 'PAID',
   CANCELLED: 'CANCELLED',

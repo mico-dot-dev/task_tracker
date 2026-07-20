@@ -66,7 +66,7 @@ model expense {
   created_at             DateTime                 @default(now()) @db.Timestamptz(6)
   name                   String?
   description            String?
-  expense_type           String?
+  expense_type           ExpenseType?
   user_id                String?                  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   bill_expense           bill_expense[]
   stock                  stock[]
@@ -359,6 +359,16 @@ enum TransactionStatus {
   PAID
   CANCELLED
   PENDING
+
+  @@schema("public")
+}
+
+enum ExpenseType {
+  HOUSE
+  PERSONAL
+  TRANSPORTATION
+  GROCERY
+  MISC
 
   @@schema("public")
 }
