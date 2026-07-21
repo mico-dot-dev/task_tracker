@@ -8,12 +8,18 @@ const ExpenseSchema = z.object({
 });
 
 const ManualExpenseSchema = ExpenseSchema.extend({
-  content: z.literal("manual"),
+  content: z.literal("misc"),
 });
 
 const TranspoExpenseSchema = ExpenseSchema.extend({
   content: z.literal("transpo"),
-  cost_list: z.array(z.coerce.number().int("Value must be an integer")),
+  cost_list: z
+    .array(
+      z.object({
+        amount: z.coerce.number().int("Value must be an integer"),
+      }),
+    )
+    .min(1, "Add at least one cost"),
 });
 
 export const DynamicFormSchema = z.discriminatedUnion("content", [
@@ -21,4 +27,6 @@ export const DynamicFormSchema = z.discriminatedUnion("content", [
   TranspoExpenseSchema,
 ]);
 
-export type DynamicFormModel = z.input<typeof DynamicFormSchema>;
+export type TranspoExpenseModel = z.infer<typeof TranspoExpenseSchema>;
+export type DynamicFormInputModel = z.input<typeof DynamicFormSchema>;
+export type DynamicFormOutputtModel = z.infer<typeof DynamicFormSchema>;

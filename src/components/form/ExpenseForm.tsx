@@ -1,10 +1,20 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { FormEvent, useEffect } from "react";
 import { ExpenseType } from "@/src/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { DynamicFormSchema, DynamicFormModel } from "@/src/types/expense";
+import {
+  useForm,
+  Control,
+  UseFormRegister,
+  FieldErrors,
+} from "react-hook-form";
+import {
+  DynamicFormSchema,
+  DynamicFormInputModel,
+  TranspoExpenseModel,
+} from "@/src/types/expense";
 import TransportationSubForm from "@/src/components/form/TransportationSubForm";
+import { CreateExpense } from "@/src/actions/expense.action";
 
 interface AddFormProps {
   closeModal: () => void;
@@ -15,24 +25,40 @@ function ExpenseForm({ closeModal }: AddFormProps) {
     register,
     handleSubmit,
     watch,
+    setValue,
     control,
     formState: { errors },
-  } = useForm<DynamicFormModel>({
+  } = useForm<DynamicFormInputModel>({
     resolver: zodResolver(DynamicFormSchema),
     defaultValues: {
+      title: "",
+      description: "",
       expense_type: ExpenseType.MISC,
+      content: "misc",
     },
   });
 
   const curr_type = watch("expense_type");
+  useEffect(() => {
+    switch (curr_type) {
+      case ExpenseType.TRANSPORTATION: {
+        setValue("content" as any, "transpo");
+        break;
+      }
+      default: {
+        setValue("content" as any, "manual");
+      }
+    }
+  }, [curr_type, setValue]);
+
   function renderSpecializedFields() {
     switch (curr_type) {
       case ExpenseType.TRANSPORTATION:
         return (
           <TransportationSubForm
-            control={control}
-            register={register}
-            errors={errors}
+            control={control as Control<TranspoExpenseModel>}
+            register={register as UseFormRegister<TranspoExpenseModel>}
+            errors={errors as FieldErrors<TranspoExpenseModel>}
           />
         );
       case ExpenseType.GROCERY:
@@ -48,24 +74,36 @@ function ExpenseForm({ closeModal }: AddFormProps) {
     }
   }
 
+  async function ExpeneseSubmit(data: DynamicFormInputModel) {
+    try {
+      const res = await CreateExpense(data);
+      if (res.success) console.log("Success");
+    } catch (e) {}
+  }
+
   return (
-    <form className="flex flex-col gap-3 text-base h-full overflow-y-scroll">
+    <form
+      className="flex flex-col gap-3 text-base h-full overflow-y-scroll"
+      onSubmit={handleSubmit(ExpeneseSubmit, (invalidErrors) => {
+        console.log("❌ Form Validation Failed:", invalidErrors);
+      })}
+    >
       <div className="flex flex-col">
-        <label htmlFor="expense-name">Expense Name</label>
+        <label htmlFor="title">Expense Name</label>
         <input
-          id="expense-name"
-          name="expense-name"
+          id="title"
           type="text"
           className="input-base p-2"
+          {...register("title")}
         />
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="expense-desc">Expense Description</label>
+        <label htmlFor="description">Expense Description</label>
         <textarea
-          id="expense-desc"
-          name="expense-desc"
+          id="description"
           className="input-base p-2 h-24 resize-none"
+          {...register("description")}
         />
       </div>
 
