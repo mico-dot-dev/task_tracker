@@ -12,6 +12,7 @@ import {
   DynamicFormSchema,
   DynamicFormInputModel,
   TranspoExpenseModel,
+  DynamicFormOutputtModel,
 } from "@/src/types/expense";
 import TransportationSubForm from "@/src/components/form/TransportationSubForm";
 import { CreateExpense } from "@/src/actions/expense.action";

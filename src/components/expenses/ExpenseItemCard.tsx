@@ -2,7 +2,7 @@ import React from "react";
 
 function ExpenseItemCard() {
   return (
-    <div className="mb-3">
+    <div className="">
       <p>Electricity</p>
       <p>Home Expenses - Running Bill</p>
     </div>

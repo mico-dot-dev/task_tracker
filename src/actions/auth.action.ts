@@ -34,13 +34,7 @@ export async function LoginUser(data: AuthModel) {
       password: data.password,
     });
 
-    // const user = await prisma.users.findUnique({
-    //   where: {
-    //     email: data.email,
-    //   },
-    // });
-
-    if (!user)
+    if (!user.user)
       return {
         ok: false,
         message: "Invalid email or password.",
