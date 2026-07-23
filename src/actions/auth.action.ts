@@ -7,7 +7,7 @@ export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
 
-    if (error || !data.user) {
+    if (error || !data.user || !data.user.id) {
       return {
         success: false,
         error: "User not authenticated",

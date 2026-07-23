@@ -8,6 +8,7 @@ import {
 } from "@/src/types/expense";
 import { ActionResponse } from "../types/auth";
 import { GetAuthUser } from "./auth.action";
+import { preloadStyle } from "next/dist/server/app-render/entry-base";
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
@@ -55,5 +56,50 @@ export async function CreateExpense(
       success: false,
       error: e as string,
     };
+  }
+}
+
+export async function GetUserExpenses(): Promise<
+  ActionResponse<DynamicFormOutputtModel[]>
+> {
+  try {
+    const user = await GetAuthUser();
+
+    if (!user.success) {
+      throw new Error("User not authenticated");
+    }
+
+    const userExpense = await prisma.expense.findMany({
+      where: {
+        user_id: user.data.user,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    const groupedExpense = Object.groupBy(
+      userExpense,
+      (item) => item.expense_type ?? "MISC",
+    );
+
+    const parsedExpense: DynamicFormOutputtModel[] = Object.entries(
+      groupedExpense,
+    ).flatMap(([category, expenses]) =>
+      (expenses ?? []).map((item) => ({
+        title: item.name!,
+        description: item.description!,
+        expense_type: item.expense_type!,
+        content: "misc",
+      })),
+    );
+
+    return {
+      success: true,
+      data: parsedExpense,
+    };
+  } catch (e) {
+    console.log("Error fetching user expense:", e);
+    throw new Error("Failed to fetch user tasks");
   }
 }

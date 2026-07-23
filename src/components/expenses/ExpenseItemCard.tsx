@@ -1,10 +1,11 @@
 import React from "react";
 
-function ExpenseItemCard() {
+function ExpenseItemCard(e: any) {
+  console.log(e);
   return (
     <div className="">
-      <p>Electricity</p>
-      <p>Home Expenses - Running Bill</p>
+      <p>{e.title}</p>
+      <p>{}</p>
     </div>
   );
 }

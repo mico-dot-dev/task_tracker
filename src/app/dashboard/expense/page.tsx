@@ -1,11 +1,11 @@
 import React from "react";
 import ExpenseAdd from "@/src/components/AddButton/AddButton";
-import ExpenseItemCard from "@/src/components/expenses/ExpenseItemCard";
+import ExpenseList from "@/src/components/expenses/ExpenseList";
 
 function page() {
   return (
     <div>
-      <ExpenseItemCard />
+      <ExpenseList />
       <ExpenseAdd content="expense" />
     </div>
   );
