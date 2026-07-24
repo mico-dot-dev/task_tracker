@@ -3,10 +3,10 @@ import React from "react";
 function ExpenseItemCard(e: any) {
   console.log(e);
   return (
-    <div className="">
+    <li className="">
       <p>{e.title}</p>
       <p>{}</p>
-    </div>
+    </li>
   );
 }
 

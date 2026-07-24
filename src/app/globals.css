@@ -69,6 +69,10 @@
   .nav-item-base {
     @apply cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-muted-text border border-transparent hover:text-header-text hover:bg-white/3;
   }
+
+  .card-list-base {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5;
+  }
 }
 
 @layer utilities {

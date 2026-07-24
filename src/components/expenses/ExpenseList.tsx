@@ -8,11 +8,11 @@ async function ExpenseList() {
     return <p>Expense Data Not Found</p>;
   }
   return (
-    <div>
+    <ul className="card-list-base">
       {expenses.data.map((expense, index) => (
         <ExpenseItemCard e={expense} key={index} />
       ))}
-    </div>
+    </ul>
   );
 }
 

@@ -7,11 +7,13 @@ const ExpenseSchema = z.object({
   expense_type: z.nativeEnum(ExpenseType),
 });
 
-const ManualExpenseSchema = ExpenseSchema.extend({
+const ManualFormSchema = ExpenseSchema.extend({
+  ...ExpenseSchema,
   content: z.literal("misc"),
 });
 
-const TranspoExpenseSchema = ExpenseSchema.extend({
+const TranspoFormSchema = ExpenseSchema.extend({
+  ...ExpenseSchema,
   content: z.literal("transpo"),
   cost_list: z
     .array(
@@ -23,10 +25,20 @@ const TranspoExpenseSchema = ExpenseSchema.extend({
 });
 
 export const DynamicFormSchema = z.discriminatedUnion("content", [
-  ManualExpenseSchema,
-  TranspoExpenseSchema,
+  ManualFormSchema,
+  TranspoFormSchema,
 ]);
 
-export type TranspoExpenseModel = z.infer<typeof TranspoExpenseSchema>;
+//For List/Fetch
+export const TranspoListSchema = TranspoFormSchema.extend({
+  id: z.string(),
+});
+
+export const DynamicListSchema = z.discriminatedUnion("content", [
+  TranspoListSchema,
+]);
+
+export type TranspoFormModel = z.infer<typeof TranspoFormSchema>;
 export type DynamicFormInputModel = z.input<typeof DynamicFormSchema>;
 export type DynamicFormOutputtModel = z.infer<typeof DynamicFormSchema>;
+export type DynamicListModel = z.infer<typeof DynamicListSchema>;

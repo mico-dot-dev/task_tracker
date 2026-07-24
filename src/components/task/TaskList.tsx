@@ -9,7 +9,7 @@ async function TaskList() {
     return <p>Task Data Not Found</p>;
   }
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <ul className="card-list-base">
       {tasks.data.map((task) => (
         <TaskCard Task={task} key={task.id} />
       ))}
