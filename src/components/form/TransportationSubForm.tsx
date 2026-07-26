@@ -7,13 +7,13 @@ import {
   UseFormRegister,
   FieldErrors,
 } from "react-hook-form";
-import { TranspoExpenseModel } from "@/src/types/expense";
+import { TranspoFormModel } from "@/src/types/expense";
 import { Plus, Trash } from "lucide-react";
 
 interface ParentFormProps {
-  control: Control<TranspoExpenseModel>;
-  register: UseFormRegister<TranspoExpenseModel>;
-  errors: FieldErrors<TranspoExpenseModel>;
+  control: Control<TranspoFormModel>;
+  register: UseFormRegister<TranspoFormModel>;
+  errors: FieldErrors<TranspoFormModel>;
 }
 
 function TransportationSubForm({ control, register, errors }: ParentFormProps) {
@@ -46,7 +46,7 @@ function TransportationSubForm({ control, register, errors }: ParentFormProps) {
           ))}
 
           <div
-            className="flex items-center gap-2 text-primary cursor-pointer hover:bg-hover"
+            className="flex items-center gap-2 text-primary cursor-pointer hover:text--hover"
             onClick={() => append({ amount: 0 })}
           >
             {" "}

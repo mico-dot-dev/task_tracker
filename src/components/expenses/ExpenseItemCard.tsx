@@ -1,11 +1,14 @@
 import React from "react";
+import { DynamicListModel } from "@/src/types/expense";
 
-function ExpenseItemCard(e: any) {
-  console.log(e);
+interface ExpenseItemProps {
+  Expense: DynamicListModel;
+}
+
+function ExpenseItemCard({ Expense }: ExpenseItemProps) {
   return (
-    <li className="">
-      <p>{e.title}</p>
-      <p>{}</p>
+    <li className="card-container-base">
+      <p>{Expense.title}</p>
     </li>
   );
 }

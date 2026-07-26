@@ -1,20 +1,28 @@
 import z from "zod";
-import { ExpenseType } from "@/src/generated/prisma";
+import { ExpenseType, DateRepeatType } from "@/src/generated/prisma";
 
 const ExpenseSchema = z.object({
   title: z.string(),
-  description: z.string(),
-  expense_type: z.nativeEnum(ExpenseType),
+  description: z.string().optional(),
 });
 
-const ManualFormSchema = ExpenseSchema.extend({
-  ...ExpenseSchema,
-  content: z.literal("misc"),
+//Declaration for each content type subcategories for dynamic inputs/fetch
+
+const BillsFormSchema = ExpenseSchema.extend({
+  repeating_type: z.nativeEnum(DateRepeatType),
+  running_bill: z.number(),
+});
+
+const HouseFormSchema = BillsFormSchema.extend({
+  expense_type: z.literal(ExpenseType.HOUSE),
+});
+
+const PersonalFormSchema = BillsFormSchema.extend({
+  expense_type: z.literal(ExpenseType.PERSONAL),
 });
 
 const TranspoFormSchema = ExpenseSchema.extend({
-  ...ExpenseSchema,
-  content: z.literal("transpo"),
+  expense_type: z.literal(ExpenseType.TRANSPORTATION),
   cost_list: z
     .array(
       z.object({
@@ -24,13 +32,31 @@ const TranspoFormSchema = ExpenseSchema.extend({
     .min(1, "Add at least one cost"),
 });
 
+const StockFormSchema = ExpenseSchema.extend({
+  expense_type: z.literal(ExpenseType.GROCERY),
+});
+
+const ManualFormSchema = ExpenseSchema.extend({
+  expense_type: z.literal(ExpenseType.MISC),
+});
+
 export const DynamicFormSchema = z.discriminatedUnion("content", [
-  ManualFormSchema,
+  HouseFormSchema,
+  PersonalFormSchema,
+  StockFormSchema,
   TranspoFormSchema,
+  ManualFormSchema,
 ]);
 
-//For List/Fetch
+export type TranspoFormModel = z.infer<typeof TranspoFormSchema>;
+export type DynamicFormInputModel = z.input<typeof DynamicFormSchema>;
+
+//For List or Fetch
+
 export const TranspoListSchema = TranspoFormSchema.extend({
+  id: z.string(),
+});
+export const ManualListSchema = ManualFormSchema.extend({
   id: z.string(),
 });
 
@@ -38,7 +64,5 @@ export const DynamicListSchema = z.discriminatedUnion("content", [
   TranspoListSchema,
 ]);
 
-export type TranspoFormModel = z.infer<typeof TranspoFormSchema>;
-export type DynamicFormInputModel = z.input<typeof DynamicFormSchema>;
 export type DynamicFormOutputtModel = z.infer<typeof DynamicFormSchema>;
 export type DynamicListModel = z.infer<typeof DynamicListSchema>;

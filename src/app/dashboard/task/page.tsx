@@ -7,7 +7,7 @@ import TaskAdd from "@/src/components/AddButton/AddButton";
 
 async function page() {
   return (
-    <div className="flex flex-1 flex-col justify-between min-h-full overflow-hidden">
+    <div className="content-container-base">
       <header className="mt-7 mb-3">
         <p className="text-2xl font-bold text-primary-text">Good Morning Aki</p>
         <div>

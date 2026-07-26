@@ -11,10 +11,12 @@ import {
 import {
   DynamicFormSchema,
   DynamicFormInputModel,
-  TranspoExpenseModel,
+  TranspoFormModel,
   DynamicFormOutputtModel,
 } from "@/src/types/expense";
 import TransportationSubForm from "@/src/components/form/TransportationSubForm";
+import BillSubForm from "./BillSubForm";
+import StockSubForm from "./StockSubForm";
 import { CreateExpense } from "@/src/actions/expense.action";
 
 interface AddFormProps {
@@ -35,41 +37,27 @@ function ExpenseForm({ closeModal }: AddFormProps) {
       title: "",
       description: "",
       expense_type: ExpenseType.MISC,
-      content: "misc",
     },
   });
 
   const curr_type = watch("expense_type");
-  useEffect(() => {
-    switch (curr_type) {
-      case ExpenseType.TRANSPORTATION: {
-        setValue("content" as any, "transpo");
-        break;
-      }
-      default: {
-        setValue("content" as any, "manual");
-      }
-    }
-  }, [curr_type, setValue]);
 
   function renderSpecializedFields() {
     switch (curr_type) {
+      case ExpenseType.HOUSE:
+      case ExpenseType.PERSONAL:
+        return <BillSubForm />;
       case ExpenseType.TRANSPORTATION:
         return (
           <TransportationSubForm
-            control={control as Control<TranspoExpenseModel>}
-            register={register as UseFormRegister<TranspoExpenseModel>}
-            errors={errors as FieldErrors<TranspoExpenseModel>}
+            control={control as Control<TranspoFormModel>}
+            register={register as UseFormRegister<TranspoFormModel>}
+            errors={errors as FieldErrors<TranspoFormModel>}
           />
         );
       case ExpenseType.GROCERY:
-        return <>gro</>;
-      case ExpenseType.HOUSE:
-        return <>h</>;
-      case ExpenseType.PERSONAL:
-        return <>p</>;
+        return <StockSubForm />;
       case ExpenseType.MISC:
-        return <>m</>;
       default:
         return <></>;
     }
@@ -84,7 +72,7 @@ function ExpenseForm({ closeModal }: AddFormProps) {
 
   return (
     <form
-      className="flex flex-col gap-3 text-base h-full overflow-y-scroll"
+      className="modal-form-base"
       onSubmit={handleSubmit(ExpeneseSubmit, (invalidErrors) => {
         console.log("❌ Form Validation Failed:", invalidErrors);
       })}

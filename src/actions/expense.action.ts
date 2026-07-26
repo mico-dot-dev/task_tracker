@@ -5,34 +5,41 @@ import {
   DynamicFormOutputtModel,
   DynamicFormInputModel,
   DynamicFormSchema,
+  DynamicListModel,
 } from "@/src/types/expense";
 import { ActionResponse } from "../types/auth";
 import { GetAuthUser } from "./auth.action";
+import { id } from "zod/v4/locales";
+import { ExpenseType } from "../generated/prisma";
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
 ): Promise<ActionResponse<DynamicFormOutputtModel>> {
   try {
-    const parsedData = DynamicFormSchema.parse(data);
     const user = await GetAuthUser();
-
     if (!user.success) {
       throw new Error("User not authenticated");
     }
 
+    const parsedData = DynamicFormSchema.safeParse(data);
+    if (!parsedData.success) {
+      throw new Error("Parse Error");
+    }
+
+    const expense: DynamicFormOutputtModel = parsedData.data;
+
     const res = await prisma.expense.create({
       data: {
-        name: parsedData.title,
-        description: parsedData.description,
-        expense_type: parsedData.expense_type,
+        name: expense.title,
+        description: expense.description,
+        expense_type: expense.expense_type,
         user_id: user.data.user,
       },
     });
 
-    switch (parsedData.content) {
-      case "transpo":
-        console.log("Transpo Case");
-        const costList: number[] = parsedData.cost_list.map(
+    switch (expense.expense_type) {
+      case ExpenseType.TRANSPORTATION:
+        const costList: number[] = expense.cost_list.map(
           (item: { amount: number }) => item.amount,
         );
         await prisma.transportation_expense.create({
@@ -48,22 +55,24 @@ export async function CreateExpense(
 
     return {
       success: true,
-      data: parsedData,
+      data: expense,
     };
   } catch (e) {
+    const message =
+      e instanceof Error ? e.message : "An unknown error occurred";
+
     return {
       success: false,
-      error: e as string,
+      error: message,
     };
   }
 }
 
 export async function GetUserExpenses(): Promise<
-  ActionResponse<DynamicFormOutputtModel[]>
+  ActionResponse<DynamicListModel[]>
 > {
   try {
     const user = await GetAuthUser();
-
     if (!user.success) {
       throw new Error("User not authenticated");
     }
@@ -82,16 +91,17 @@ export async function GetUserExpenses(): Promise<
       (item) => item.expense_type ?? "MISC",
     );
 
-    const parsedExpense: DynamicFormOutputtModel[] = Object.entries(
+    const parsedExpense: DynamicListModel[] = Object.entries(
       groupedExpense,
-    ).flatMap(([category, expenses]) =>
-      (expenses ?? []).map((item) => ({
+    ).flatMap(([category, expenses]) => {
+      return (expenses ?? []).map((item) => ({
+        id: item.id.toString(),
         title: item.name!,
         description: item.description!,
-        expense_type: item.expense_type!,
-        content: "misc",
-      })),
-    );
+        expense_type: ExpenseType.TRANSPORTATION,
+        cost_list: [],
+      }));
+    });
 
     return {
       success: true,

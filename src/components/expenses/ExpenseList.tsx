@@ -9,8 +9,8 @@ async function ExpenseList() {
   }
   return (
     <ul className="card-list-base">
-      {expenses.data.map((expense, index) => (
-        <ExpenseItemCard e={expense} key={index} />
+      {expenses.data.map((expense) => (
+        <ExpenseItemCard Expense={expense} key={expense.id} />
       ))}
     </ul>
   );

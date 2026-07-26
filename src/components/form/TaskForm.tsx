@@ -129,10 +129,7 @@ function TaskForm({ closeModal }: AddFormProps) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(TaskSubmit)}
-      className="flex flex-col gap-10 text-base h-full overflow-y-scroll"
-    >
+    <form onSubmit={handleSubmit(TaskSubmit)} className="modal-form-base">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col">
           <label htmlFor="task-title">Task Title</label>

@@ -1,11 +1,14 @@
 import React from "react";
+import { Suspense } from "react";
 import ExpenseAdd from "@/src/components/AddButton/AddButton";
 import ExpenseList from "@/src/components/expenses/ExpenseList";
 
 function page() {
   return (
-    <div>
-      <ExpenseList />
+    <div className="content-container-base">
+      <Suspense>
+        <ExpenseList />
+      </Suspense>
       <ExpenseAdd content="expense" />
     </div>
   );

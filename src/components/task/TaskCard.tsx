@@ -27,7 +27,7 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
   }
 
   return (
-    <li className="bg-foreground border border-border rounded-md">
+    <li className="card-container-base">
       <div
         className={twJoin(
           "flex flex-row m-5",
