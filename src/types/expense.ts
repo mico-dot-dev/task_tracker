@@ -34,13 +34,14 @@ const TranspoFormSchema = ExpenseSchema.extend({
 
 const StockFormSchema = ExpenseSchema.extend({
   expense_type: z.literal(ExpenseType.GROCERY),
+  min_amount: z.number(),
 });
 
 const ManualFormSchema = ExpenseSchema.extend({
   expense_type: z.literal(ExpenseType.MISC),
 });
 
-export const DynamicFormSchema = z.discriminatedUnion("content", [
+export const DynamicFormSchema = z.discriminatedUnion("expense_type", [
   HouseFormSchema,
   PersonalFormSchema,
   StockFormSchema,
@@ -48,20 +49,43 @@ export const DynamicFormSchema = z.discriminatedUnion("content", [
   ManualFormSchema,
 ]);
 
+export type HouseFormModel = z.infer<typeof HouseFormSchema>;
+export type PersonalFormModel = z.infer<typeof PersonalFormSchema>;
+export type StockFormModel = z.infer<typeof StockFormSchema>;
 export type TranspoFormModel = z.infer<typeof TranspoFormSchema>;
+export type ManualFormModel = z.infer<typeof ManualFormSchema>;
+
+export type DynamicFormModel = z.infer<typeof DynamicFormSchema>;
 export type DynamicFormInputModel = z.input<typeof DynamicFormSchema>;
 
 //For List or Fetch
 
+export const PersonalListSchema = PersonalFormSchema.extend({
+  id: z.string(),
+});
+
+export const HouseListSchema = HouseFormSchema.extend({
+  id: z.string(),
+});
+
 export const TranspoListSchema = TranspoFormSchema.extend({
   id: z.string(),
 });
+
+export const StockListSchema = StockFormSchema.extend({
+  id: z.string(),
+});
+
 export const ManualListSchema = ManualFormSchema.extend({
   id: z.string(),
 });
 
 export const DynamicListSchema = z.discriminatedUnion("content", [
+  HouseListSchema,
+  PersonalListSchema,
+  StockListSchema,
   TranspoListSchema,
+  ManualListSchema,
 ]);
 
 export type DynamicFormOutputtModel = z.infer<typeof DynamicFormSchema>;

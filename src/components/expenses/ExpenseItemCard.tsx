@@ -6,6 +6,7 @@ interface ExpenseItemProps {
 }
 
 function ExpenseItemCard({ Expense }: ExpenseItemProps) {
+  console.log(Expense.title);
   return (
     <li className="card-container-base">
       <p>{Expense.title}</p>

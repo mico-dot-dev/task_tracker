@@ -1,22 +1,12 @@
 "use client";
 
-import React from "react";
-import {
-  Control,
-  useFieldArray,
-  UseFormRegister,
-  FieldErrors,
-} from "react-hook-form";
-import { TranspoFormModel } from "@/src/types/expense";
+import { useFormContext, useFieldArray } from "react-hook-form";
+import { DynamicFormModel } from "@/src/types/expense";
 import { Plus, Trash } from "lucide-react";
 
-interface ParentFormProps {
-  control: Control<TranspoFormModel>;
-  register: UseFormRegister<TranspoFormModel>;
-  errors: FieldErrors<TranspoFormModel>;
-}
+function TransportationSubForm() {
+  const { register, control } = useFormContext<DynamicFormModel>();
 
-function TransportationSubForm({ control, register, errors }: ParentFormProps) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "cost_list",

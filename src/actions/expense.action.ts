@@ -6,11 +6,11 @@ import {
   DynamicFormInputModel,
   DynamicFormSchema,
   DynamicListModel,
+  DynamicFormModel,
 } from "@/src/types/expense";
 import { ActionResponse } from "../types/auth";
 import { GetAuthUser } from "./auth.action";
-import { id } from "zod/v4/locales";
-import { ExpenseType } from "../generated/prisma";
+import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
@@ -38,6 +38,16 @@ export async function CreateExpense(
     });
 
     switch (expense.expense_type) {
+      case ExpenseType.HOUSE:
+      case ExpenseType.PERSONAL:
+        await prisma.bill_expense.create({
+          data: {
+            expense_id: res.id,
+            repeating_type: expense.repeating_type,
+            running_bill: expense.running_bill || 0,
+          },
+        });
+        break;
       case ExpenseType.TRANSPORTATION:
         const costList: number[] = expense.cost_list.map(
           (item: { amount: number }) => item.amount,
@@ -48,8 +58,15 @@ export async function CreateExpense(
             cost_list: costList,
           },
         });
-
         break;
+      case ExpenseType.GROCERY:
+        await prisma.stock.create({
+          data: {
+            expense_id: res.id,
+            min_amount: expense.min_amount,
+          },
+        });
+
       default:
     }
 
@@ -77,9 +94,15 @@ export async function GetUserExpenses(): Promise<
       throw new Error("User not authenticated");
     }
 
+    //dynamic fetching to be improved
     const userExpense = await prisma.expense.findMany({
       where: {
         user_id: user.data.user,
+      },
+      include: {
+        bill_expense: true,
+        transportation_expense: true,
+        stock: true,
       },
       orderBy: {
         name: "asc",
@@ -91,17 +114,45 @@ export async function GetUserExpenses(): Promise<
       (item) => item.expense_type ?? "MISC",
     );
 
+    function MapDynamicExpense(item: any): DynamicListModel {
+      const common = {
+        id: item.id.toString(),
+        title: item.title ?? "",
+        description: item.description ?? "",
+        expense_type: item.expense_type,
+      };
+
+      switch (item.expense_type) {
+        case ExpenseType.TRANSPORTATION:
+          return {
+            ...common,
+            cost_list: item.cost_list ?? [],
+          };
+
+        case ExpenseType.HOUSE:
+        case ExpenseType.PERSONAL:
+          return {
+            ...common,
+            repeating_type: item.repeating_type ?? DateRepeatType.MANUAL,
+            running_bill: item.running_bill ?? 0,
+          };
+
+        case ExpenseType.GROCERY:
+          return {
+            ...common,
+            min_amount: item.min_amount ?? 0,
+          };
+
+        default:
+          return {
+            ...common,
+          };
+      }
+    }
+
     const parsedExpense: DynamicListModel[] = Object.entries(
       groupedExpense,
-    ).flatMap(([category, expenses]) => {
-      return (expenses ?? []).map((item) => ({
-        id: item.id.toString(),
-        title: item.name!,
-        description: item.description!,
-        expense_type: ExpenseType.TRANSPORTATION,
-        cost_list: [],
-      }));
-    });
+    ).flatMap(([_, expenses]) => (expenses ?? []).map(MapDynamicExpense));
 
     return {
       success: true,
