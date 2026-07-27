@@ -34,7 +34,7 @@ function BillSubForm() {
           id="title"
           type="int"
           className="input-base p-2"
-          {...register("running_bill")}
+          {...register("running_bill", { valueAsNumber: true })}
         />
       </div>
     </>

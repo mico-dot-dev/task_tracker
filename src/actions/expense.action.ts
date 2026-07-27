@@ -117,7 +117,7 @@ export async function GetUserExpenses(): Promise<
     function MapDynamicExpense(item: any): DynamicListModel {
       const common = {
         id: item.id.toString(),
-        title: item.title ?? "",
+        title: item.name ?? "",
         description: item.description ?? "",
         expense_type: item.expense_type,
       };

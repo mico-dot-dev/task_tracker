@@ -12,6 +12,7 @@ import TransportationSubForm from "@/src/components/form/TransportationSubForm";
 import BillSubForm from "./BillSubForm";
 import StockSubForm from "./StockSubForm";
 import { CreateExpense } from "@/src/actions/expense.action";
+import Swal from "sweetalert2";
 
 interface AddFormProps {
   closeModal: () => void;
@@ -48,7 +49,13 @@ function ExpenseForm({ closeModal }: AddFormProps) {
   async function ExpeneseSubmit(data: DynamicFormInputModel) {
     try {
       const res = await CreateExpense(data);
-      if (res.success) console.log("Success");
+      if (res.success) {
+        closeModal();
+        Swal.fire({
+          icon: "success",
+          title: "Expense Added Successfully",
+        });
+      }
     } catch (e) {}
   }
 
