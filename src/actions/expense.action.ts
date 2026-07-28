@@ -147,6 +147,14 @@ export async function GetUserExpenses(): Promise<
       }
     }
 
+    const userExpenses = await prisma.expense.findMany({
+      where: { user_id: user.data.user },
+      include: expenseQueryInclude, // 💡 Bind the constant to the query
+      orderBy: { name: "asc" },
+    });
+
+    const ans = userExpenses.map(mapPrismaToDomain);
+
     //dynamic fetching to be improved
     const userExpense = await prisma.expense.findMany({
       where: {
