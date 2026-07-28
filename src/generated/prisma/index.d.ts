@@ -1699,17 +1699,11 @@ export namespace Prisma {
    */
 
   export type ExpenseCountOutputType = {
-    bill_expense: number
-    stock: number
     transaction: number
-    transportation_expense: number
   }
 
   export type ExpenseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    bill_expense?: boolean | ExpenseCountOutputTypeCountBill_expenseArgs
-    stock?: boolean | ExpenseCountOutputTypeCountStockArgs
     transaction?: boolean | ExpenseCountOutputTypeCountTransactionArgs
-    transportation_expense?: boolean | ExpenseCountOutputTypeCountTransportation_expenseArgs
   }
 
   // Custom InputTypes
@@ -1726,29 +1720,8 @@ export namespace Prisma {
   /**
    * ExpenseCountOutputType without action
    */
-  export type ExpenseCountOutputTypeCountBill_expenseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: bill_expenseWhereInput
-  }
-
-  /**
-   * ExpenseCountOutputType without action
-   */
-  export type ExpenseCountOutputTypeCountStockArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: stockWhereInput
-  }
-
-  /**
-   * ExpenseCountOutputType without action
-   */
   export type ExpenseCountOutputTypeCountTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: transactionWhereInput
-  }
-
-  /**
-   * ExpenseCountOutputType without action
-   */
-  export type ExpenseCountOutputTypeCountTransportation_expenseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: transportation_expenseWhereInput
   }
 
 
@@ -6374,10 +6347,10 @@ export namespace Prisma {
   export type $expensePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "expense"
     objects: {
-      bill_expense: Prisma.$bill_expensePayload<ExtArgs>[]
-      stock: Prisma.$stockPayload<ExtArgs>[]
+      bill_expense: Prisma.$bill_expensePayload<ExtArgs> | null
+      stock: Prisma.$stockPayload<ExtArgs> | null
       transaction: Prisma.$transactionPayload<ExtArgs>[]
-      transportation_expense: Prisma.$transportation_expensePayload<ExtArgs>[]
+      transportation_expense: Prisma.$transportation_expensePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -6780,10 +6753,10 @@ export namespace Prisma {
    */
   export interface Prisma__expenseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    bill_expense<T extends expense$bill_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$bill_expenseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$bill_expensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    stock<T extends expense$stockArgs<ExtArgs> = {}>(args?: Subset<T, expense$stockArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$stockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bill_expense<T extends expense$bill_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$bill_expenseArgs<ExtArgs>>): Prisma__bill_expenseClient<$Result.GetResult<Prisma.$bill_expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    stock<T extends expense$stockArgs<ExtArgs> = {}>(args?: Subset<T, expense$stockArgs<ExtArgs>>): Prisma__stockClient<$Result.GetResult<Prisma.$stockPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transaction<T extends expense$transactionArgs<ExtArgs> = {}>(args?: Subset<T, expense$transactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    transportation_expense<T extends expense$transportation_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$transportation_expenseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transportation_expensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transportation_expense<T extends expense$transportation_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$transportation_expenseArgs<ExtArgs>>): Prisma__transportation_expenseClient<$Result.GetResult<Prisma.$transportation_expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7228,11 +7201,6 @@ export namespace Prisma {
      */
     include?: bill_expenseInclude<ExtArgs> | null
     where?: bill_expenseWhereInput
-    orderBy?: bill_expenseOrderByWithRelationInput | bill_expenseOrderByWithRelationInput[]
-    cursor?: bill_expenseWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Bill_expenseScalarFieldEnum | Bill_expenseScalarFieldEnum[]
   }
 
   /**
@@ -7252,11 +7220,6 @@ export namespace Prisma {
      */
     include?: stockInclude<ExtArgs> | null
     where?: stockWhereInput
-    orderBy?: stockOrderByWithRelationInput | stockOrderByWithRelationInput[]
-    cursor?: stockWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: StockScalarFieldEnum | StockScalarFieldEnum[]
   }
 
   /**
@@ -7300,11 +7263,6 @@ export namespace Prisma {
      */
     include?: transportation_expenseInclude<ExtArgs> | null
     where?: transportation_expenseWhereInput
-    orderBy?: transportation_expenseOrderByWithRelationInput | transportation_expenseOrderByWithRelationInput[]
-    cursor?: transportation_expenseWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Transportation_expenseScalarFieldEnum | Transportation_expenseScalarFieldEnum[]
   }
 
   /**
@@ -7508,7 +7466,7 @@ export namespace Prisma {
     created_at: Date
     curr_amount: number | null
     min_amount: number
-    expense_id: bigint | null
+    expense_id: bigint
     _count: StockCountAggregateOutputType | null
     _avg: StockAvgAggregateOutputType | null
     _sum: StockSumAggregateOutputType | null
@@ -7536,7 +7494,7 @@ export namespace Prisma {
     curr_amount?: boolean
     min_amount?: boolean
     expense_id?: boolean
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
   export type stockSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7545,7 +7503,7 @@ export namespace Prisma {
     curr_amount?: boolean
     min_amount?: boolean
     expense_id?: boolean
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
   export type stockSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7554,7 +7512,7 @@ export namespace Prisma {
     curr_amount?: boolean
     min_amount?: boolean
     expense_id?: boolean
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
   export type stockSelectScalar = {
@@ -7567,26 +7525,26 @@ export namespace Prisma {
 
   export type stockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "curr_amount" | "min_amount" | "expense_id", ExtArgs["result"]["stock"]>
   export type stockInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
   export type stockIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
   export type stockIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | stock$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
 
   export type $stockPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "stock"
     objects: {
-      expense: Prisma.$expensePayload<ExtArgs> | null
+      expense: Prisma.$expensePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       created_at: Date
       curr_amount: number | null
       min_amount: number
-      expense_id: bigint | null
+      expense_id: bigint
     }, ExtArgs["result"]["stock"]>
     composites: {}
   }
@@ -7981,7 +7939,7 @@ export namespace Prisma {
    */
   export interface Prisma__stockClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    expense<T extends stock$expenseArgs<ExtArgs> = {}>(args?: Subset<T, stock$expenseArgs<ExtArgs>>): Prisma__expenseClient<$Result.GetResult<Prisma.$expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    expense<T extends expenseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, expenseDefaultArgs<ExtArgs>>): Prisma__expenseClient<$Result.GetResult<Prisma.$expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8414,25 +8372,6 @@ export namespace Prisma {
      * Limit how many stocks to delete.
      */
     limit?: number
-  }
-
-  /**
-   * stock.expense
-   */
-  export type stock$expenseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the expense
-     */
-    select?: expenseSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the expense
-     */
-    omit?: expenseOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: expenseInclude<ExtArgs> | null
-    where?: expenseWhereInput
   }
 
   /**
@@ -9761,7 +9700,7 @@ export namespace Prisma {
   export type Transportation_expenseGroupByOutputType = {
     id: bigint
     created_at: Date
-    expense_id: bigint | null
+    expense_id: bigint
     cost_list: number[]
     _count: Transportation_expenseCountAggregateOutputType | null
     _avg: Transportation_expenseAvgAggregateOutputType | null
@@ -9789,7 +9728,7 @@ export namespace Prisma {
     created_at?: boolean
     expense_id?: boolean
     cost_list?: boolean
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transportation_expense"]>
 
   export type transportation_expenseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9797,7 +9736,7 @@ export namespace Prisma {
     created_at?: boolean
     expense_id?: boolean
     cost_list?: boolean
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transportation_expense"]>
 
   export type transportation_expenseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9805,7 +9744,7 @@ export namespace Prisma {
     created_at?: boolean
     expense_id?: boolean
     cost_list?: boolean
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transportation_expense"]>
 
   export type transportation_expenseSelectScalar = {
@@ -9817,24 +9756,24 @@ export namespace Prisma {
 
   export type transportation_expenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "expense_id" | "cost_list", ExtArgs["result"]["transportation_expense"]>
   export type transportation_expenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
   export type transportation_expenseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
   export type transportation_expenseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    expense?: boolean | transportation_expense$expenseArgs<ExtArgs>
+    expense?: boolean | expenseDefaultArgs<ExtArgs>
   }
 
   export type $transportation_expensePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "transportation_expense"
     objects: {
-      expense: Prisma.$expensePayload<ExtArgs> | null
+      expense: Prisma.$expensePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       created_at: Date
-      expense_id: bigint | null
+      expense_id: bigint
       cost_list: number[]
     }, ExtArgs["result"]["transportation_expense"]>
     composites: {}
@@ -10230,7 +10169,7 @@ export namespace Prisma {
    */
   export interface Prisma__transportation_expenseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    expense<T extends transportation_expense$expenseArgs<ExtArgs> = {}>(args?: Subset<T, transportation_expense$expenseArgs<ExtArgs>>): Prisma__expenseClient<$Result.GetResult<Prisma.$expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    expense<T extends expenseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, expenseDefaultArgs<ExtArgs>>): Prisma__expenseClient<$Result.GetResult<Prisma.$expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10487,7 +10426,7 @@ export namespace Prisma {
     /**
      * The data needed to create a transportation_expense.
      */
-    data?: XOR<transportation_expenseCreateInput, transportation_expenseUncheckedCreateInput>
+    data: XOR<transportation_expenseCreateInput, transportation_expenseUncheckedCreateInput>
   }
 
   /**
@@ -10662,25 +10601,6 @@ export namespace Prisma {
      * Limit how many transportation_expenses to delete.
      */
     limit?: number
-  }
-
-  /**
-   * transportation_expense.expense
-   */
-  export type transportation_expense$expenseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the expense
-     */
-    select?: expenseSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the expense
-     */
-    omit?: expenseOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: expenseInclude<ExtArgs> | null
-    where?: expenseWhereInput
   }
 
   /**
@@ -11157,15 +11077,15 @@ export namespace Prisma {
 
   export type bill_expenseWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    expense_id?: bigint | number
     AND?: bill_expenseWhereInput | bill_expenseWhereInput[]
     OR?: bill_expenseWhereInput[]
     NOT?: bill_expenseWhereInput | bill_expenseWhereInput[]
     created_at?: DateTimeFilter<"bill_expense"> | Date | string
-    expense_id?: BigIntFilter<"bill_expense"> | bigint | number
     repeating_type?: EnumDateRepeatTypeNullableFilter<"bill_expense"> | $Enums.DateRepeatType | null
     running_bill?: IntNullableFilter<"bill_expense"> | number | null
     expense?: XOR<ExpenseScalarRelationFilter, expenseWhereInput>
-  }, "id">
+  }, "id" | "expense_id">
 
   export type bill_expenseOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11201,10 +11121,10 @@ export namespace Prisma {
     description?: StringNullableFilter<"expense"> | string | null
     expense_type?: EnumExpenseTypeNullableFilter<"expense"> | $Enums.ExpenseType | null
     user_id?: UuidNullableFilter<"expense"> | string | null
-    bill_expense?: Bill_expenseListRelationFilter
-    stock?: StockListRelationFilter
+    bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
+    stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
     transaction?: TransactionListRelationFilter
-    transportation_expense?: Transportation_expenseListRelationFilter
+    transportation_expense?: XOR<Transportation_expenseNullableScalarRelationFilter, transportation_expenseWhereInput> | null
   }
 
   export type expenseOrderByWithRelationInput = {
@@ -11214,10 +11134,10 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     expense_type?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
-    bill_expense?: bill_expenseOrderByRelationAggregateInput
-    stock?: stockOrderByRelationAggregateInput
+    bill_expense?: bill_expenseOrderByWithRelationInput
+    stock?: stockOrderByWithRelationInput
     transaction?: transactionOrderByRelationAggregateInput
-    transportation_expense?: transportation_expenseOrderByRelationAggregateInput
+    transportation_expense?: transportation_expenseOrderByWithRelationInput
   }
 
   export type expenseWhereUniqueInput = Prisma.AtLeast<{
@@ -11230,10 +11150,10 @@ export namespace Prisma {
     description?: StringNullableFilter<"expense"> | string | null
     expense_type?: EnumExpenseTypeNullableFilter<"expense"> | $Enums.ExpenseType | null
     user_id?: UuidNullableFilter<"expense"> | string | null
-    bill_expense?: Bill_expenseListRelationFilter
-    stock?: StockListRelationFilter
+    bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
+    stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
     transaction?: TransactionListRelationFilter
-    transportation_expense?: Transportation_expenseListRelationFilter
+    transportation_expense?: XOR<Transportation_expenseNullableScalarRelationFilter, transportation_expenseWhereInput> | null
   }, "id">
 
   export type expenseOrderByWithAggregationInput = {
@@ -11270,8 +11190,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"stock"> | Date | string
     curr_amount?: IntNullableFilter<"stock"> | number | null
     min_amount?: IntFilter<"stock"> | number
-    expense_id?: BigIntNullableFilter<"stock"> | bigint | number | null
-    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
+    expense_id?: BigIntFilter<"stock"> | bigint | number
+    expense?: XOR<ExpenseScalarRelationFilter, expenseWhereInput>
   }
 
   export type stockOrderByWithRelationInput = {
@@ -11279,28 +11199,28 @@ export namespace Prisma {
     created_at?: SortOrder
     curr_amount?: SortOrderInput | SortOrder
     min_amount?: SortOrder
-    expense_id?: SortOrderInput | SortOrder
+    expense_id?: SortOrder
     expense?: expenseOrderByWithRelationInput
   }
 
   export type stockWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    expense_id?: bigint | number
     AND?: stockWhereInput | stockWhereInput[]
     OR?: stockWhereInput[]
     NOT?: stockWhereInput | stockWhereInput[]
     created_at?: DateTimeFilter<"stock"> | Date | string
     curr_amount?: IntNullableFilter<"stock"> | number | null
     min_amount?: IntFilter<"stock"> | number
-    expense_id?: BigIntNullableFilter<"stock"> | bigint | number | null
-    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
-  }, "id">
+    expense?: XOR<ExpenseScalarRelationFilter, expenseWhereInput>
+  }, "id" | "expense_id">
 
   export type stockOrderByWithAggregationInput = {
     id?: SortOrder
     created_at?: SortOrder
     curr_amount?: SortOrderInput | SortOrder
     min_amount?: SortOrder
-    expense_id?: SortOrderInput | SortOrder
+    expense_id?: SortOrder
     _count?: stockCountOrderByAggregateInput
     _avg?: stockAvgOrderByAggregateInput
     _max?: stockMaxOrderByAggregateInput
@@ -11316,7 +11236,7 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"stock"> | Date | string
     curr_amount?: IntNullableWithAggregatesFilter<"stock"> | number | null
     min_amount?: IntWithAggregatesFilter<"stock"> | number
-    expense_id?: BigIntNullableWithAggregatesFilter<"stock"> | bigint | number | null
+    expense_id?: BigIntWithAggregatesFilter<"stock"> | bigint | number
   }
 
   export type transactionWhereInput = {
@@ -11387,34 +11307,34 @@ export namespace Prisma {
     NOT?: transportation_expenseWhereInput | transportation_expenseWhereInput[]
     id?: BigIntFilter<"transportation_expense"> | bigint | number
     created_at?: DateTimeFilter<"transportation_expense"> | Date | string
-    expense_id?: BigIntNullableFilter<"transportation_expense"> | bigint | number | null
+    expense_id?: BigIntFilter<"transportation_expense"> | bigint | number
     cost_list?: IntNullableListFilter<"transportation_expense">
-    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
+    expense?: XOR<ExpenseScalarRelationFilter, expenseWhereInput>
   }
 
   export type transportation_expenseOrderByWithRelationInput = {
     id?: SortOrder
     created_at?: SortOrder
-    expense_id?: SortOrderInput | SortOrder
+    expense_id?: SortOrder
     cost_list?: SortOrder
     expense?: expenseOrderByWithRelationInput
   }
 
   export type transportation_expenseWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    expense_id?: bigint | number
     AND?: transportation_expenseWhereInput | transportation_expenseWhereInput[]
     OR?: transportation_expenseWhereInput[]
     NOT?: transportation_expenseWhereInput | transportation_expenseWhereInput[]
     created_at?: DateTimeFilter<"transportation_expense"> | Date | string
-    expense_id?: BigIntNullableFilter<"transportation_expense"> | bigint | number | null
     cost_list?: IntNullableListFilter<"transportation_expense">
-    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
-  }, "id">
+    expense?: XOR<ExpenseScalarRelationFilter, expenseWhereInput>
+  }, "id" | "expense_id">
 
   export type transportation_expenseOrderByWithAggregationInput = {
     id?: SortOrder
     created_at?: SortOrder
-    expense_id?: SortOrderInput | SortOrder
+    expense_id?: SortOrder
     cost_list?: SortOrder
     _count?: transportation_expenseCountOrderByAggregateInput
     _avg?: transportation_expenseAvgOrderByAggregateInput
@@ -11429,7 +11349,7 @@ export namespace Prisma {
     NOT?: transportation_expenseScalarWhereWithAggregatesInput | transportation_expenseScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"transportation_expense"> | bigint | number
     created_at?: DateTimeWithAggregatesFilter<"transportation_expense"> | Date | string
-    expense_id?: BigIntNullableWithAggregatesFilter<"transportation_expense"> | bigint | number | null
+    expense_id?: BigIntWithAggregatesFilter<"transportation_expense"> | bigint | number
     cost_list?: IntNullableListFilter<"transportation_expense">
   }
 
@@ -11680,10 +11600,10 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseCreateNestedManyWithoutExpenseInput
-    stock?: stockCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
+    stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseUncheckedCreateInput = {
@@ -11693,10 +11613,10 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseUncheckedCreateNestedManyWithoutExpenseInput
-    stock?: stockUncheckedCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
+    stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseUncheckedCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseUpdateInput = {
@@ -11706,10 +11626,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUpdateManyWithoutExpenseNestedInput
-    stock?: stockUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
+    stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseUncheckedUpdateInput = {
@@ -11719,10 +11639,10 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUncheckedUpdateManyWithoutExpenseNestedInput
-    stock?: stockUncheckedUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
+    stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUncheckedUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseCreateManyInput = {
@@ -11757,7 +11677,7 @@ export namespace Prisma {
     created_at?: Date | string
     curr_amount?: number | null
     min_amount: number
-    expense?: expenseCreateNestedOneWithoutStockInput
+    expense: expenseCreateNestedOneWithoutStockInput
   }
 
   export type stockUncheckedCreateInput = {
@@ -11765,7 +11685,7 @@ export namespace Prisma {
     created_at?: Date | string
     curr_amount?: number | null
     min_amount: number
-    expense_id?: bigint | number | null
+    expense_id: bigint | number
   }
 
   export type stockUpdateInput = {
@@ -11773,7 +11693,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
     min_amount?: IntFieldUpdateOperationsInput | number
-    expense?: expenseUpdateOneWithoutStockNestedInput
+    expense?: expenseUpdateOneRequiredWithoutStockNestedInput
   }
 
   export type stockUncheckedUpdateInput = {
@@ -11781,7 +11701,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
     min_amount?: IntFieldUpdateOperationsInput | number
-    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    expense_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
   export type stockCreateManyInput = {
@@ -11789,7 +11709,7 @@ export namespace Prisma {
     created_at?: Date | string
     curr_amount?: number | null
     min_amount: number
-    expense_id?: bigint | number | null
+    expense_id: bigint | number
   }
 
   export type stockUpdateManyMutationInput = {
@@ -11804,7 +11724,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
     min_amount?: IntFieldUpdateOperationsInput | number
-    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    expense_id?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
   export type transactionCreateInput = {
@@ -11873,13 +11793,13 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     cost_list?: transportation_expenseCreatecost_listInput | number[]
-    expense?: expenseCreateNestedOneWithoutTransportation_expenseInput
+    expense: expenseCreateNestedOneWithoutTransportation_expenseInput
   }
 
   export type transportation_expenseUncheckedCreateInput = {
     id?: bigint | number
     created_at?: Date | string
-    expense_id?: bigint | number | null
+    expense_id: bigint | number
     cost_list?: transportation_expenseCreatecost_listInput | number[]
   }
 
@@ -11887,20 +11807,20 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     cost_list?: transportation_expenseUpdatecost_listInput | number[]
-    expense?: expenseUpdateOneWithoutTransportation_expenseNestedInput
+    expense?: expenseUpdateOneRequiredWithoutTransportation_expenseNestedInput
   }
 
   export type transportation_expenseUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    expense_id?: BigIntFieldUpdateOperationsInput | bigint | number
     cost_list?: transportation_expenseUpdatecost_listInput | number[]
   }
 
   export type transportation_expenseCreateManyInput = {
     id?: bigint | number
     created_at?: Date | string
-    expense_id?: bigint | number | null
+    expense_id: bigint | number
     cost_list?: transportation_expenseCreatecost_listInput | number[]
   }
 
@@ -11913,7 +11833,7 @@ export namespace Prisma {
   export type transportation_expenseUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    expense_id?: BigIntFieldUpdateOperationsInput | bigint | number
     cost_list?: transportation_expenseUpdatecost_listInput | number[]
   }
 
@@ -12376,16 +12296,14 @@ export namespace Prisma {
     not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
-  export type Bill_expenseListRelationFilter = {
-    every?: bill_expenseWhereInput
-    some?: bill_expenseWhereInput
-    none?: bill_expenseWhereInput
+  export type Bill_expenseNullableScalarRelationFilter = {
+    is?: bill_expenseWhereInput | null
+    isNot?: bill_expenseWhereInput | null
   }
 
-  export type StockListRelationFilter = {
-    every?: stockWhereInput
-    some?: stockWhereInput
-    none?: stockWhereInput
+  export type StockNullableScalarRelationFilter = {
+    is?: stockWhereInput | null
+    isNot?: stockWhereInput | null
   }
 
   export type TransactionListRelationFilter = {
@@ -12394,25 +12312,12 @@ export namespace Prisma {
     none?: transactionWhereInput
   }
 
-  export type Transportation_expenseListRelationFilter = {
-    every?: transportation_expenseWhereInput
-    some?: transportation_expenseWhereInput
-    none?: transportation_expenseWhereInput
-  }
-
-  export type bill_expenseOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type stockOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type Transportation_expenseNullableScalarRelationFilter = {
+    is?: transportation_expenseWhereInput | null
+    isNot?: transportation_expenseWhereInput | null
   }
 
   export type transactionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type transportation_expenseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12476,11 +12381,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type ExpenseNullableScalarRelationFilter = {
-    is?: expenseWhereInput | null
-    isNot?: expenseWhereInput | null
-  }
-
   export type stockCountOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
@@ -12535,6 +12435,11 @@ export namespace Prisma {
     in?: $Enums.TransactionStatus[] | ListEnumTransactionStatusFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.TransactionStatus[] | ListEnumTransactionStatusFieldRefInput<$PrismaModel> | null
     not?: NestedEnumTransactionStatusNullableFilter<$PrismaModel> | $Enums.TransactionStatus | null
+  }
+
+  export type ExpenseNullableScalarRelationFilter = {
+    is?: expenseWhereInput | null
+    isNot?: expenseWhereInput | null
   }
 
   export type transactionCountOrderByAggregateInput = {
@@ -12771,18 +12676,16 @@ export namespace Prisma {
     update?: XOR<XOR<expenseUpdateToOneWithWhereWithoutBill_expenseInput, expenseUpdateWithoutBill_expenseInput>, expenseUncheckedUpdateWithoutBill_expenseInput>
   }
 
-  export type bill_expenseCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput> | bill_expenseCreateWithoutExpenseInput[] | bill_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput | bill_expenseCreateOrConnectWithoutExpenseInput[]
-    createMany?: bill_expenseCreateManyExpenseInputEnvelope
-    connect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
+  export type bill_expenseCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput
+    connect?: bill_expenseWhereUniqueInput
   }
 
-  export type stockCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput> | stockCreateWithoutExpenseInput[] | stockUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput | stockCreateOrConnectWithoutExpenseInput[]
-    createMany?: stockCreateManyExpenseInputEnvelope
-    connect?: stockWhereUniqueInput | stockWhereUniqueInput[]
+  export type stockCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput
+    connect?: stockWhereUniqueInput
   }
 
   export type transactionCreateNestedManyWithoutExpenseInput = {
@@ -12792,25 +12695,22 @@ export namespace Prisma {
     connect?: transactionWhereUniqueInput | transactionWhereUniqueInput[]
   }
 
-  export type transportation_expenseCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput> | transportation_expenseCreateWithoutExpenseInput[] | transportation_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput | transportation_expenseCreateOrConnectWithoutExpenseInput[]
-    createMany?: transportation_expenseCreateManyExpenseInputEnvelope
-    connect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
+  export type transportation_expenseCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput
+    connect?: transportation_expenseWhereUniqueInput
   }
 
-  export type bill_expenseUncheckedCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput> | bill_expenseCreateWithoutExpenseInput[] | bill_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput | bill_expenseCreateOrConnectWithoutExpenseInput[]
-    createMany?: bill_expenseCreateManyExpenseInputEnvelope
-    connect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
+  export type bill_expenseUncheckedCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput
+    connect?: bill_expenseWhereUniqueInput
   }
 
-  export type stockUncheckedCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput> | stockCreateWithoutExpenseInput[] | stockUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput | stockCreateOrConnectWithoutExpenseInput[]
-    createMany?: stockCreateManyExpenseInputEnvelope
-    connect?: stockWhereUniqueInput | stockWhereUniqueInput[]
+  export type stockUncheckedCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput
+    connect?: stockWhereUniqueInput
   }
 
   export type transactionUncheckedCreateNestedManyWithoutExpenseInput = {
@@ -12820,43 +12720,34 @@ export namespace Prisma {
     connect?: transactionWhereUniqueInput | transactionWhereUniqueInput[]
   }
 
-  export type transportation_expenseUncheckedCreateNestedManyWithoutExpenseInput = {
-    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput> | transportation_expenseCreateWithoutExpenseInput[] | transportation_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput | transportation_expenseCreateOrConnectWithoutExpenseInput[]
-    createMany?: transportation_expenseCreateManyExpenseInputEnvelope
-    connect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
+  export type transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput = {
+    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput
+    connect?: transportation_expenseWhereUniqueInput
   }
 
   export type NullableEnumExpenseTypeFieldUpdateOperationsInput = {
     set?: $Enums.ExpenseType | null
   }
 
-  export type bill_expenseUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput> | bill_expenseCreateWithoutExpenseInput[] | bill_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput | bill_expenseCreateOrConnectWithoutExpenseInput[]
-    upsert?: bill_expenseUpsertWithWhereUniqueWithoutExpenseInput | bill_expenseUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: bill_expenseCreateManyExpenseInputEnvelope
-    set?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    disconnect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    delete?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    connect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    update?: bill_expenseUpdateWithWhereUniqueWithoutExpenseInput | bill_expenseUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: bill_expenseUpdateManyWithWhereWithoutExpenseInput | bill_expenseUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: bill_expenseScalarWhereInput | bill_expenseScalarWhereInput[]
+  export type bill_expenseUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput
+    upsert?: bill_expenseUpsertWithoutExpenseInput
+    disconnect?: bill_expenseWhereInput | boolean
+    delete?: bill_expenseWhereInput | boolean
+    connect?: bill_expenseWhereUniqueInput
+    update?: XOR<XOR<bill_expenseUpdateToOneWithWhereWithoutExpenseInput, bill_expenseUpdateWithoutExpenseInput>, bill_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type stockUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput> | stockCreateWithoutExpenseInput[] | stockUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput | stockCreateOrConnectWithoutExpenseInput[]
-    upsert?: stockUpsertWithWhereUniqueWithoutExpenseInput | stockUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: stockCreateManyExpenseInputEnvelope
-    set?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    disconnect?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    delete?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    connect?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    update?: stockUpdateWithWhereUniqueWithoutExpenseInput | stockUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: stockUpdateManyWithWhereWithoutExpenseInput | stockUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: stockScalarWhereInput | stockScalarWhereInput[]
+  export type stockUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput
+    upsert?: stockUpsertWithoutExpenseInput
+    disconnect?: stockWhereInput | boolean
+    delete?: stockWhereInput | boolean
+    connect?: stockWhereUniqueInput
+    update?: XOR<XOR<stockUpdateToOneWithWhereWithoutExpenseInput, stockUpdateWithoutExpenseInput>, stockUncheckedUpdateWithoutExpenseInput>
   }
 
   export type transactionUpdateManyWithoutExpenseNestedInput = {
@@ -12873,46 +12764,34 @@ export namespace Prisma {
     deleteMany?: transactionScalarWhereInput | transactionScalarWhereInput[]
   }
 
-  export type transportation_expenseUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput> | transportation_expenseCreateWithoutExpenseInput[] | transportation_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput | transportation_expenseCreateOrConnectWithoutExpenseInput[]
-    upsert?: transportation_expenseUpsertWithWhereUniqueWithoutExpenseInput | transportation_expenseUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: transportation_expenseCreateManyExpenseInputEnvelope
-    set?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    disconnect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    delete?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    connect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    update?: transportation_expenseUpdateWithWhereUniqueWithoutExpenseInput | transportation_expenseUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: transportation_expenseUpdateManyWithWhereWithoutExpenseInput | transportation_expenseUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: transportation_expenseScalarWhereInput | transportation_expenseScalarWhereInput[]
+  export type transportation_expenseUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput
+    upsert?: transportation_expenseUpsertWithoutExpenseInput
+    disconnect?: transportation_expenseWhereInput | boolean
+    delete?: transportation_expenseWhereInput | boolean
+    connect?: transportation_expenseWhereUniqueInput
+    update?: XOR<XOR<transportation_expenseUpdateToOneWithWhereWithoutExpenseInput, transportation_expenseUpdateWithoutExpenseInput>, transportation_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type bill_expenseUncheckedUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput> | bill_expenseCreateWithoutExpenseInput[] | bill_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput | bill_expenseCreateOrConnectWithoutExpenseInput[]
-    upsert?: bill_expenseUpsertWithWhereUniqueWithoutExpenseInput | bill_expenseUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: bill_expenseCreateManyExpenseInputEnvelope
-    set?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    disconnect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    delete?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    connect?: bill_expenseWhereUniqueInput | bill_expenseWhereUniqueInput[]
-    update?: bill_expenseUpdateWithWhereUniqueWithoutExpenseInput | bill_expenseUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: bill_expenseUpdateManyWithWhereWithoutExpenseInput | bill_expenseUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: bill_expenseScalarWhereInput | bill_expenseScalarWhereInput[]
+  export type bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: bill_expenseCreateOrConnectWithoutExpenseInput
+    upsert?: bill_expenseUpsertWithoutExpenseInput
+    disconnect?: bill_expenseWhereInput | boolean
+    delete?: bill_expenseWhereInput | boolean
+    connect?: bill_expenseWhereUniqueInput
+    update?: XOR<XOR<bill_expenseUpdateToOneWithWhereWithoutExpenseInput, bill_expenseUpdateWithoutExpenseInput>, bill_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type stockUncheckedUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput> | stockCreateWithoutExpenseInput[] | stockUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput | stockCreateOrConnectWithoutExpenseInput[]
-    upsert?: stockUpsertWithWhereUniqueWithoutExpenseInput | stockUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: stockCreateManyExpenseInputEnvelope
-    set?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    disconnect?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    delete?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    connect?: stockWhereUniqueInput | stockWhereUniqueInput[]
-    update?: stockUpdateWithWhereUniqueWithoutExpenseInput | stockUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: stockUpdateManyWithWhereWithoutExpenseInput | stockUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: stockScalarWhereInput | stockScalarWhereInput[]
+  export type stockUncheckedUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: stockCreateOrConnectWithoutExpenseInput
+    upsert?: stockUpsertWithoutExpenseInput
+    disconnect?: stockWhereInput | boolean
+    delete?: stockWhereInput | boolean
+    connect?: stockWhereUniqueInput
+    update?: XOR<XOR<stockUpdateToOneWithWhereWithoutExpenseInput, stockUpdateWithoutExpenseInput>, stockUncheckedUpdateWithoutExpenseInput>
   }
 
   export type transactionUncheckedUpdateManyWithoutExpenseNestedInput = {
@@ -12929,18 +12808,14 @@ export namespace Prisma {
     deleteMany?: transactionScalarWhereInput | transactionScalarWhereInput[]
   }
 
-  export type transportation_expenseUncheckedUpdateManyWithoutExpenseNestedInput = {
-    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput> | transportation_expenseCreateWithoutExpenseInput[] | transportation_expenseUncheckedCreateWithoutExpenseInput[]
-    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput | transportation_expenseCreateOrConnectWithoutExpenseInput[]
-    upsert?: transportation_expenseUpsertWithWhereUniqueWithoutExpenseInput | transportation_expenseUpsertWithWhereUniqueWithoutExpenseInput[]
-    createMany?: transportation_expenseCreateManyExpenseInputEnvelope
-    set?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    disconnect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    delete?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    connect?: transportation_expenseWhereUniqueInput | transportation_expenseWhereUniqueInput[]
-    update?: transportation_expenseUpdateWithWhereUniqueWithoutExpenseInput | transportation_expenseUpdateWithWhereUniqueWithoutExpenseInput[]
-    updateMany?: transportation_expenseUpdateManyWithWhereWithoutExpenseInput | transportation_expenseUpdateManyWithWhereWithoutExpenseInput[]
-    deleteMany?: transportation_expenseScalarWhereInput | transportation_expenseScalarWhereInput[]
+  export type transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput = {
+    create?: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
+    connectOrCreate?: transportation_expenseCreateOrConnectWithoutExpenseInput
+    upsert?: transportation_expenseUpsertWithoutExpenseInput
+    disconnect?: transportation_expenseWhereInput | boolean
+    delete?: transportation_expenseWhereInput | boolean
+    connect?: transportation_expenseWhereUniqueInput
+    update?: XOR<XOR<transportation_expenseUpdateToOneWithWhereWithoutExpenseInput, transportation_expenseUpdateWithoutExpenseInput>, transportation_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
   export type expenseCreateNestedOneWithoutStockInput = {
@@ -12949,12 +12824,10 @@ export namespace Prisma {
     connect?: expenseWhereUniqueInput
   }
 
-  export type expenseUpdateOneWithoutStockNestedInput = {
+  export type expenseUpdateOneRequiredWithoutStockNestedInput = {
     create?: XOR<expenseCreateWithoutStockInput, expenseUncheckedCreateWithoutStockInput>
     connectOrCreate?: expenseCreateOrConnectWithoutStockInput
     upsert?: expenseUpsertWithoutStockInput
-    disconnect?: expenseWhereInput | boolean
-    delete?: expenseWhereInput | boolean
     connect?: expenseWhereUniqueInput
     update?: XOR<XOR<expenseUpdateToOneWithWhereWithoutStockInput, expenseUpdateWithoutStockInput>, expenseUncheckedUpdateWithoutStockInput>
   }
@@ -13002,12 +12875,10 @@ export namespace Prisma {
     push?: number | number[]
   }
 
-  export type expenseUpdateOneWithoutTransportation_expenseNestedInput = {
+  export type expenseUpdateOneRequiredWithoutTransportation_expenseNestedInput = {
     create?: XOR<expenseCreateWithoutTransportation_expenseInput, expenseUncheckedCreateWithoutTransportation_expenseInput>
     connectOrCreate?: expenseCreateOrConnectWithoutTransportation_expenseInput
     upsert?: expenseUpsertWithoutTransportation_expenseInput
-    disconnect?: expenseWhereInput | boolean
-    delete?: expenseWhereInput | boolean
     connect?: expenseWhereUniqueInput
     update?: XOR<XOR<expenseUpdateToOneWithWhereWithoutTransportation_expenseInput, expenseUpdateWithoutTransportation_expenseInput>, expenseUncheckedUpdateWithoutTransportation_expenseInput>
   }
@@ -13501,9 +13372,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    stock?: stockCreateNestedManyWithoutExpenseInput
+    stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseUncheckedCreateWithoutBill_expenseInput = {
@@ -13513,9 +13384,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    stock?: stockUncheckedCreateNestedManyWithoutExpenseInput
+    stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseUncheckedCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseCreateOrConnectWithoutBill_expenseInput = {
@@ -13541,9 +13412,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    stock?: stockUpdateManyWithoutExpenseNestedInput
+    stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseUncheckedUpdateWithoutBill_expenseInput = {
@@ -13553,9 +13424,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    stock?: stockUncheckedUpdateManyWithoutExpenseNestedInput
+    stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUncheckedUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
   export type bill_expenseCreateWithoutExpenseInput = {
@@ -13577,11 +13448,6 @@ export namespace Prisma {
     create: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
   }
 
-  export type bill_expenseCreateManyExpenseInputEnvelope = {
-    data: bill_expenseCreateManyExpenseInput | bill_expenseCreateManyExpenseInput[]
-    skipDuplicates?: boolean
-  }
-
   export type stockCreateWithoutExpenseInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -13599,11 +13465,6 @@ export namespace Prisma {
   export type stockCreateOrConnectWithoutExpenseInput = {
     where: stockWhereUniqueInput
     create: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
-  }
-
-  export type stockCreateManyExpenseInputEnvelope = {
-    data: stockCreateManyExpenseInput | stockCreateManyExpenseInput[]
-    skipDuplicates?: boolean
   }
 
   export type transactionCreateWithoutExpenseInput = {
@@ -13649,63 +13510,54 @@ export namespace Prisma {
     create: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
   }
 
-  export type transportation_expenseCreateManyExpenseInputEnvelope = {
-    data: transportation_expenseCreateManyExpenseInput | transportation_expenseCreateManyExpenseInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type bill_expenseUpsertWithWhereUniqueWithoutExpenseInput = {
-    where: bill_expenseWhereUniqueInput
+  export type bill_expenseUpsertWithoutExpenseInput = {
     update: XOR<bill_expenseUpdateWithoutExpenseInput, bill_expenseUncheckedUpdateWithoutExpenseInput>
     create: XOR<bill_expenseCreateWithoutExpenseInput, bill_expenseUncheckedCreateWithoutExpenseInput>
+    where?: bill_expenseWhereInput
   }
 
-  export type bill_expenseUpdateWithWhereUniqueWithoutExpenseInput = {
-    where: bill_expenseWhereUniqueInput
+  export type bill_expenseUpdateToOneWithWhereWithoutExpenseInput = {
+    where?: bill_expenseWhereInput
     data: XOR<bill_expenseUpdateWithoutExpenseInput, bill_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type bill_expenseUpdateManyWithWhereWithoutExpenseInput = {
-    where: bill_expenseScalarWhereInput
-    data: XOR<bill_expenseUpdateManyMutationInput, bill_expenseUncheckedUpdateManyWithoutExpenseInput>
+  export type bill_expenseUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    running_bill?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type bill_expenseScalarWhereInput = {
-    AND?: bill_expenseScalarWhereInput | bill_expenseScalarWhereInput[]
-    OR?: bill_expenseScalarWhereInput[]
-    NOT?: bill_expenseScalarWhereInput | bill_expenseScalarWhereInput[]
-    id?: BigIntFilter<"bill_expense"> | bigint | number
-    created_at?: DateTimeFilter<"bill_expense"> | Date | string
-    expense_id?: BigIntFilter<"bill_expense"> | bigint | number
-    repeating_type?: EnumDateRepeatTypeNullableFilter<"bill_expense"> | $Enums.DateRepeatType | null
-    running_bill?: IntNullableFilter<"bill_expense"> | number | null
+  export type bill_expenseUncheckedUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    running_bill?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type stockUpsertWithWhereUniqueWithoutExpenseInput = {
-    where: stockWhereUniqueInput
+  export type stockUpsertWithoutExpenseInput = {
     update: XOR<stockUpdateWithoutExpenseInput, stockUncheckedUpdateWithoutExpenseInput>
     create: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+    where?: stockWhereInput
   }
 
-  export type stockUpdateWithWhereUniqueWithoutExpenseInput = {
-    where: stockWhereUniqueInput
+  export type stockUpdateToOneWithWhereWithoutExpenseInput = {
+    where?: stockWhereInput
     data: XOR<stockUpdateWithoutExpenseInput, stockUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type stockUpdateManyWithWhereWithoutExpenseInput = {
-    where: stockScalarWhereInput
-    data: XOR<stockUpdateManyMutationInput, stockUncheckedUpdateManyWithoutExpenseInput>
+  export type stockUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
+    min_amount?: IntFieldUpdateOperationsInput | number
   }
 
-  export type stockScalarWhereInput = {
-    AND?: stockScalarWhereInput | stockScalarWhereInput[]
-    OR?: stockScalarWhereInput[]
-    NOT?: stockScalarWhereInput | stockScalarWhereInput[]
-    id?: BigIntFilter<"stock"> | bigint | number
-    created_at?: DateTimeFilter<"stock"> | Date | string
-    curr_amount?: IntNullableFilter<"stock"> | number | null
-    min_amount?: IntFilter<"stock"> | number
-    expense_id?: BigIntNullableFilter<"stock"> | bigint | number | null
+  export type stockUncheckedUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
+    min_amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type transactionUpsertWithWhereUniqueWithoutExpenseInput = {
@@ -13736,30 +13588,27 @@ export namespace Prisma {
     status?: EnumTransactionStatusNullableFilter<"transaction"> | $Enums.TransactionStatus | null
   }
 
-  export type transportation_expenseUpsertWithWhereUniqueWithoutExpenseInput = {
-    where: transportation_expenseWhereUniqueInput
+  export type transportation_expenseUpsertWithoutExpenseInput = {
     update: XOR<transportation_expenseUpdateWithoutExpenseInput, transportation_expenseUncheckedUpdateWithoutExpenseInput>
     create: XOR<transportation_expenseCreateWithoutExpenseInput, transportation_expenseUncheckedCreateWithoutExpenseInput>
+    where?: transportation_expenseWhereInput
   }
 
-  export type transportation_expenseUpdateWithWhereUniqueWithoutExpenseInput = {
-    where: transportation_expenseWhereUniqueInput
+  export type transportation_expenseUpdateToOneWithWhereWithoutExpenseInput = {
+    where?: transportation_expenseWhereInput
     data: XOR<transportation_expenseUpdateWithoutExpenseInput, transportation_expenseUncheckedUpdateWithoutExpenseInput>
   }
 
-  export type transportation_expenseUpdateManyWithWhereWithoutExpenseInput = {
-    where: transportation_expenseScalarWhereInput
-    data: XOR<transportation_expenseUpdateManyMutationInput, transportation_expenseUncheckedUpdateManyWithoutExpenseInput>
+  export type transportation_expenseUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    cost_list?: transportation_expenseUpdatecost_listInput | number[]
   }
 
-  export type transportation_expenseScalarWhereInput = {
-    AND?: transportation_expenseScalarWhereInput | transportation_expenseScalarWhereInput[]
-    OR?: transportation_expenseScalarWhereInput[]
-    NOT?: transportation_expenseScalarWhereInput | transportation_expenseScalarWhereInput[]
-    id?: BigIntFilter<"transportation_expense"> | bigint | number
-    created_at?: DateTimeFilter<"transportation_expense"> | Date | string
-    expense_id?: BigIntNullableFilter<"transportation_expense"> | bigint | number | null
-    cost_list?: IntNullableListFilter<"transportation_expense">
+  export type transportation_expenseUncheckedUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    cost_list?: transportation_expenseUpdatecost_listInput | number[]
   }
 
   export type expenseCreateWithoutStockInput = {
@@ -13769,9 +13618,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseUncheckedCreateWithoutStockInput = {
@@ -13781,9 +13630,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseUncheckedCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseUncheckedCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseCreateOrConnectWithoutStockInput = {
@@ -13809,9 +13658,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseUncheckedUpdateWithoutStockInput = {
@@ -13821,9 +13670,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUncheckedUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUncheckedUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseCreateWithoutTransactionInput = {
@@ -13833,9 +13682,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseCreateNestedManyWithoutExpenseInput
-    stock?: stockCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
+    stock?: stockCreateNestedOneWithoutExpenseInput
+    transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseUncheckedCreateWithoutTransactionInput = {
@@ -13845,9 +13694,9 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseUncheckedCreateNestedManyWithoutExpenseInput
-    stock?: stockUncheckedCreateNestedManyWithoutExpenseInput
-    transportation_expense?: transportation_expenseUncheckedCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
+    stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
 
   export type expenseCreateOrConnectWithoutTransactionInput = {
@@ -13873,9 +13722,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUpdateManyWithoutExpenseNestedInput
-    stock?: stockUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
+    stock?: stockUpdateOneWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseUncheckedUpdateWithoutTransactionInput = {
@@ -13885,9 +13734,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUncheckedUpdateManyWithoutExpenseNestedInput
-    stock?: stockUncheckedUpdateManyWithoutExpenseNestedInput
-    transportation_expense?: transportation_expenseUncheckedUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
+    stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
   export type expenseCreateWithoutTransportation_expenseInput = {
@@ -13897,8 +13746,8 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseCreateNestedManyWithoutExpenseInput
-    stock?: stockCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
+    stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
   }
 
@@ -13909,8 +13758,8 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
-    bill_expense?: bill_expenseUncheckedCreateNestedManyWithoutExpenseInput
-    stock?: stockUncheckedCreateNestedManyWithoutExpenseInput
+    bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
+    stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
   }
 
@@ -13937,8 +13786,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUpdateManyWithoutExpenseNestedInput
-    stock?: stockUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
+    stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
   }
 
@@ -13949,8 +13798,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
-    bill_expense?: bill_expenseUncheckedUpdateManyWithoutExpenseNestedInput
-    stock?: stockUncheckedUpdateManyWithoutExpenseNestedInput
+    bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
+    stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
   }
 
@@ -14002,74 +13851,12 @@ export namespace Prisma {
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
   }
 
-  export type bill_expenseCreateManyExpenseInput = {
-    id?: bigint | number
-    created_at?: Date | string
-    repeating_type?: $Enums.DateRepeatType | null
-    running_bill?: number | null
-  }
-
-  export type stockCreateManyExpenseInput = {
-    id?: bigint | number
-    created_at?: Date | string
-    curr_amount?: number | null
-    min_amount: number
-  }
-
   export type transactionCreateManyExpenseInput = {
     id?: bigint | number
     created_at?: Date | string
     amount?: number | null
     price?: number | null
     status?: $Enums.TransactionStatus | null
-  }
-
-  export type transportation_expenseCreateManyExpenseInput = {
-    id?: bigint | number
-    created_at?: Date | string
-    cost_list?: transportation_expenseCreatecost_listInput | number[]
-  }
-
-  export type bill_expenseUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
-    running_bill?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type bill_expenseUncheckedUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
-    running_bill?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type bill_expenseUncheckedUpdateManyWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
-    running_bill?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type stockUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
-    min_amount?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type stockUncheckedUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
-    min_amount?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type stockUncheckedUpdateManyWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    curr_amount?: NullableIntFieldUpdateOperationsInput | number | null
-    min_amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type transactionUpdateWithoutExpenseInput = {
@@ -14094,24 +13881,6 @@ export namespace Prisma {
     amount?: NullableIntFieldUpdateOperationsInput | number | null
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
-  }
-
-  export type transportation_expenseUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    cost_list?: transportation_expenseUpdatecost_listInput | number[]
-  }
-
-  export type transportation_expenseUncheckedUpdateWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    cost_list?: transportation_expenseUpdatecost_listInput | number[]
-  }
-
-  export type transportation_expenseUncheckedUpdateManyWithoutExpenseInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    cost_list?: transportation_expenseUpdatecost_listInput | number[]
   }
 
 
