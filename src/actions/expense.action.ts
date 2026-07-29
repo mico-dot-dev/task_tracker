@@ -150,70 +150,11 @@ export async function GetUserExpenses(): Promise<
     const userExpenses = await prisma.expense.findMany({
       where: { user_id: user.data.user },
       include: expenseQueryInclude, // 💡 Bind the constant to the query
-      orderBy: { name: "asc" },
+      orderBy: { expense_type: "asc" },
     });
 
-    const ans = userExpenses.map(mapPrismaToDomain);
-
-    //dynamic fetching to be improved
-    const userExpense = await prisma.expense.findMany({
-      where: {
-        user_id: user.data.user,
-      },
-      include: {
-        bill_expense: true,
-        transportation_expense: true,
-        stock: true,
-      },
-      orderBy: {
-        name: "asc",
-      },
-    });
-
-    const groupedExpense = Object.groupBy(
-      userExpense,
-      (item) => item.expense_type ?? "MISC",
-    );
-
-    function MapDynamicExpense(item: any): DynamicListModel {
-      const common = {
-        id: item.id.toString(),
-        title: item.name ?? "",
-        description: item.description ?? "",
-        expense_type: item.expense_type,
-      };
-
-      switch (item.expense_type) {
-        case ExpenseType.TRANSPORTATION:
-          return {
-            ...common,
-            cost_list: item.cost_list ?? [],
-          };
-
-        case ExpenseType.HOUSE:
-        case ExpenseType.PERSONAL:
-          return {
-            ...common,
-            repeating_type: item.repeating_type ?? DateRepeatType.MANUAL,
-            running_bill: item.running_bill ?? 0,
-          };
-
-        case ExpenseType.GROCERY:
-          return {
-            ...common,
-            min_amount: item.min_amount ?? 0,
-          };
-
-        default:
-          return {
-            ...common,
-          };
-      }
-    }
-
-    const parsedExpense: DynamicListModel[] = Object.entries(
-      groupedExpense,
-    ).flatMap(([_, expenses]) => (expenses ?? []).map(MapDynamicExpense));
+    const parsedExpense: DynamicListModel[] =
+      userExpenses.map(mapPrismaToDomain);
 
     return {
       success: true,
