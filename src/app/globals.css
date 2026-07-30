@@ -32,23 +32,6 @@
 }
 
 :root {
-  --background: #0b1220;
-  --foreground: #111a17;
-  --border: #1f2b26;
-
-  --primary-text: #eafbf4;
-  --secondary-text: #a7b8b0;
-  --muted-text: #6c7d75;
-
-  --primary: #00e381;
-  --hover: #1af08f;
-  --active: #00c86f;
-  --text-on-button: #06281a;
-
-  --success: #22c55e;
-  --warning: #fbbf24;
-  --error: #ef4444;
-  --info: #38bdf8;
 }
 
 @layer components {

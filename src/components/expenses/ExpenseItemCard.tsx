@@ -1,32 +1,49 @@
 import React, { ReactElement } from "react";
 import { DynamicListModel } from "@/src/types/expense";
 import { ExpenseType } from "@/src/generated/prisma";
-import { House, UserRound, Bus, ShoppingCart, Package } from "lucide-react";
+import {
+  House,
+  UserRound,
+  Bus,
+  ShoppingCart,
+  Package,
+  LucideIcon,
+} from "lucide-react";
+import {
+  ExpenseSubContent,
+  getExpenseSubContent,
+} from "@/src/lib/formatter/expense";
 
 interface ExpenseItemProps {
   Expense: DynamicListModel;
 }
 
+const expenseIconMap: Record<ExpenseType, LucideIcon> = {
+  [ExpenseType.HOUSE]: House,
+  [ExpenseType.PERSONAL]: UserRound,
+  [ExpenseType.TRANSPORTATION]: Bus,
+  [ExpenseType.GROCERY]: ShoppingCart,
+  [ExpenseType.MISC]: Package,
+};
+
 function ExpenseItemCard({ Expense }: ExpenseItemProps) {
-  const expenseIcon: Record<ExpenseType, ReactElement> = {
-    [ExpenseType.HOUSE]: <House />,
-    [ExpenseType.PERSONAL]: <UserRound />,
-    [ExpenseType.TRANSPORTATION]: <Bus />,
-    [ExpenseType.GROCERY]: <ShoppingCart />,
-    [ExpenseType.MISC]: <Package />,
-  };
+  const IconComponent = expenseIconMap[Expense.expense_type];
+  const subInfo: ExpenseSubContent = getExpenseSubContent(Expense);
 
   return (
     <li className="card-container-base">
       <div className="flex flex-row m-5">
-        {expenseIcon[Expense.expense_type]}
+        <div className="self-center justify-items-center content-center w-10 h-10 mr-3 text-muted-icon rounded-md bg-foreground">
+          {" "}
+          <IconComponent size={25} strokeWidth={1.5} />
+        </div>
         <div className="flex-1">
           <p>{Expense.title}</p>
           <p className="text-sm text-muted-text">{Expense.description}</p>
         </div>
         <div className="">
-          <p>Expense Info</p>
-          <p className="text-sm text-muted-text">Expense Info</p>
+          <p>{subInfo.primary}</p>
+          <p className="text-sm text-muted-text">{subInfo.secondary}</p>
         </div>
       </div>
     </li>
