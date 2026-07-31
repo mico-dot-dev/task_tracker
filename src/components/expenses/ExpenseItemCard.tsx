@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Package,
   LucideIcon,
+  EllipsisVertical,
 } from "lucide-react";
 import {
   ExpenseSubContent,
@@ -40,10 +41,13 @@ function ExpenseItemCard({ Expense }: ExpenseItemProps) {
         <div className="flex-1">
           <p>{Expense.title}</p>
           <p className="text-sm text-muted-text">{Expense.description}</p>
+          <div className="flex flex-row items-end justify-between">
+            <p>{subInfo.primary}</p>
+            <p className="text-sm text-muted-text">{subInfo.secondary}</p>
+          </div>
         </div>
-        <div className="">
-          <p>{subInfo.primary}</p>
-          <p className="text-sm text-muted-text">{subInfo.secondary}</p>
+        <div>
+          <EllipsisVertical size={20} />
         </div>
       </div>
     </li>

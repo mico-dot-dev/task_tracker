@@ -25,12 +25,13 @@ function TaskGroupBy() {
     <>
       <div className="flex flex-row justify-between h-10 text-sm  font-medium">
         <div className="flex flex-row gap-3 text-background">
-          {categories.length > 0 && (
-            <button className="button-base p-2 rounded-2xl">
-              {categories[0].title}
-            </button>
-          )}
-
+          {categories.map((category) => {
+            return (
+              <button className="button-base p-2 rounded-2xl" key={category.id}>
+                {category.title}
+              </button>
+            );
+          })}
           <button
             className="flex text-header-text cursor-pointer items-center "
             onClick={() => setModalOpen(true)}
@@ -43,7 +44,7 @@ function TaskGroupBy() {
         <div className="flex flex-row gap-3 text-background">
           <button className="flex flex-row px-1.5 gap-1.5 items-center button-base rounded-xl">
             <p>Group by</p>
-            <p className="font-semibold"> Category</p>
+            <p className="font-bold"> Category</p>
           </button>
           <button className="cursor-pointer px-5 button-base rounded-xl">
             Filter

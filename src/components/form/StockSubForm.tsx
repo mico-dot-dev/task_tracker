@@ -12,7 +12,7 @@ function StockSubForm() {
           id="title"
           type="int"
           className="input-base p-2"
-          {...register("min_amount")}
+          {...register("min_amount", { valueAsNumber: true })}
         />
       </div>
     </>

@@ -21,14 +21,14 @@ export function getExpenseSubContent(
         type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
       subContent = {
         primary: formattedLabel,
-        secondary: "₱" + expense.running_bill.toString(),
+        secondary: "Repeating Cost: " + "₱" + expense.running_bill.toString(),
       };
       break;
     case ExpenseType.TRANSPORTATION:
       break;
     case ExpenseType.GROCERY:
       subContent = {
-        primary: expense.min_amount.toString(),
+        primary: "Minimum Amount: " + expense.min_amount.toString(),
         secondary: "",
       };
       break;

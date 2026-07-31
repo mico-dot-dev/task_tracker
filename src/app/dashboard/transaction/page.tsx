@@ -1,16 +1,11 @@
 import React from "react";
-import TransactionItemCard from "@/src/components/transaction/TransactionItemCard";
+import TrancsactionTable from "@/src/components/transaction/TransactionTable";
 
 function page() {
   return (
     <div>
       <h1>Transaction Page</h1>
-      <button>Add Transaction</button>
-      <button>Transaction History</button>
-      <p>Transaction List</p>
-      <TransactionItemCard />
-      <TransactionItemCard />
-      <TransactionItemCard />
+      <TrancsactionTable />
     </div>
   );
 }
