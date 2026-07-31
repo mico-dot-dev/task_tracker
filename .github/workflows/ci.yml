@@ -1,0 +1,43 @@
+# .github/workflows/ci.yml
+name: CI Pipepline
+
+# 1. TRIGGER: When should this pipeline run?
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# 2. JOBS: What automated tasks need to run?
+jobs:
+  quality-check:
+    # Runs on a fresh, temporary Ubuntu Linux Virtual Machine in GitHub's cloud
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your repository code into the Virtual Machine
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js on the VM
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm" # Caches dependencies to speed up future pipeline runs
+
+      # Step 3: Install your project's npm packages safely
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Check for formatting or syntax mistakes
+      - name: Run linter
+        run: npm run lint
+
+      # Step 5: Run your automated unit tests
+      - name: Run unit tests
+        run: npm test
+
+      # Step 6: Ensure the app builds into production bundle without crashing
+      - name: Build application
+        run: npm run build
