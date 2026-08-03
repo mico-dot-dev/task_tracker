@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import React from "react";
-export type ContentType = "task" | "expense" | "task_category";
+export type ContentType = "task" | "expense" | "task_category" | "transaction";
 
 interface AddContents {
   label: string;
@@ -8,10 +8,15 @@ interface AddContents {
 }
 
 const TaskForm = dynamic(() => import("@/src/components/form/TaskForm"));
+
 const TaskCategoryForm = dynamic(
   () => import("@/src/components/form/TaskCatForm"),
 );
+
 const ExpenseForm = dynamic(() => import("@/src/components/form/ExpenseForm"));
+const TransactionForm = dynamic(
+  () => import("@/src/components/form/TransactionForm"),
+);
 
 export const FORM_REGISTRY: Record<ContentType, AddContents> = {
   task: {
@@ -27,5 +32,10 @@ export const FORM_REGISTRY: Record<ContentType, AddContents> = {
   expense: {
     label: "Expense",
     AddFormComponent: ExpenseForm,
+  },
+
+  transaction: {
+    label: "Transaction",
+    AddFormComponent: TransactionForm,
   },
 };

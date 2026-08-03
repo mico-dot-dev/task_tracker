@@ -3,11 +3,7 @@ import React, { FormEvent, useEffect } from "react";
 import { ExpenseType } from "@/src/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
-import {
-  DynamicFormSchema,
-  DynamicFormInputModel,
-  TranspoFormModel,
-} from "@/src/types/expense";
+import { DynamicFormSchema, DynamicFormInputModel } from "@/src/types/expense";
 import TransportationSubForm from "@/src/components/form/TransportationSubForm";
 import BillSubForm from "./BillSubForm";
 import StockSubForm from "./StockSubForm";

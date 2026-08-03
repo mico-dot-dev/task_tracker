@@ -1,5 +1,5 @@
 import { ExpenseType } from "@/src/generated/prisma";
-import { DynamicFormModel } from "@/src/types/expense";
+import { DynamicListModel } from "@/src/types/expense";
 
 export interface ExpenseSubContent {
   primary: string;
@@ -7,7 +7,7 @@ export interface ExpenseSubContent {
 }
 
 export function getExpenseSubContent(
-  expense: DynamicFormModel,
+  expense: DynamicListModel,
 ): ExpenseSubContent {
   let subContent: ExpenseSubContent = {
     primary: "",
@@ -28,8 +28,10 @@ export function getExpenseSubContent(
       break;
     case ExpenseType.GROCERY:
       subContent = {
-        primary: "Minimum Amount: " + expense.min_amount.toString(),
-        secondary: "",
+        primary:
+          "Current Amount: " +
+          (expense.curr_amount ? expense.curr_amount.toString() : "0"),
+        secondary: "Minimum Amount: " + expense.min_amount.toString(),
       };
       break;
     case ExpenseType.MISC:

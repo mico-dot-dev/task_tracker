@@ -5,7 +5,6 @@ import { TaskListModel } from "@/src/types/task";
 import { twJoin } from "tailwind-merge";
 import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";
-
 import { Circle, CircleCheck, EllipsisVertical } from "lucide-react";
 
 function TaskCard({ Task }: { Task: TaskListModel }) {
@@ -51,8 +50,16 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
             <p className="">{Task.category}</p>
           </div>
         </div>
-        <button className="cursor-pointer self-start">
-          <EllipsisVertical size={20} />
+        <button className="cursor-pointer self-start ">
+          <details className="dropdown dropdown-right">
+            <summary className="btn bg-transparent border-none h-auto w-auto p-0">
+              <EllipsisVertical size={20} />
+            </summary>
+            <ul className="menu dropdown-content bg-white text-background w-24 p-0 px-3 py-1 flex flex-col">
+              <li className="hover:bg-gray-200 w-full items-start">Delete</li>
+              <li className="hover:bg-gray-200 w-full items-start">Edit</li>
+            </ul>
+          </details>
         </button>
       </div>
     </li>

@@ -74,6 +74,7 @@ export const TranspoListSchema = TranspoFormSchema.extend({
 
 export const StockListSchema = StockFormSchema.extend({
   id: z.string(),
+  curr_amount: z.number(),
 });
 
 export const ManualListSchema = ManualFormSchema.extend({
@@ -88,5 +89,4 @@ export const DynamicListSchema = z.discriminatedUnion("content", [
   ManualListSchema,
 ]);
 
-export type DynamicFormOutputtModel = z.infer<typeof DynamicFormSchema>;
 export type DynamicListModel = z.infer<typeof DynamicListSchema>;

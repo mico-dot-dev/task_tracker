@@ -2,7 +2,6 @@
 
 import { prisma } from "@/src/lib/prisma-client";
 import {
-  DynamicFormOutputtModel,
   DynamicFormInputModel,
   DynamicFormSchema,
   DynamicListModel,
@@ -14,7 +13,7 @@ import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
-): Promise<ActionResponse<DynamicFormOutputtModel>> {
+): Promise<ActionResponse<DynamicFormModel>> {
   try {
     const user = await GetAuthUser();
     if (!user.success) {
@@ -26,7 +25,7 @@ export async function CreateExpense(
       throw new Error("Parse Error");
     }
 
-    const expense: DynamicFormOutputtModel = parsedData.data;
+    const expense: DynamicFormModel = parsedData.data;
 
     const res = await prisma.expense.create({
       data: {
@@ -136,6 +135,7 @@ export async function GetUserExpenses(): Promise<
             ...common,
             expense_type: ExpenseType.GROCERY,
             // 💡 Correctly access the nested relational object
+            curr_amount: item.stock?.curr_amount ?? 0,
             min_amount: item.stock?.min_amount ?? 0,
           };
 
