@@ -49,6 +49,10 @@ function Navbar() {
               <Package size={20} />
               <p>Expense</p>
             </a>
+            <a href="/dashboard/stock" className="nav-item-base">
+              <ShoppingBasket size={20} />
+              <p>Stock</p>
+            </a>
             <a href="/dashboard/transaction" className="nav-item-base">
               <Landmark size={20} />
               <p>Transaction</p>

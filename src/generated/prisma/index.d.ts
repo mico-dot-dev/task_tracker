@@ -6120,6 +6120,7 @@ export namespace Prisma {
     description: string | null
     expense_type: $Enums.ExpenseType | null
     user_id: string | null
+    is_archived: boolean | null
   }
 
   export type ExpenseMaxAggregateOutputType = {
@@ -6129,6 +6130,7 @@ export namespace Prisma {
     description: string | null
     expense_type: $Enums.ExpenseType | null
     user_id: string | null
+    is_archived: boolean | null
   }
 
   export type ExpenseCountAggregateOutputType = {
@@ -6138,6 +6140,7 @@ export namespace Prisma {
     description: number
     expense_type: number
     user_id: number
+    is_archived: number
     _all: number
   }
 
@@ -6157,6 +6160,7 @@ export namespace Prisma {
     description?: true
     expense_type?: true
     user_id?: true
+    is_archived?: true
   }
 
   export type ExpenseMaxAggregateInputType = {
@@ -6166,6 +6170,7 @@ export namespace Prisma {
     description?: true
     expense_type?: true
     user_id?: true
+    is_archived?: true
   }
 
   export type ExpenseCountAggregateInputType = {
@@ -6175,6 +6180,7 @@ export namespace Prisma {
     description?: true
     expense_type?: true
     user_id?: true
+    is_archived?: true
     _all?: true
   }
 
@@ -6271,6 +6277,7 @@ export namespace Prisma {
     description: string | null
     expense_type: $Enums.ExpenseType | null
     user_id: string | null
+    is_archived: boolean
     _count: ExpenseCountAggregateOutputType | null
     _avg: ExpenseAvgAggregateOutputType | null
     _sum: ExpenseSumAggregateOutputType | null
@@ -6299,6 +6306,7 @@ export namespace Prisma {
     description?: boolean
     expense_type?: boolean
     user_id?: boolean
+    is_archived?: boolean
     bill_expense?: boolean | expense$bill_expenseArgs<ExtArgs>
     stock?: boolean | expense$stockArgs<ExtArgs>
     transaction?: boolean | expense$transactionArgs<ExtArgs>
@@ -6313,6 +6321,7 @@ export namespace Prisma {
     description?: boolean
     expense_type?: boolean
     user_id?: boolean
+    is_archived?: boolean
   }, ExtArgs["result"]["expense"]>
 
   export type expenseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6322,6 +6331,7 @@ export namespace Prisma {
     description?: boolean
     expense_type?: boolean
     user_id?: boolean
+    is_archived?: boolean
   }, ExtArgs["result"]["expense"]>
 
   export type expenseSelectScalar = {
@@ -6331,9 +6341,10 @@ export namespace Prisma {
     description?: boolean
     expense_type?: boolean
     user_id?: boolean
+    is_archived?: boolean
   }
 
-  export type expenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "name" | "description" | "expense_type" | "user_id", ExtArgs["result"]["expense"]>
+  export type expenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "name" | "description" | "expense_type" | "user_id" | "is_archived", ExtArgs["result"]["expense"]>
   export type expenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill_expense?: boolean | expense$bill_expenseArgs<ExtArgs>
     stock?: boolean | expense$stockArgs<ExtArgs>
@@ -6359,6 +6370,7 @@ export namespace Prisma {
       description: string | null
       expense_type: $Enums.ExpenseType | null
       user_id: string | null
+      is_archived: boolean
     }, ExtArgs["result"]["expense"]>
     composites: {}
   }
@@ -6792,6 +6804,7 @@ export namespace Prisma {
     readonly description: FieldRef<"expense", 'String'>
     readonly expense_type: FieldRef<"expense", 'ExpenseType'>
     readonly user_id: FieldRef<"expense", 'String'>
+    readonly is_archived: FieldRef<"expense", 'Boolean'>
   }
     
 
@@ -8426,6 +8439,7 @@ export namespace Prisma {
     amount: number | null
     price: number | null
     status: $Enums.TransactionStatus | null
+    repeat_at: Date | null
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -8435,6 +8449,7 @@ export namespace Prisma {
     amount: number | null
     price: number | null
     status: $Enums.TransactionStatus | null
+    repeat_at: Date | null
   }
 
   export type TransactionCountAggregateOutputType = {
@@ -8444,6 +8459,7 @@ export namespace Prisma {
     amount: number
     price: number
     status: number
+    repeat_at: number
     _all: number
   }
 
@@ -8469,6 +8485,7 @@ export namespace Prisma {
     amount?: true
     price?: true
     status?: true
+    repeat_at?: true
   }
 
   export type TransactionMaxAggregateInputType = {
@@ -8478,6 +8495,7 @@ export namespace Prisma {
     amount?: true
     price?: true
     status?: true
+    repeat_at?: true
   }
 
   export type TransactionCountAggregateInputType = {
@@ -8487,6 +8505,7 @@ export namespace Prisma {
     amount?: true
     price?: true
     status?: true
+    repeat_at?: true
     _all?: true
   }
 
@@ -8580,9 +8599,10 @@ export namespace Prisma {
     id: bigint
     created_at: Date
     expense_id: bigint | null
-    amount: number | null
+    amount: number
     price: number | null
     status: $Enums.TransactionStatus | null
+    repeat_at: Date | null
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
     _sum: TransactionSumAggregateOutputType | null
@@ -8611,6 +8631,7 @@ export namespace Prisma {
     amount?: boolean
     price?: boolean
     status?: boolean
+    repeat_at?: boolean
     expense?: boolean | transaction$expenseArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -8621,6 +8642,7 @@ export namespace Prisma {
     amount?: boolean
     price?: boolean
     status?: boolean
+    repeat_at?: boolean
     expense?: boolean | transaction$expenseArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -8631,6 +8653,7 @@ export namespace Prisma {
     amount?: boolean
     price?: boolean
     status?: boolean
+    repeat_at?: boolean
     expense?: boolean | transaction$expenseArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -8641,9 +8664,10 @@ export namespace Prisma {
     amount?: boolean
     price?: boolean
     status?: boolean
+    repeat_at?: boolean
   }
 
-  export type transactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "expense_id" | "amount" | "price" | "status", ExtArgs["result"]["transaction"]>
+  export type transactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "expense_id" | "amount" | "price" | "status" | "repeat_at", ExtArgs["result"]["transaction"]>
   export type transactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     expense?: boolean | transaction$expenseArgs<ExtArgs>
   }
@@ -8663,9 +8687,10 @@ export namespace Prisma {
       id: bigint
       created_at: Date
       expense_id: bigint | null
-      amount: number | null
+      amount: number
       price: number | null
       status: $Enums.TransactionStatus | null
+      repeat_at: Date | null
     }, ExtArgs["result"]["transaction"]>
     composites: {}
   }
@@ -9096,6 +9121,7 @@ export namespace Prisma {
     readonly amount: FieldRef<"transaction", 'Int'>
     readonly price: FieldRef<"transaction", 'Float'>
     readonly status: FieldRef<"transaction", 'TransactionStatus'>
+    readonly repeat_at: FieldRef<"transaction", 'DateTime'>
   }
     
 
@@ -10688,7 +10714,8 @@ export namespace Prisma {
     name: 'name',
     description: 'description',
     expense_type: 'expense_type',
-    user_id: 'user_id'
+    user_id: 'user_id',
+    is_archived: 'is_archived'
   };
 
   export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
@@ -10711,7 +10738,8 @@ export namespace Prisma {
     expense_id: 'expense_id',
     amount: 'amount',
     price: 'price',
-    status: 'status'
+    status: 'status',
+    repeat_at: 'repeat_at'
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -11121,6 +11149,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"expense"> | string | null
     expense_type?: EnumExpenseTypeNullableFilter<"expense"> | $Enums.ExpenseType | null
     user_id?: UuidNullableFilter<"expense"> | string | null
+    is_archived?: BoolFilter<"expense"> | boolean
     bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
     stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
     transaction?: TransactionListRelationFilter
@@ -11134,6 +11163,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     expense_type?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
+    is_archived?: SortOrder
     bill_expense?: bill_expenseOrderByWithRelationInput
     stock?: stockOrderByWithRelationInput
     transaction?: transactionOrderByRelationAggregateInput
@@ -11150,6 +11180,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"expense"> | string | null
     expense_type?: EnumExpenseTypeNullableFilter<"expense"> | $Enums.ExpenseType | null
     user_id?: UuidNullableFilter<"expense"> | string | null
+    is_archived?: BoolFilter<"expense"> | boolean
     bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
     stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
     transaction?: TransactionListRelationFilter
@@ -11163,6 +11194,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     expense_type?: SortOrderInput | SortOrder
     user_id?: SortOrderInput | SortOrder
+    is_archived?: SortOrder
     _count?: expenseCountOrderByAggregateInput
     _avg?: expenseAvgOrderByAggregateInput
     _max?: expenseMaxOrderByAggregateInput
@@ -11180,6 +11212,7 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"expense"> | string | null
     expense_type?: EnumExpenseTypeNullableWithAggregatesFilter<"expense"> | $Enums.ExpenseType | null
     user_id?: UuidNullableWithAggregatesFilter<"expense"> | string | null
+    is_archived?: BoolWithAggregatesFilter<"expense"> | boolean
   }
 
   export type stockWhereInput = {
@@ -11246,9 +11279,10 @@ export namespace Prisma {
     id?: BigIntFilter<"transaction"> | bigint | number
     created_at?: DateTimeFilter<"transaction"> | Date | string
     expense_id?: BigIntNullableFilter<"transaction"> | bigint | number | null
-    amount?: IntNullableFilter<"transaction"> | number | null
+    amount?: IntFilter<"transaction"> | number
     price?: FloatNullableFilter<"transaction"> | number | null
     status?: EnumTransactionStatusNullableFilter<"transaction"> | $Enums.TransactionStatus | null
+    repeat_at?: DateTimeNullableFilter<"transaction"> | Date | string | null
     expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
   }
 
@@ -11256,9 +11290,10 @@ export namespace Prisma {
     id?: SortOrder
     created_at?: SortOrder
     expense_id?: SortOrderInput | SortOrder
-    amount?: SortOrderInput | SortOrder
+    amount?: SortOrder
     price?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    repeat_at?: SortOrderInput | SortOrder
     expense?: expenseOrderByWithRelationInput
   }
 
@@ -11269,9 +11304,10 @@ export namespace Prisma {
     NOT?: transactionWhereInput | transactionWhereInput[]
     created_at?: DateTimeFilter<"transaction"> | Date | string
     expense_id?: BigIntNullableFilter<"transaction"> | bigint | number | null
-    amount?: IntNullableFilter<"transaction"> | number | null
+    amount?: IntFilter<"transaction"> | number
     price?: FloatNullableFilter<"transaction"> | number | null
     status?: EnumTransactionStatusNullableFilter<"transaction"> | $Enums.TransactionStatus | null
+    repeat_at?: DateTimeNullableFilter<"transaction"> | Date | string | null
     expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
   }, "id">
 
@@ -11279,9 +11315,10 @@ export namespace Prisma {
     id?: SortOrder
     created_at?: SortOrder
     expense_id?: SortOrderInput | SortOrder
-    amount?: SortOrderInput | SortOrder
+    amount?: SortOrder
     price?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    repeat_at?: SortOrderInput | SortOrder
     _count?: transactionCountOrderByAggregateInput
     _avg?: transactionAvgOrderByAggregateInput
     _max?: transactionMaxOrderByAggregateInput
@@ -11296,9 +11333,10 @@ export namespace Prisma {
     id?: BigIntWithAggregatesFilter<"transaction"> | bigint | number
     created_at?: DateTimeWithAggregatesFilter<"transaction"> | Date | string
     expense_id?: BigIntNullableWithAggregatesFilter<"transaction"> | bigint | number | null
-    amount?: IntNullableWithAggregatesFilter<"transaction"> | number | null
+    amount?: IntWithAggregatesFilter<"transaction"> | number
     price?: FloatNullableWithAggregatesFilter<"transaction"> | number | null
     status?: EnumTransactionStatusNullableWithAggregatesFilter<"transaction"> | $Enums.TransactionStatus | null
+    repeat_at?: DateTimeNullableWithAggregatesFilter<"transaction"> | Date | string | null
   }
 
   export type transportation_expenseWhereInput = {
@@ -11600,6 +11638,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
@@ -11613,6 +11652,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
@@ -11626,6 +11666,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
@@ -11639,6 +11680,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
@@ -11652,6 +11694,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
   }
 
   export type expenseUpdateManyMutationInput = {
@@ -11661,6 +11704,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type expenseUncheckedUpdateManyInput = {
@@ -11670,6 +11714,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type stockCreateInput = {
@@ -11730,9 +11775,10 @@ export namespace Prisma {
   export type transactionCreateInput = {
     id?: bigint | number
     created_at?: Date | string
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
     expense?: expenseCreateNestedOneWithoutTransactionInput
   }
 
@@ -11740,17 +11786,19 @@ export namespace Prisma {
     id?: bigint | number
     created_at?: Date | string
     expense_id?: bigint | number | null
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
   }
 
   export type transactionUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expense?: expenseUpdateOneWithoutTransactionNestedInput
   }
 
@@ -11758,35 +11806,39 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type transactionCreateManyInput = {
     id?: bigint | number
     created_at?: Date | string
     expense_id?: bigint | number | null
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
   }
 
   export type transactionUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type transactionUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type transportation_expenseCreateInput = {
@@ -12328,6 +12380,7 @@ export namespace Prisma {
     description?: SortOrder
     expense_type?: SortOrder
     user_id?: SortOrder
+    is_archived?: SortOrder
   }
 
   export type expenseAvgOrderByAggregateInput = {
@@ -12341,6 +12394,7 @@ export namespace Prisma {
     description?: SortOrder
     expense_type?: SortOrder
     user_id?: SortOrder
+    is_archived?: SortOrder
   }
 
   export type expenseMinOrderByAggregateInput = {
@@ -12350,6 +12404,7 @@ export namespace Prisma {
     description?: SortOrder
     expense_type?: SortOrder
     user_id?: SortOrder
+    is_archived?: SortOrder
   }
 
   export type expenseSumOrderByAggregateInput = {
@@ -12449,6 +12504,7 @@ export namespace Prisma {
     amount?: SortOrder
     price?: SortOrder
     status?: SortOrder
+    repeat_at?: SortOrder
   }
 
   export type transactionAvgOrderByAggregateInput = {
@@ -12465,6 +12521,7 @@ export namespace Prisma {
     amount?: SortOrder
     price?: SortOrder
     status?: SortOrder
+    repeat_at?: SortOrder
   }
 
   export type transactionMinOrderByAggregateInput = {
@@ -12474,6 +12531,7 @@ export namespace Prisma {
     amount?: SortOrder
     price?: SortOrder
     status?: SortOrder
+    repeat_at?: SortOrder
   }
 
   export type transactionSumOrderByAggregateInput = {
@@ -13372,6 +13430,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
@@ -13384,6 +13443,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
@@ -13412,6 +13472,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
@@ -13424,6 +13485,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
@@ -13470,17 +13532,19 @@ export namespace Prisma {
   export type transactionCreateWithoutExpenseInput = {
     id?: bigint | number
     created_at?: Date | string
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
   }
 
   export type transactionUncheckedCreateWithoutExpenseInput = {
     id?: bigint | number
     created_at?: Date | string
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
   }
 
   export type transactionCreateOrConnectWithoutExpenseInput = {
@@ -13583,9 +13647,10 @@ export namespace Prisma {
     id?: BigIntFilter<"transaction"> | bigint | number
     created_at?: DateTimeFilter<"transaction"> | Date | string
     expense_id?: BigIntNullableFilter<"transaction"> | bigint | number | null
-    amount?: IntNullableFilter<"transaction"> | number | null
+    amount?: IntFilter<"transaction"> | number
     price?: FloatNullableFilter<"transaction"> | number | null
     status?: EnumTransactionStatusNullableFilter<"transaction"> | $Enums.TransactionStatus | null
+    repeat_at?: DateTimeNullableFilter<"transaction"> | Date | string | null
   }
 
   export type transportation_expenseUpsertWithoutExpenseInput = {
@@ -13618,6 +13683,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
@@ -13630,6 +13696,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
@@ -13658,6 +13725,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
@@ -13670,6 +13738,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
@@ -13682,6 +13751,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
@@ -13694,6 +13764,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
@@ -13722,6 +13793,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
@@ -13734,6 +13806,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
@@ -13746,6 +13819,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
@@ -13758,6 +13832,7 @@ export namespace Prisma {
     description?: string | null
     expense_type?: $Enums.ExpenseType | null
     user_id?: string | null
+    is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
@@ -13786,6 +13861,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
@@ -13798,6 +13874,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
@@ -13854,33 +13931,37 @@ export namespace Prisma {
   export type transactionCreateManyExpenseInput = {
     id?: bigint | number
     created_at?: Date | string
-    amount?: number | null
+    amount?: number
     price?: number | null
     status?: $Enums.TransactionStatus | null
+    repeat_at?: Date | string | null
   }
 
   export type transactionUpdateWithoutExpenseInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type transactionUncheckedUpdateWithoutExpenseInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type transactionUncheckedUpdateManyWithoutExpenseInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    amount?: NullableIntFieldUpdateOperationsInput | number | null
+    amount?: IntFieldUpdateOperationsInput | number
     price?: NullableFloatFieldUpdateOperationsInput | number | null
     status?: NullableEnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus | null
+    repeat_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

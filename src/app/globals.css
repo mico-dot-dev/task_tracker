@@ -19,16 +19,18 @@
   --color-focus: #eab308;
   --color-active: #8b5cf6;
 
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
-  --color-info: var(--info);
+  /* Status Types */
+  --color-text-success: #34d399;
+  --color-text-warning: #fb923c;
+  --color-text-error: #f87171;
+  --color-text-info: #38bdf8;
 
-  /* For Categories */
-  --color-priority: #ff5e5e;
-  --color-Today: #ffbf47;
-  --color-Week: #47ffc5;
-  --color-Other: #94a3b8;
+  /* Expense Categories */
+  --color-a: #ff5e5e;
+
+  /* Transaction Status */
+  --color-text-pending: #fbbf24;
+  --color-text-cancelled: #f87171;
 }
 
 :root {

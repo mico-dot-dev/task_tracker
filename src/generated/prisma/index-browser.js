@@ -160,7 +160,8 @@ exports.Prisma.ExpenseScalarFieldEnum = {
   name: 'name',
   description: 'description',
   expense_type: 'expense_type',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  is_archived: 'is_archived'
 };
 
 exports.Prisma.StockScalarFieldEnum = {
@@ -177,7 +178,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   expense_id: 'expense_id',
   amount: 'amount',
   price: 'price',
-  status: 'status'
+  status: 'status',
+  repeat_at: 'repeat_at'
 };
 
 exports.Prisma.Transportation_expenseScalarFieldEnum = {
