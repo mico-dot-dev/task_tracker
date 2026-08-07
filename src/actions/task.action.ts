@@ -21,12 +21,6 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       return { success: false, error: "User not authenticated" };
     }
 
-    if (!user.success) {
-      return {
-        success: false,
-        error: "User not authenticated",
-      };
-    }
     const rawTaskData = await prisma.task_category.findMany({
       where: { user_id: user.data.user },
       select: {
