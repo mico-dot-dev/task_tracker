@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StockModel } from "@/src/types/stock";
 import { GetUserStock, ManageStockAmount } from "@/src/actions/stock.action";
 import { Plus, Minus } from "lucide-react";
@@ -9,14 +9,24 @@ function StockList() {
   const [userStock, setUserStock] = useState<StockModel[]>([]);
   const [err, setErr] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchUserStock() {
-      const stockData = await GetUserStock();
-      if (stockData.success) setUserStock(stockData.data);
-      else setErr(stockData.error);
-    }
-    fetchUserStock();
+  const fetchUserStock = useCallback(async () => {
+    const stockData = await GetUserStock();
+    if (stockData.success) setUserStock(stockData.data);
+    else setErr(stockData.error);
   }, []);
+
+  useEffect(() => {
+    fetchUserStock();
+  }, [fetchUserStock]);
+
+  function handleStockUpdate(
+    method: "increment" | "decrement",
+    stock: StockModel,
+  ) {
+    ManageStockAmount(stock, method).then(() => {
+      fetchUserStock();
+    });
+  }
 
   if (err) {
     return <div>Error fetching stock data: {err}</div>;
@@ -49,17 +59,13 @@ function StockList() {
               <div className="flex gap-5">
                 <button
                   className="button-base"
-                  onClick={async () =>
-                    await ManageStockAmount(stock, "increment")
-                  }
+                  onClick={() => handleStockUpdate("increment", stock)}
                 >
                   <Plus />
                 </button>
                 <button
                   className="button-base"
-                  onClick={async () =>
-                    await ManageStockAmount(stock, "decrement")
-                  }
+                  onClick={() => handleStockUpdate("decrement", stock)}
                 >
                   <Minus />
                 </button>
