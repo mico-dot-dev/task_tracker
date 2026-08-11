@@ -11051,14 +11051,14 @@ export namespace Prisma {
 
   export type task_categoryWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    title?: string
     AND?: task_categoryWhereInput | task_categoryWhereInput[]
     OR?: task_categoryWhereInput[]
     NOT?: task_categoryWhereInput | task_categoryWhereInput[]
     created_at?: DateTimeFilter<"task_category"> | Date | string
-    title?: StringFilter<"task_category"> | string
     user_id?: UuidFilter<"task_category"> | string
     task?: TaskListRelationFilter
-  }, "id">
+  }, "id" | "title">
 
   export type task_categoryOrderByWithAggregationInput = {
     id?: SortOrder

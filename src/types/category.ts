@@ -12,4 +12,4 @@ export const CategoryListSchema = CategorySchema.extend({
 });
 
 export type CategoryFormModel = z.input<typeof CategorySchema>;
-export type CategoryListModel = z.input<typeof CategoryListSchema>;
+export type CategoryListModel = z.output<typeof CategoryListSchema>;

@@ -46,6 +46,9 @@ export async function CreateExpense(
             running_bill: expense.running_bill || 0,
           },
         });
+
+        if (expense.repeating_type !== DateRepeatType.MANUAL) {
+        }
         break;
       case ExpenseType.TRANSPORTATION:
         const costList: number[] = expense.cost_list.map(
