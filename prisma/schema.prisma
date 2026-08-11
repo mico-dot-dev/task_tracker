@@ -32,8 +32,11 @@ model task {
   due_date         DateTime?       @db.Timestamptz(6)
   task_category_id BigInt?
   repeating_type   DateRepeatType?
+  expense_id       BigInt?
+  expense          expense?        @relation(fields: [expense_id], references: [id], onDelete: Cascade)
   task_category    task_category?  @relation(fields: [task_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
+  @@unique([expense_id, completed], map: "expense_completed_unique")
   @@schema("public")
 }
 
@@ -71,6 +74,7 @@ model expense {
   is_archived            Boolean                 @default(false)
   bill_expense           bill_expense?
   stock                  stock?
+  task                   task[]
   transaction            transaction[]
   transportation_expense transportation_expense?
 

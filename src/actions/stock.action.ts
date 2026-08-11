@@ -62,6 +62,16 @@ export async function ManageStockAmount(
       where: {
         id: parseInt(stock.id),
       },
+      select: {
+        curr_amount: true,
+        min_amount: true,
+        expense: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
       data: {
         curr_amount:
           action === "increment"
@@ -74,45 +84,57 @@ export async function ManageStockAmount(
       throw new Error("Failed to update stock amount");
     }
 
-    if (updatedStock.curr_amount < updatedStock.min_amount) {
-      const stockTaskCategory = await prisma.task_category.findUnique({
-        where: {
-          title: "Home",
-        },
-      });
+    const stockTaskCategory = await prisma.task_category.findUnique({
+      where: {
+        title: "Home",
+      },
+    });
 
-      if (!stockTaskCategory) throw new Error("Stock task category not found");
+    if (!stockTaskCategory) throw new Error("Stock task category not found");
 
-      const updateTask: TaskFormModelOutput = {
-        title: "Buy " + stock.name,
-        description: "",
-        category_id: Number(stockTaskCategory.id),
+    const updateTask: TaskFormModelOutput = {
+      title: "Buy " + updatedStock.expense.name,
+      description: "",
+      category_id: Number(stockTaskCategory.id),
+      completed: false,
+      priority_level: 0,
+      repeating_type: "MANUAL",
+      expense_id: Number(updatedStock.expense.id),
+    };
+
+    const existingTask = await prisma.task.findFirst({
+      where: {
+        expense_id: Number(updatedStock.expense.id),
         completed: false,
-        priority_level: 0,
-        repeating_type: "MANUAL",
-      };
+      },
+    });
 
-      const existingTask = await prisma.task.findFirst({
+    console.log("Existing Task:", existingTask);
+
+    if (existingTask && updatedStock.curr_amount >= updatedStock.min_amount) {
+      await prisma.task.updateMany({
         where: {
-          title: updateTask.title,
-          completed: false,
+          id: existingTask.id,
+        },
+        data: {
+          completed: true,
         },
       });
-
-      if (existingTask) {
-        return;
-      } else {
-        await prisma.task.create({
-          data: {
-            title: updateTask.title,
-            description: updateTask.description,
-            task_category_id: updateTask.category_id,
-            completed: updateTask.completed,
-            priority_level: updateTask.priority_level,
-            repeating_type: updateTask.repeating_type,
-          },
-        });
-      }
+    } else if (
+      !existingTask &&
+      updatedStock.curr_amount < updatedStock.min_amount
+    ) {
+      await prisma.task.create({
+        data: {
+          title: updateTask.title,
+          description: updateTask.description,
+          task_category_id: updateTask.category_id,
+          completed: updateTask.completed,
+          priority_level: updateTask.priority_level,
+          repeating_type: updateTask.repeating_type,
+          expense_id: updateTask.expense_id,
+        },
+      });
     }
   } catch (err) {
     console.error("[ManageStockAmount Failure]:", {

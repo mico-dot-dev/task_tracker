@@ -23,6 +23,7 @@ export const TaskListSchema = TaskSchema.extend({
 
 export const TaskFormSchema = TaskSchema.extend({
   category_id: z.number().int(),
+  expense_id: z.number().int().optional(),
 });
 
 export type TaskListModel = z.infer<typeof TaskListSchema>;

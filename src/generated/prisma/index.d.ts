@@ -1699,10 +1699,12 @@ export namespace Prisma {
    */
 
   export type ExpenseCountOutputType = {
+    task: number
     transaction: number
   }
 
   export type ExpenseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | ExpenseCountOutputTypeCountTaskArgs
     transaction?: boolean | ExpenseCountOutputTypeCountTransactionArgs
   }
 
@@ -1715,6 +1717,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the ExpenseCountOutputType
      */
     select?: ExpenseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ExpenseCountOutputType without action
+   */
+  export type ExpenseCountOutputTypeCountTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: taskWhereInput
   }
 
   /**
@@ -2719,12 +2728,14 @@ export namespace Prisma {
     id: number | null
     priority_level: number | null
     task_category_id: number | null
+    expense_id: number | null
   }
 
   export type TaskSumAggregateOutputType = {
     id: bigint | null
     priority_level: number | null
     task_category_id: bigint | null
+    expense_id: bigint | null
   }
 
   export type TaskMinAggregateOutputType = {
@@ -2738,6 +2749,7 @@ export namespace Prisma {
     due_date: Date | null
     task_category_id: bigint | null
     repeating_type: $Enums.DateRepeatType | null
+    expense_id: bigint | null
   }
 
   export type TaskMaxAggregateOutputType = {
@@ -2751,6 +2763,7 @@ export namespace Prisma {
     due_date: Date | null
     task_category_id: bigint | null
     repeating_type: $Enums.DateRepeatType | null
+    expense_id: bigint | null
   }
 
   export type TaskCountAggregateOutputType = {
@@ -2764,6 +2777,7 @@ export namespace Prisma {
     due_date: number
     task_category_id: number
     repeating_type: number
+    expense_id: number
     _all: number
   }
 
@@ -2772,12 +2786,14 @@ export namespace Prisma {
     id?: true
     priority_level?: true
     task_category_id?: true
+    expense_id?: true
   }
 
   export type TaskSumAggregateInputType = {
     id?: true
     priority_level?: true
     task_category_id?: true
+    expense_id?: true
   }
 
   export type TaskMinAggregateInputType = {
@@ -2791,6 +2807,7 @@ export namespace Prisma {
     due_date?: true
     task_category_id?: true
     repeating_type?: true
+    expense_id?: true
   }
 
   export type TaskMaxAggregateInputType = {
@@ -2804,6 +2821,7 @@ export namespace Prisma {
     due_date?: true
     task_category_id?: true
     repeating_type?: true
+    expense_id?: true
   }
 
   export type TaskCountAggregateInputType = {
@@ -2817,6 +2835,7 @@ export namespace Prisma {
     due_date?: true
     task_category_id?: true
     repeating_type?: true
+    expense_id?: true
     _all?: true
   }
 
@@ -2917,6 +2936,7 @@ export namespace Prisma {
     due_date: Date | null
     task_category_id: bigint | null
     repeating_type: $Enums.DateRepeatType | null
+    expense_id: bigint | null
     _count: TaskCountAggregateOutputType | null
     _avg: TaskAvgAggregateOutputType | null
     _sum: TaskSumAggregateOutputType | null
@@ -2949,6 +2969,8 @@ export namespace Prisma {
     due_date?: boolean
     task_category_id?: boolean
     repeating_type?: boolean
+    expense_id?: boolean
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -2963,6 +2985,8 @@ export namespace Prisma {
     due_date?: boolean
     task_category_id?: boolean
     repeating_type?: boolean
+    expense_id?: boolean
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -2977,6 +3001,8 @@ export namespace Prisma {
     due_date?: boolean
     task_category_id?: boolean
     repeating_type?: boolean
+    expense_id?: boolean
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -2991,22 +3017,27 @@ export namespace Prisma {
     due_date?: boolean
     task_category_id?: boolean
     repeating_type?: boolean
+    expense_id?: boolean
   }
 
-  export type taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "description" | "completed" | "completed_at" | "title" | "priority_level" | "due_date" | "task_category_id" | "repeating_type", ExtArgs["result"]["task"]>
+  export type taskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "description" | "completed" | "completed_at" | "title" | "priority_level" | "due_date" | "task_category_id" | "repeating_type" | "expense_id", ExtArgs["result"]["task"]>
   export type taskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }
   export type taskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }
   export type taskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expense?: boolean | task$expenseArgs<ExtArgs>
     task_category?: boolean | task$task_categoryArgs<ExtArgs>
   }
 
   export type $taskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "task"
     objects: {
+      expense: Prisma.$expensePayload<ExtArgs> | null
       task_category: Prisma.$task_categoryPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3020,6 +3051,7 @@ export namespace Prisma {
       due_date: Date | null
       task_category_id: bigint | null
       repeating_type: $Enums.DateRepeatType | null
+      expense_id: bigint | null
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
@@ -3414,6 +3446,7 @@ export namespace Prisma {
    */
   export interface Prisma__taskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    expense<T extends task$expenseArgs<ExtArgs> = {}>(args?: Subset<T, task$expenseArgs<ExtArgs>>): Prisma__expenseClient<$Result.GetResult<Prisma.$expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     task_category<T extends task$task_categoryArgs<ExtArgs> = {}>(args?: Subset<T, task$task_categoryArgs<ExtArgs>>): Prisma__task_categoryClient<$Result.GetResult<Prisma.$task_categoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3454,6 +3487,7 @@ export namespace Prisma {
     readonly due_date: FieldRef<"task", 'DateTime'>
     readonly task_category_id: FieldRef<"task", 'BigInt'>
     readonly repeating_type: FieldRef<"task", 'DateRepeatType'>
+    readonly expense_id: FieldRef<"task", 'BigInt'>
   }
     
 
@@ -3852,6 +3886,25 @@ export namespace Prisma {
      * Limit how many tasks to delete.
      */
     limit?: number
+  }
+
+  /**
+   * task.expense
+   */
+  export type task$expenseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the expense
+     */
+    select?: expenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the expense
+     */
+    omit?: expenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: expenseInclude<ExtArgs> | null
+    where?: expenseWhereInput
   }
 
   /**
@@ -6309,6 +6362,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: boolean | expense$bill_expenseArgs<ExtArgs>
     stock?: boolean | expense$stockArgs<ExtArgs>
+    task?: boolean | expense$taskArgs<ExtArgs>
     transaction?: boolean | expense$transactionArgs<ExtArgs>
     transportation_expense?: boolean | expense$transportation_expenseArgs<ExtArgs>
     _count?: boolean | ExpenseCountOutputTypeDefaultArgs<ExtArgs>
@@ -6348,6 +6402,7 @@ export namespace Prisma {
   export type expenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bill_expense?: boolean | expense$bill_expenseArgs<ExtArgs>
     stock?: boolean | expense$stockArgs<ExtArgs>
+    task?: boolean | expense$taskArgs<ExtArgs>
     transaction?: boolean | expense$transactionArgs<ExtArgs>
     transportation_expense?: boolean | expense$transportation_expenseArgs<ExtArgs>
     _count?: boolean | ExpenseCountOutputTypeDefaultArgs<ExtArgs>
@@ -6360,6 +6415,7 @@ export namespace Prisma {
     objects: {
       bill_expense: Prisma.$bill_expensePayload<ExtArgs> | null
       stock: Prisma.$stockPayload<ExtArgs> | null
+      task: Prisma.$taskPayload<ExtArgs>[]
       transaction: Prisma.$transactionPayload<ExtArgs>[]
       transportation_expense: Prisma.$transportation_expensePayload<ExtArgs> | null
     }
@@ -6767,6 +6823,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     bill_expense<T extends expense$bill_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$bill_expenseArgs<ExtArgs>>): Prisma__bill_expenseClient<$Result.GetResult<Prisma.$bill_expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     stock<T extends expense$stockArgs<ExtArgs> = {}>(args?: Subset<T, expense$stockArgs<ExtArgs>>): Prisma__stockClient<$Result.GetResult<Prisma.$stockPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    task<T extends expense$taskArgs<ExtArgs> = {}>(args?: Subset<T, expense$taskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$taskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transaction<T extends expense$transactionArgs<ExtArgs> = {}>(args?: Subset<T, expense$transactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transportation_expense<T extends expense$transportation_expenseArgs<ExtArgs> = {}>(args?: Subset<T, expense$transportation_expenseArgs<ExtArgs>>): Prisma__transportation_expenseClient<$Result.GetResult<Prisma.$transportation_expensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -7233,6 +7290,30 @@ export namespace Prisma {
      */
     include?: stockInclude<ExtArgs> | null
     where?: stockWhereInput
+  }
+
+  /**
+   * expense.task
+   */
+  export type expense$taskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the task
+     */
+    select?: taskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the task
+     */
+    omit?: taskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: taskInclude<ExtArgs> | null
+    where?: taskWhereInput
+    orderBy?: taskOrderByWithRelationInput | taskOrderByWithRelationInput[]
+    cursor?: taskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -10681,7 +10762,8 @@ export namespace Prisma {
     priority_level: 'priority_level',
     due_date: 'due_date',
     task_category_id: 'task_category_id',
-    repeating_type: 'repeating_type'
+    repeating_type: 'repeating_type',
+    expense_id: 'expense_id'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -10962,6 +11044,8 @@ export namespace Prisma {
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
     repeating_type?: EnumDateRepeatTypeNullableFilter<"task"> | $Enums.DateRepeatType | null
+    expense_id?: BigIntNullableFilter<"task"> | bigint | number | null
+    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
     task_category?: XOR<Task_categoryNullableScalarRelationFilter, task_categoryWhereInput> | null
   }
 
@@ -10976,11 +11060,14 @@ export namespace Prisma {
     due_date?: SortOrderInput | SortOrder
     task_category_id?: SortOrderInput | SortOrder
     repeating_type?: SortOrderInput | SortOrder
+    expense_id?: SortOrderInput | SortOrder
+    expense?: expenseOrderByWithRelationInput
     task_category?: task_categoryOrderByWithRelationInput
   }
 
   export type taskWhereUniqueInput = Prisma.AtLeast<{
     id?: bigint | number
+    expense_id_completed?: taskExpense_idCompletedCompoundUniqueInput
     AND?: taskWhereInput | taskWhereInput[]
     OR?: taskWhereInput[]
     NOT?: taskWhereInput | taskWhereInput[]
@@ -10993,8 +11080,10 @@ export namespace Prisma {
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
     repeating_type?: EnumDateRepeatTypeNullableFilter<"task"> | $Enums.DateRepeatType | null
+    expense_id?: BigIntNullableFilter<"task"> | bigint | number | null
+    expense?: XOR<ExpenseNullableScalarRelationFilter, expenseWhereInput> | null
     task_category?: XOR<Task_categoryNullableScalarRelationFilter, task_categoryWhereInput> | null
-  }, "id">
+  }, "id" | "expense_id_completed">
 
   export type taskOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11007,6 +11096,7 @@ export namespace Prisma {
     due_date?: SortOrderInput | SortOrder
     task_category_id?: SortOrderInput | SortOrder
     repeating_type?: SortOrderInput | SortOrder
+    expense_id?: SortOrderInput | SortOrder
     _count?: taskCountOrderByAggregateInput
     _avg?: taskAvgOrderByAggregateInput
     _max?: taskMaxOrderByAggregateInput
@@ -11028,6 +11118,7 @@ export namespace Prisma {
     due_date?: DateTimeNullableWithAggregatesFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableWithAggregatesFilter<"task"> | bigint | number | null
     repeating_type?: EnumDateRepeatTypeNullableWithAggregatesFilter<"task"> | $Enums.DateRepeatType | null
+    expense_id?: BigIntNullableWithAggregatesFilter<"task"> | bigint | number | null
   }
 
   export type task_categoryWhereInput = {
@@ -11152,6 +11243,7 @@ export namespace Prisma {
     is_archived?: BoolFilter<"expense"> | boolean
     bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
     stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
+    task?: TaskListRelationFilter
     transaction?: TransactionListRelationFilter
     transportation_expense?: XOR<Transportation_expenseNullableScalarRelationFilter, transportation_expenseWhereInput> | null
   }
@@ -11166,6 +11258,7 @@ export namespace Prisma {
     is_archived?: SortOrder
     bill_expense?: bill_expenseOrderByWithRelationInput
     stock?: stockOrderByWithRelationInput
+    task?: taskOrderByRelationAggregateInput
     transaction?: transactionOrderByRelationAggregateInput
     transportation_expense?: transportation_expenseOrderByWithRelationInput
   }
@@ -11183,6 +11276,7 @@ export namespace Prisma {
     is_archived?: BoolFilter<"expense"> | boolean
     bill_expense?: XOR<Bill_expenseNullableScalarRelationFilter, bill_expenseWhereInput> | null
     stock?: XOR<StockNullableScalarRelationFilter, stockWhereInput> | null
+    task?: TaskListRelationFilter
     transaction?: TransactionListRelationFilter
     transportation_expense?: XOR<Transportation_expenseNullableScalarRelationFilter, transportation_expenseWhereInput> | null
   }, "id">
@@ -11443,6 +11537,7 @@ export namespace Prisma {
     priority_level?: number
     due_date?: Date | string | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense?: expenseCreateNestedOneWithoutTaskInput
     task_category?: task_categoryCreateNestedOneWithoutTaskInput
   }
 
@@ -11457,6 +11552,7 @@ export namespace Prisma {
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense_id?: bigint | number | null
   }
 
   export type taskUpdateInput = {
@@ -11469,6 +11565,7 @@ export namespace Prisma {
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense?: expenseUpdateOneWithoutTaskNestedInput
     task_category?: task_categoryUpdateOneWithoutTaskNestedInput
   }
 
@@ -11483,6 +11580,7 @@ export namespace Prisma {
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type taskCreateManyInput = {
@@ -11496,6 +11594,7 @@ export namespace Prisma {
     due_date?: Date | string | null
     task_category_id?: bigint | number | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense_id?: bigint | number | null
   }
 
   export type taskUpdateManyMutationInput = {
@@ -11521,6 +11620,7 @@ export namespace Prisma {
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type task_categoryCreateInput = {
@@ -11641,6 +11741,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
+    task?: taskCreateNestedManyWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
@@ -11655,6 +11756,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    task?: taskUncheckedCreateNestedManyWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
@@ -11669,6 +11771,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
+    task?: taskUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
@@ -11683,6 +11786,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    task?: taskUncheckedUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
@@ -12063,6 +12167,11 @@ export namespace Prisma {
     not?: NestedEnumDateRepeatTypeNullableFilter<$PrismaModel> | $Enums.DateRepeatType | null
   }
 
+  export type ExpenseNullableScalarRelationFilter = {
+    is?: expenseWhereInput | null
+    isNot?: expenseWhereInput | null
+  }
+
   export type Task_categoryNullableScalarRelationFilter = {
     is?: task_categoryWhereInput | null
     isNot?: task_categoryWhereInput | null
@@ -12071,6 +12180,11 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type taskExpense_idCompletedCompoundUniqueInput = {
+    expense_id: bigint | number
+    completed: boolean
   }
 
   export type taskCountOrderByAggregateInput = {
@@ -12084,12 +12198,14 @@ export namespace Prisma {
     due_date?: SortOrder
     task_category_id?: SortOrder
     repeating_type?: SortOrder
+    expense_id?: SortOrder
   }
 
   export type taskAvgOrderByAggregateInput = {
     id?: SortOrder
     priority_level?: SortOrder
     task_category_id?: SortOrder
+    expense_id?: SortOrder
   }
 
   export type taskMaxOrderByAggregateInput = {
@@ -12103,6 +12219,7 @@ export namespace Prisma {
     due_date?: SortOrder
     task_category_id?: SortOrder
     repeating_type?: SortOrder
+    expense_id?: SortOrder
   }
 
   export type taskMinOrderByAggregateInput = {
@@ -12116,12 +12233,14 @@ export namespace Prisma {
     due_date?: SortOrder
     task_category_id?: SortOrder
     repeating_type?: SortOrder
+    expense_id?: SortOrder
   }
 
   export type taskSumOrderByAggregateInput = {
     id?: SortOrder
     priority_level?: SortOrder
     task_category_id?: SortOrder
+    expense_id?: SortOrder
   }
 
   export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -12492,11 +12611,6 @@ export namespace Prisma {
     not?: NestedEnumTransactionStatusNullableFilter<$PrismaModel> | $Enums.TransactionStatus | null
   }
 
-  export type ExpenseNullableScalarRelationFilter = {
-    is?: expenseWhereInput | null
-    isNot?: expenseWhereInput | null
-  }
-
   export type transactionCountOrderByAggregateInput = {
     id?: SortOrder
     created_at?: SortOrder
@@ -12614,6 +12728,12 @@ export namespace Prisma {
     set?: string
   }
 
+  export type expenseCreateNestedOneWithoutTaskInput = {
+    create?: XOR<expenseCreateWithoutTaskInput, expenseUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: expenseCreateOrConnectWithoutTaskInput
+    connect?: expenseWhereUniqueInput
+  }
+
   export type task_categoryCreateNestedOneWithoutTaskInput = {
     create?: XOR<task_categoryCreateWithoutTaskInput, task_categoryUncheckedCreateWithoutTaskInput>
     connectOrCreate?: task_categoryCreateOrConnectWithoutTaskInput
@@ -12650,6 +12770,16 @@ export namespace Prisma {
 
   export type NullableEnumDateRepeatTypeFieldUpdateOperationsInput = {
     set?: $Enums.DateRepeatType | null
+  }
+
+  export type expenseUpdateOneWithoutTaskNestedInput = {
+    create?: XOR<expenseCreateWithoutTaskInput, expenseUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: expenseCreateOrConnectWithoutTaskInput
+    upsert?: expenseUpsertWithoutTaskInput
+    disconnect?: expenseWhereInput | boolean
+    delete?: expenseWhereInput | boolean
+    connect?: expenseWhereUniqueInput
+    update?: XOR<XOR<expenseUpdateToOneWithWhereWithoutTaskInput, expenseUpdateWithoutTaskInput>, expenseUncheckedUpdateWithoutTaskInput>
   }
 
   export type task_categoryUpdateOneWithoutTaskNestedInput = {
@@ -12746,6 +12876,13 @@ export namespace Prisma {
     connect?: stockWhereUniqueInput
   }
 
+  export type taskCreateNestedManyWithoutExpenseInput = {
+    create?: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput> | taskCreateWithoutExpenseInput[] | taskUncheckedCreateWithoutExpenseInput[]
+    connectOrCreate?: taskCreateOrConnectWithoutExpenseInput | taskCreateOrConnectWithoutExpenseInput[]
+    createMany?: taskCreateManyExpenseInputEnvelope
+    connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+  }
+
   export type transactionCreateNestedManyWithoutExpenseInput = {
     create?: XOR<transactionCreateWithoutExpenseInput, transactionUncheckedCreateWithoutExpenseInput> | transactionCreateWithoutExpenseInput[] | transactionUncheckedCreateWithoutExpenseInput[]
     connectOrCreate?: transactionCreateOrConnectWithoutExpenseInput | transactionCreateOrConnectWithoutExpenseInput[]
@@ -12769,6 +12906,13 @@ export namespace Prisma {
     create?: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
     connectOrCreate?: stockCreateOrConnectWithoutExpenseInput
     connect?: stockWhereUniqueInput
+  }
+
+  export type taskUncheckedCreateNestedManyWithoutExpenseInput = {
+    create?: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput> | taskCreateWithoutExpenseInput[] | taskUncheckedCreateWithoutExpenseInput[]
+    connectOrCreate?: taskCreateOrConnectWithoutExpenseInput | taskCreateOrConnectWithoutExpenseInput[]
+    createMany?: taskCreateManyExpenseInputEnvelope
+    connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
   }
 
   export type transactionUncheckedCreateNestedManyWithoutExpenseInput = {
@@ -12806,6 +12950,20 @@ export namespace Prisma {
     delete?: stockWhereInput | boolean
     connect?: stockWhereUniqueInput
     update?: XOR<XOR<stockUpdateToOneWithWhereWithoutExpenseInput, stockUpdateWithoutExpenseInput>, stockUncheckedUpdateWithoutExpenseInput>
+  }
+
+  export type taskUpdateManyWithoutExpenseNestedInput = {
+    create?: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput> | taskCreateWithoutExpenseInput[] | taskUncheckedCreateWithoutExpenseInput[]
+    connectOrCreate?: taskCreateOrConnectWithoutExpenseInput | taskCreateOrConnectWithoutExpenseInput[]
+    upsert?: taskUpsertWithWhereUniqueWithoutExpenseInput | taskUpsertWithWhereUniqueWithoutExpenseInput[]
+    createMany?: taskCreateManyExpenseInputEnvelope
+    set?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    disconnect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    delete?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    update?: taskUpdateWithWhereUniqueWithoutExpenseInput | taskUpdateWithWhereUniqueWithoutExpenseInput[]
+    updateMany?: taskUpdateManyWithWhereWithoutExpenseInput | taskUpdateManyWithWhereWithoutExpenseInput[]
+    deleteMany?: taskScalarWhereInput | taskScalarWhereInput[]
   }
 
   export type transactionUpdateManyWithoutExpenseNestedInput = {
@@ -12850,6 +13008,20 @@ export namespace Prisma {
     delete?: stockWhereInput | boolean
     connect?: stockWhereUniqueInput
     update?: XOR<XOR<stockUpdateToOneWithWhereWithoutExpenseInput, stockUpdateWithoutExpenseInput>, stockUncheckedUpdateWithoutExpenseInput>
+  }
+
+  export type taskUncheckedUpdateManyWithoutExpenseNestedInput = {
+    create?: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput> | taskCreateWithoutExpenseInput[] | taskUncheckedCreateWithoutExpenseInput[]
+    connectOrCreate?: taskCreateOrConnectWithoutExpenseInput | taskCreateOrConnectWithoutExpenseInput[]
+    upsert?: taskUpsertWithWhereUniqueWithoutExpenseInput | taskUpsertWithWhereUniqueWithoutExpenseInput[]
+    createMany?: taskCreateManyExpenseInputEnvelope
+    set?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    disconnect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    delete?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    connect?: taskWhereUniqueInput | taskWhereUniqueInput[]
+    update?: taskUpdateWithWhereUniqueWithoutExpenseInput | taskUpdateWithWhereUniqueWithoutExpenseInput[]
+    updateMany?: taskUpdateManyWithWhereWithoutExpenseInput | taskUpdateManyWithWhereWithoutExpenseInput[]
+    deleteMany?: taskScalarWhereInput | taskScalarWhereInput[]
   }
 
   export type transactionUncheckedUpdateManyWithoutExpenseNestedInput = {
@@ -13313,6 +13485,39 @@ export namespace Prisma {
     _max?: NestedEnumTransactionStatusNullableFilter<$PrismaModel>
   }
 
+  export type expenseCreateWithoutTaskInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    name?: string | null
+    description?: string | null
+    expense_type?: $Enums.ExpenseType | null
+    user_id?: string | null
+    is_archived?: boolean
+    bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
+    stock?: stockCreateNestedOneWithoutExpenseInput
+    transaction?: transactionCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
+  }
+
+  export type expenseUncheckedCreateWithoutTaskInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    name?: string | null
+    description?: string | null
+    expense_type?: $Enums.ExpenseType | null
+    user_id?: string | null
+    is_archived?: boolean
+    bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
+    stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
+    transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
+  }
+
+  export type expenseCreateOrConnectWithoutTaskInput = {
+    where: expenseWhereUniqueInput
+    create: XOR<expenseCreateWithoutTaskInput, expenseUncheckedCreateWithoutTaskInput>
+  }
+
   export type task_categoryCreateWithoutTaskInput = {
     id?: bigint | number
     created_at?: Date | string
@@ -13330,6 +13535,45 @@ export namespace Prisma {
   export type task_categoryCreateOrConnectWithoutTaskInput = {
     where: task_categoryWhereUniqueInput
     create: XOR<task_categoryCreateWithoutTaskInput, task_categoryUncheckedCreateWithoutTaskInput>
+  }
+
+  export type expenseUpsertWithoutTaskInput = {
+    update: XOR<expenseUpdateWithoutTaskInput, expenseUncheckedUpdateWithoutTaskInput>
+    create: XOR<expenseCreateWithoutTaskInput, expenseUncheckedCreateWithoutTaskInput>
+    where?: expenseWhereInput
+  }
+
+  export type expenseUpdateToOneWithWhereWithoutTaskInput = {
+    where?: expenseWhereInput
+    data: XOR<expenseUpdateWithoutTaskInput, expenseUncheckedUpdateWithoutTaskInput>
+  }
+
+  export type expenseUpdateWithoutTaskInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
+    user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
+    bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
+    stock?: stockUpdateOneWithoutExpenseNestedInput
+    transaction?: transactionUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
+  }
+
+  export type expenseUncheckedUpdateWithoutTaskInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    expense_type?: NullableEnumExpenseTypeFieldUpdateOperationsInput | $Enums.ExpenseType | null
+    user_id?: NullableStringFieldUpdateOperationsInput | string | null
+    is_archived?: BoolFieldUpdateOperationsInput | boolean
+    bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
+    stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
+    transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
   export type task_categoryUpsertWithoutTaskInput = {
@@ -13367,6 +13611,7 @@ export namespace Prisma {
     priority_level?: number
     due_date?: Date | string | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense?: expenseCreateNestedOneWithoutTaskInput
   }
 
   export type taskUncheckedCreateWithoutTask_categoryInput = {
@@ -13379,6 +13624,7 @@ export namespace Prisma {
     priority_level?: number
     due_date?: Date | string | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense_id?: bigint | number | null
   }
 
   export type taskCreateOrConnectWithoutTask_categoryInput = {
@@ -13421,6 +13667,7 @@ export namespace Prisma {
     due_date?: DateTimeNullableFilter<"task"> | Date | string | null
     task_category_id?: BigIntNullableFilter<"task"> | bigint | number | null
     repeating_type?: EnumDateRepeatTypeNullableFilter<"task"> | $Enums.DateRepeatType | null
+    expense_id?: BigIntNullableFilter<"task"> | bigint | number | null
   }
 
   export type expenseCreateWithoutBill_expenseInput = {
@@ -13432,6 +13679,7 @@ export namespace Prisma {
     user_id?: string | null
     is_archived?: boolean
     stock?: stockCreateNestedOneWithoutExpenseInput
+    task?: taskCreateNestedManyWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
@@ -13445,6 +13693,7 @@ export namespace Prisma {
     user_id?: string | null
     is_archived?: boolean
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    task?: taskUncheckedCreateNestedManyWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
@@ -13474,6 +13723,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     stock?: stockUpdateOneWithoutExpenseNestedInput
+    task?: taskUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
@@ -13487,6 +13737,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    task?: taskUncheckedUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
@@ -13527,6 +13778,42 @@ export namespace Prisma {
   export type stockCreateOrConnectWithoutExpenseInput = {
     where: stockWhereUniqueInput
     create: XOR<stockCreateWithoutExpenseInput, stockUncheckedCreateWithoutExpenseInput>
+  }
+
+  export type taskCreateWithoutExpenseInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    description?: string | null
+    completed?: boolean
+    completed_at?: Date | string | null
+    title?: string | null
+    priority_level?: number
+    due_date?: Date | string | null
+    repeating_type?: $Enums.DateRepeatType | null
+    task_category?: task_categoryCreateNestedOneWithoutTaskInput
+  }
+
+  export type taskUncheckedCreateWithoutExpenseInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    description?: string | null
+    completed?: boolean
+    completed_at?: Date | string | null
+    title?: string | null
+    priority_level?: number
+    due_date?: Date | string | null
+    task_category_id?: bigint | number | null
+    repeating_type?: $Enums.DateRepeatType | null
+  }
+
+  export type taskCreateOrConnectWithoutExpenseInput = {
+    where: taskWhereUniqueInput
+    create: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput>
+  }
+
+  export type taskCreateManyExpenseInputEnvelope = {
+    data: taskCreateManyExpenseInput | taskCreateManyExpenseInput[]
+    skipDuplicates?: boolean
   }
 
   export type transactionCreateWithoutExpenseInput = {
@@ -13624,6 +13911,22 @@ export namespace Prisma {
     min_amount?: IntFieldUpdateOperationsInput | number
   }
 
+  export type taskUpsertWithWhereUniqueWithoutExpenseInput = {
+    where: taskWhereUniqueInput
+    update: XOR<taskUpdateWithoutExpenseInput, taskUncheckedUpdateWithoutExpenseInput>
+    create: XOR<taskCreateWithoutExpenseInput, taskUncheckedCreateWithoutExpenseInput>
+  }
+
+  export type taskUpdateWithWhereUniqueWithoutExpenseInput = {
+    where: taskWhereUniqueInput
+    data: XOR<taskUpdateWithoutExpenseInput, taskUncheckedUpdateWithoutExpenseInput>
+  }
+
+  export type taskUpdateManyWithWhereWithoutExpenseInput = {
+    where: taskScalarWhereInput
+    data: XOR<taskUpdateManyMutationInput, taskUncheckedUpdateManyWithoutExpenseInput>
+  }
+
   export type transactionUpsertWithWhereUniqueWithoutExpenseInput = {
     where: transactionWhereUniqueInput
     update: XOR<transactionUpdateWithoutExpenseInput, transactionUncheckedUpdateWithoutExpenseInput>
@@ -13685,6 +13988,7 @@ export namespace Prisma {
     user_id?: string | null
     is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
+    task?: taskCreateNestedManyWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
@@ -13698,6 +14002,7 @@ export namespace Prisma {
     user_id?: string | null
     is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
+    task?: taskUncheckedCreateNestedManyWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
@@ -13727,6 +14032,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
+    task?: taskUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
@@ -13740,6 +14046,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
+    task?: taskUncheckedUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
@@ -13754,6 +14061,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
+    task?: taskCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseCreateNestedOneWithoutExpenseInput
   }
 
@@ -13767,6 +14075,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    task?: taskUncheckedCreateNestedManyWithoutExpenseInput
     transportation_expense?: transportation_expenseUncheckedCreateNestedOneWithoutExpenseInput
   }
 
@@ -13796,6 +14105,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
+    task?: taskUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUpdateOneWithoutExpenseNestedInput
   }
 
@@ -13809,6 +14119,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    task?: taskUncheckedUpdateManyWithoutExpenseNestedInput
     transportation_expense?: transportation_expenseUncheckedUpdateOneWithoutExpenseNestedInput
   }
 
@@ -13822,6 +14133,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseCreateNestedOneWithoutExpenseInput
     stock?: stockCreateNestedOneWithoutExpenseInput
+    task?: taskCreateNestedManyWithoutExpenseInput
     transaction?: transactionCreateNestedManyWithoutExpenseInput
   }
 
@@ -13835,6 +14147,7 @@ export namespace Prisma {
     is_archived?: boolean
     bill_expense?: bill_expenseUncheckedCreateNestedOneWithoutExpenseInput
     stock?: stockUncheckedCreateNestedOneWithoutExpenseInput
+    task?: taskUncheckedCreateNestedManyWithoutExpenseInput
     transaction?: transactionUncheckedCreateNestedManyWithoutExpenseInput
   }
 
@@ -13864,6 +14177,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUpdateOneWithoutExpenseNestedInput
     stock?: stockUpdateOneWithoutExpenseNestedInput
+    task?: taskUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUpdateManyWithoutExpenseNestedInput
   }
 
@@ -13877,6 +14191,7 @@ export namespace Prisma {
     is_archived?: BoolFieldUpdateOperationsInput | boolean
     bill_expense?: bill_expenseUncheckedUpdateOneWithoutExpenseNestedInput
     stock?: stockUncheckedUpdateOneWithoutExpenseNestedInput
+    task?: taskUncheckedUpdateManyWithoutExpenseNestedInput
     transaction?: transactionUncheckedUpdateManyWithoutExpenseNestedInput
   }
 
@@ -13890,6 +14205,7 @@ export namespace Prisma {
     priority_level?: number
     due_date?: Date | string | null
     repeating_type?: $Enums.DateRepeatType | null
+    expense_id?: bigint | number | null
   }
 
   export type taskUpdateWithoutTask_categoryInput = {
@@ -13902,6 +14218,7 @@ export namespace Prisma {
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense?: expenseUpdateOneWithoutTaskNestedInput
   }
 
   export type taskUncheckedUpdateWithoutTask_categoryInput = {
@@ -13914,6 +14231,7 @@ export namespace Prisma {
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type taskUncheckedUpdateManyWithoutTask_categoryInput = {
@@ -13926,6 +14244,20 @@ export namespace Prisma {
     priority_level?: IntFieldUpdateOperationsInput | number
     due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    expense_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type taskCreateManyExpenseInput = {
+    id?: bigint | number
+    created_at?: Date | string
+    description?: string | null
+    completed?: boolean
+    completed_at?: Date | string | null
+    title?: string | null
+    priority_level?: number
+    due_date?: Date | string | null
+    task_category_id?: bigint | number | null
+    repeating_type?: $Enums.DateRepeatType | null
   }
 
   export type transactionCreateManyExpenseInput = {
@@ -13935,6 +14267,45 @@ export namespace Prisma {
     price?: number | null
     status?: $Enums.TransactionStatus | null
     repeat_at?: Date | string | null
+  }
+
+  export type taskUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    priority_level?: IntFieldUpdateOperationsInput | number
+    due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+    task_category?: task_categoryUpdateOneWithoutTaskNestedInput
+  }
+
+  export type taskUncheckedUpdateWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    priority_level?: IntFieldUpdateOperationsInput | number
+    due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
+  }
+
+  export type taskUncheckedUpdateManyWithoutExpenseInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    completed_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    priority_level?: IntFieldUpdateOperationsInput | number
+    due_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    task_category_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    repeating_type?: NullableEnumDateRepeatTypeFieldUpdateOperationsInput | $Enums.DateRepeatType | null
   }
 
   export type transactionUpdateWithoutExpenseInput = {
