@@ -32,9 +32,20 @@
   --color-text-pending: #fbbf24;
   --color-text-cancelled: #f87171;
 }
-
-:root {
-}
+/* 
+@plugin "daisyui/theme" {
+  name: "aura";
+  default: true; 
+  --color-primary: #a855f7;
+  --color-primary-content: #ffffff;
+  --color-secondary: #c084fc;
+  --color-accent: #e9d5ff;
+  --color-neutral: #1f2937;
+  --color-base-100: #0f172a;
+  --color-base-200: #1e293b;
+  --color-base-300: #334155;
+  --color-base-content: #f8fafc;
+} */
 
 @layer components {
   .input-base {

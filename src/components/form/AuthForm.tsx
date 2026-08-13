@@ -122,17 +122,17 @@ function AccountForm() {
                 className="input-base py-2 indent-2.5"
                 autoComplete="off"
                 required
-                minLength={6}
                 {...register("password")}
               />
             </div>
 
-            <button
-              type="submit"
-              className="button-base rounded-4xl h-12 text-lg flex items-center justify-center "
-            >
-              {content.mode}
-            </button>
+            <div className="aura text-text-info duration-3000 rounded-4xl">
+              <div className="cursor-pointer button-base rounded-4xl h-12 text-lg flex items-center justify-center">
+                <button className="cursor-pointer" type="submit">
+                  {content.mode}
+                </button>
+              </div>
+            </div>
           </form>
 
           <fieldset className="flex border-t border-text mb-30">
