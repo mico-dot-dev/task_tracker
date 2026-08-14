@@ -36,7 +36,6 @@ model task {
   expense          expense?        @relation(fields: [expense_id], references: [id], onDelete: Cascade)
   task_category    task_category?  @relation(fields: [task_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@unique([expense_id, completed], map: "expense_completed_unique")
   @@schema("public")
 }
 

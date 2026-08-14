@@ -1,6 +1,6 @@
 import React from "react";
-import ExpenseItemCard from "@/src/components/expenses/ExpenseItemCard";
 import { GetUserExpenses } from "@/src/actions/expense.action";
+import ExpenseItemCard from "@/src/components/expenses/ExpenseItemCard";
 
 async function ExpenseList() {
   const expenses = await GetUserExpenses();

@@ -93,7 +93,7 @@ export async function GetUserExpenses(): Promise<
   try {
     const user = await GetAuthUser();
     if (!user.success) {
-      throw new Error("User not authenticated");
+      return { success: false, error: "User not authenticated" };
     }
 
     const expenseQueryInclude = {
@@ -123,7 +123,7 @@ export async function GetUserExpenses(): Promise<
           };
 
         case ExpenseType.HOUSE:
-        case ExpenseType.PERSONAL:
+        case ExpenseType.PERSONAL: {
           return {
             ...common,
             expense_type: item.expense_type,
@@ -132,8 +132,9 @@ export async function GetUserExpenses(): Promise<
               item.bill_expense?.repeating_type ?? DateRepeatType.MANUAL,
             running_bill: item.bill_expense?.running_bill ?? 0,
           };
+        }
 
-        case ExpenseType.GROCERY:
+        case ExpenseType.GROCERY: {
           return {
             ...common,
             expense_type: ExpenseType.GROCERY,
@@ -141,12 +142,14 @@ export async function GetUserExpenses(): Promise<
             curr_amount: item.stock?.curr_amount ?? 0,
             min_amount: item.stock?.min_amount ?? 0,
           };
+        }
 
-        default:
+        default: {
           return {
             ...common,
             expense_type: item.expense_type ?? ExpenseType.MISC,
           };
+        }
       }
     }
 
@@ -165,6 +168,6 @@ export async function GetUserExpenses(): Promise<
     };
   } catch (e) {
     console.log("Error fetching user expense:", e);
-    throw new Error("Failed to fetch user tasks");
+    throw new Error("Failed to fetch user expenses");
   }
 }
