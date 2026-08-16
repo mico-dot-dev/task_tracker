@@ -1,6 +1,5 @@
 import React from "react";
 import { ExpenseType } from "@/src/generated/prisma";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddFormProps {
   closeModal: () => void;

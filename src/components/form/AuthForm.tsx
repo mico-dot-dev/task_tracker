@@ -51,47 +51,40 @@ function AccountForm() {
 
   async function AuthSubmit(data: AuthModel) {
     try {
+      Swal.showLoading();
       const res = await authService(data);
-
       if (!res) {
         throw new Error("No response from auth service");
       }
 
+      if (!res.success) {
+        await Swal.fire({
+          icon: "error",
+          title: mode === "login" ? "Login Failed" : "Sign Up Failed",
+          text: res.error || "An unexpected error occurred.",
+        });
+        return;
+      }
+
       //Login
       if (mode === "login") {
-        // Redirect to dashboard or another page after successful login
-        if (!res.ok) {
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed",
-            text: res.error || "Invalid email or password.",
-          });
-        } else {
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful",
-            text: res.message,
-          }).then(() => {
-            router.push("/dashboard");
-          });
-        }
-        // for sign up
+        await Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: res.message,
+        }).then(() => {
+          router.push("/dashboard");
+          router.refresh();
+        });
+        // Sign up
       } else {
-        if (!res.ok) {
-          Swal.fire({
-            icon: "error",
-            title: "Sign Up Failed",
-            text: res.error || "An error occurred during sign up.",
-          });
-        } else {
-          Swal.fire({
-            icon: "success",
-            title: "Email Sent",
-            text: "Validation email sent. Please check your inbox to complete the registration.",
-          }).then(() => {
-            setMode("login");
-          });
-        }
+        await Swal.fire({
+          icon: "success",
+          title: "Email Sent",
+          text: "Validation email sent. Please check your inbox to complete the registration.",
+        }).then(() => {
+          setMode("login");
+        });
       }
     } catch (error) {
       console.error("Error submitting form:", error);

@@ -26,7 +26,9 @@ export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   }
 }
 
-export async function LoginUser(data: AuthModel) {
+export async function LoginUser(
+  data: AuthModel,
+): Promise<ActionResponse<{ message: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data: user, error } = await supabase.auth.signInWithPassword({
@@ -36,21 +38,35 @@ export async function LoginUser(data: AuthModel) {
 
     if (!user.user)
       return {
-        ok: false,
-        message: "Invalid email or password.",
+        success: false,
+        error: "Invalid email or password.",
       };
 
     return {
-      ok: true,
-      message: "Login successful.",
+      success: true,
+      data: { message: "Login successful." },
     };
   } catch (error) {
     console.error("Login failed:", error);
     return {
-      ok: false,
+      success: false,
       error: "Internal Server Error",
     };
   }
 }
 
-export async function SignUpUser(data: AuthModel) {}
+export async function SignUpUser(
+  data: AuthModel,
+): Promise<ActionResponse<{ message: string }>> {
+  try {
+    return {
+      success: true,
+      data: { message: "Signup Success" },
+    };
+  } catch (e) {
+    return {
+      success: false,
+      error: "Sign Up fail",
+    };
+  }
+}
