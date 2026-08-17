@@ -1,4 +1,5 @@
 "use server";
+import { redirect } from "next/navigation";
 import { supabaseServer } from "../lib/supabase/server";
 import { AuthModel, ActionResponse } from "@/src/types/auth";
 
@@ -6,12 +7,10 @@ export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.auth.getUser();
+    console.log("Get User func");
 
-    if (error || !data.user || !data.user.id) {
-      return {
-        success: false,
-        error: "User not authenticated",
-      };
+    if (error || !data.user) {
+      redirect("/");
     }
 
     return {

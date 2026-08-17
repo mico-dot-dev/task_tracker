@@ -50,7 +50,7 @@ function TransactionTable() {
             <p>2023-10-15</p>
           </td>
           <td>
-            <button>Paid</button>
+            <button className="button-base">Paid</button>
           </td>
           <td>
             <EllipsisVertical />
