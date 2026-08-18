@@ -1,21 +1,22 @@
 "use server";
-import { redirect } from "next/navigation";
 import { supabaseServer } from "../lib/supabase/server";
-import { AuthModel, ActionResponse } from "@/src/types/auth";
+import { AuthModel, ActionResponse, AuthSchema } from "@/src/types/auth";
 
 export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {
     const supabase = await supabaseServer();
-    const { data, error } = await supabase.auth.getUser();
-    console.log("Get User func");
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
 
-    if (error || !data.user) {
-      redirect("/");
+    if (error || !user) {
+      return { success: false, error: "User not authenticated" };
     }
 
     return {
       success: true,
-      data: { user: data.user.id },
+      data: { user: user.id },
     };
   } catch (error) {
     return {
@@ -28,14 +29,19 @@ export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
 export async function LoginUser(
   data: AuthModel,
 ): Promise<ActionResponse<{ message: string }>> {
+  const parsedUser = AuthSchema.safeParse(data);
+  if (!parsedUser) {
+    return { success: false, error: "Invalid form payload" };
+  }
+
   try {
     const supabase = await supabaseServer();
-    const { data: user, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     });
 
-    if (!user.user)
+    if (error)
       return {
         success: false,
         error: "Invalid email or password.",
@@ -57,7 +63,20 @@ export async function LoginUser(
 export async function SignUpUser(
   data: AuthModel,
 ): Promise<ActionResponse<{ message: string }>> {
+  const parsedData = AuthSchema.safeParse(data);
+  if (!parsedData.success) {
+    return { success: false, error: "Invalid form payload" };
+  }
+
   try {
+    const supabase = await supabaseServer();
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error) throw new Error("Error in creating a new user");
+
     return {
       success: true,
       data: { message: "Signup Success" },

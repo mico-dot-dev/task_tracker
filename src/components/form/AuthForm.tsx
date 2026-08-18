@@ -53,6 +53,7 @@ function AccountForm() {
     try {
       Swal.showLoading();
       const res = await authService(data);
+
       if (!res) {
         throw new Error("No response from auth service");
       }
@@ -68,14 +69,17 @@ function AccountForm() {
 
       //Login
       if (mode === "login") {
-        await Swal.fire({
-          icon: "success",
-          title: "Login Successful",
-          text: res.message,
-        }).then(() => {
-          router.push("/dashboard");
-          router.refresh();
-        });
+        router.push("/dashboard");
+        router.refresh();
+        Swal.close();
+        // await Swal.fire({
+        //   icon: "success",
+        //   title: "Login Successful",
+        //   text: res.message,
+        // }).then(() => {
+        //   router.push("/dashboard");
+        //   router.refresh();
+        // });
         // Sign up
       } else {
         await Swal.fire({

@@ -9,37 +9,40 @@ import {
   TaskFormModelBase,
 } from "@/src/types/task";
 import { ActionResponse } from "@/src/types/auth";
-import { GetAuthUser } from "@/src/actions/auth.action";
+import { authenticateUser } from "@/src/lib/action-wrapper";
 import { revalidatePath } from "next/cache";
 import { DateRepeatType } from "@/src/generated/prisma";
+import { ReturnErrorMessage } from "@/src/hook/ReturnErrorMessage";
+import { success } from "zod";
 
 export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
   try {
-    const user = await GetAuthUser();
+    const rawTaskData = await authenticateUser(async (userId) => {
+      const data = await prisma.task_category.findMany({
+        where: { user_id: userId },
+        select: {
+          title: true,
+          task: true,
+        },
+        orderBy: {
+          title: "asc",
+        },
+      });
 
-    if (!user.success) {
-      return { success: false, error: "User not authenticated" };
-    }
-
-    const rawTaskData = await prisma.task_category.findMany({
-      where: { user_id: user.data.user },
-      select: {
-        title: true,
-        task: true,
-      },
-      orderBy: {
-        title: "asc",
-      },
+      return {
+        success: true,
+        data: data,
+      };
     });
 
-    if (!rawTaskData) {
+    if (!rawTaskData.success) {
       return {
         success: false,
-        error: "No tasks found for the user",
+        error: rawTaskData.error || "Failed to fetch tasks",
       };
     }
 
-    const flattenedTasks: TaskListModel[] = rawTaskData.flatMap(
+    const flattenedTasks: TaskListModel[] = rawTaskData.data.flatMap(
       (TaskListModel) =>
         TaskListModel.task.map((task) => {
           const isValidEnum = Object.values(DateRepeatType).includes(
@@ -76,58 +79,81 @@ export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
       data: parsedTasks,
     };
   } catch (error) {
-    console.log("Error fetching user tasks:", error);
-    throw new Error("Failed to fetch user tasks");
+    const e = ReturnErrorMessage(error);
+
+    return {
+      success: false,
+      error: e,
+    };
   }
 }
 
 export async function CreateTask(
   data: TaskFormModelInput,
 ): Promise<ActionResponse<TaskFormModelBase>> {
+  const { data: parsedTask, error } = TaskFormSchema.safeParse(data);
+
+  if (error) {
+    return { success: false, error: "Invalid task data" };
+  }
   try {
-    const user = await GetAuthUser();
-    if (!user.success) {
+    const authResult = await authenticateUser(async (user_id) => {
+      const category = await prisma.task_category.findFirst({
+        where: {
+          user_id: user_id,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!category) {
+        return { success: false, error: "Unauthorized or invalid category." };
+      }
+
+      const newTask = await prisma.task.create({
+        data: {
+          title: parsedTask.title ?? "",
+          description: parsedTask.description ?? "",
+          completed: parsedTask.completed!,
+          task_category_id: parsedTask.category_id,
+          priority_level: parsedTask.priority_level,
+          repeating_type: parsedTask.repeating_type!,
+          due_date: parsedTask.due_date,
+        },
+      });
+      return {
+        success: true,
+        data: newTask,
+      };
+    });
+
+    if (!authResult.success) {
       return {
         success: false,
-        error: "User not authenticated",
+        error: authResult.error || "Authentication failed",
       };
     }
 
-    const parsedTask = TaskFormSchema.safeParse(data);
-
-    if (!parsedTask.success) {
-      console.error("Invalid task data:", parsedTask.error);
-      throw new Error("Invalid task data: " + JSON.stringify(parsedTask.error));
-    }
-
-    const task: TaskFormModelInput = parsedTask.data;
-
-    const newTask = await prisma.task.create({
-      data: {
-        title: task.title!,
-        description: task.description!,
-        completed: task.completed!,
-        task_category_id: task.category_id,
-        priority_level: task.priority_level,
-        repeating_type: task.repeating_type!,
-        due_date: task.due_date,
-      },
-    });
-
     revalidatePath("/(dashboard)/tasks");
+
     return {
       success: true,
       data: {
-        title: newTask.title!,
-        description: newTask.description!,
-        completed: newTask.completed!,
-        priority_level: newTask.priority_level!,
-        repeating_type: newTask.repeating_type!,
+        title: authResult.data.title ?? "",
+        description: authResult.data.description ?? "",
+        completed: authResult.data.completed!,
+        priority_level: parsedTask.priority_level,
+        repeating_type: parsedTask.repeating_type!,
+        due_date: parsedTask.due_date,
       },
     };
   } catch (error) {
-    console.log("Error creating task:", error);
-    throw new Error("Failed to create task");
+    const e = ReturnErrorMessage(error);
+    return {
+      success: false,
+      error: e,
+    };
   }
 }
 
