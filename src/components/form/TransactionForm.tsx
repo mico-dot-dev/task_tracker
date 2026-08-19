@@ -1,18 +1,49 @@
 "use client";
 
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { expenseIconMap } from "@/src/lib/expense-icon-mapper";
 import { ExpenseType } from "@/src/generated/prisma";
-import { FormProvider } from "react-hook-form";
-import { expenseIconMap, getExpenseIcon } from "@/src/lib/expense-icon-mapper";
+import {
+  TransactionFormModel,
+  TransactionSchema,
+} from "@/src/types/transaction";
+import { DynamicListModel } from "@/src/types/expense";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddFormProps {
   closeModal: () => void;
 }
 
 function TransactionForm({ closeModal }: AddFormProps) {
+  const methods = useForm<TransactionFormModel>({
+    resolver: zodResolver(TransactionSchema),
+    defaultValues: {
+      name: "",
+      type: ExpenseType.MISC,
+      amount: 1,
+      price: 0,
+      due_date: undefined,
+    },
+  });
+
+  const { register } = methods;
+
+  const [expenseData, setExpenseData] = useState<DynamicListModel[]>();
+
+  useEffect(() => {
+    // setExpenseData()
+  }, []);
+
   const [step, setStep] = useState(1);
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
-  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+  const nextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setStep((prev) => Math.min(prev + 1, 3));
+  };
+  const prevStep = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
 
   return (
     <>
@@ -25,7 +56,7 @@ function TransactionForm({ closeModal }: AddFormProps) {
         <p>Select the Expense Type</p>
       </div>
 
-      <FormProvider>
+      <FormProvider {...methods}>
         <form>
           {/* Step 1 */}
           {step === 1 && (
@@ -53,6 +84,29 @@ function TransactionForm({ closeModal }: AddFormProps) {
               })}
             </fieldset>
           )}
+
+          {step === 2 && <fieldset className="flex-flex-col">Step 2</fieldset>}
+          {step === 3 && <fieldset className="flex-flex-col">Step 3</fieldset>}
+
+          <footer className="justify-between w-full flex">
+            {step > 1 ? (
+              <button type="button" onClick={prevStep}>
+                Back
+              </button>
+            ) : (
+              <button type="button" onClick={closeModal}>
+                Close
+              </button>
+            )}
+
+            {step < 3 ? (
+              <button type="button" onClick={nextStep}>
+                Next
+              </button>
+            ) : (
+              <button type="submit">Submit</button>
+            )}
+          </footer>
         </form>
       </FormProvider>
     </>

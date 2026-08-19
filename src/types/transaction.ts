@@ -7,7 +7,7 @@ export const TransactionSchema = z.object({
   status: z.nativeEnum(TransactionStatus),
   amount: z.int(),
   price: z.float32(),
-  due_added: z.date().optional(),
+  due_date: z.date().optional(),
 });
 
 export type TransactionFormModel = z.input<typeof TransactionSchema>;

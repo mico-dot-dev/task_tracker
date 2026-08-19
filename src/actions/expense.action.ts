@@ -171,3 +171,5 @@ export async function GetUserExpenses(): Promise<
     throw new Error("Failed to fetch user expenses");
   }
 }
+
+export async function GetUserExpenseByType() {}
