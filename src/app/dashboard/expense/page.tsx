@@ -1,6 +1,6 @@
 import React from "react";
 import { Suspense } from "react";
-import ExpenseAdd from "@/src/components/AddButton/AddButton";
+import ExpenseAdd from "@/src/components/ui/AddButton";
 import ExpenseList from "@/src/components/expenses/ExpenseList";
 
 function page() {

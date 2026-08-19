@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
-import AddCategoryModal from "../AddFormModal/AddFormModal";
+import AddCategoryModal from "../modal/AddModal";
 import { CategoryListModel } from "@/src/types/category";
 import { GetUserCategory } from "@/src/actions/category.action";
 

@@ -4,6 +4,7 @@ export type ContentType = "task" | "expense" | "task_category" | "transaction";
 
 interface AddContents {
   label: string;
+  description: string;
   AddFormComponent: React.ComponentType<{ closeModal: () => void }>;
 }
 
@@ -21,21 +22,29 @@ const TransactionForm = dynamic(
 export const FORM_REGISTRY: Record<ContentType, AddContents> = {
   task: {
     label: "Task",
+    description:
+      "Capture, organize, and track your daily to-dos, priorities, and deadlines to stay productive and focused.",
     AddFormComponent: TaskForm,
   },
 
   task_category: {
     label: "Category",
+    description:
+      "Toss your tasks into tidy little buckets so your dashboard stays organized.",
     AddFormComponent: TaskCategoryForm,
   },
 
   expense: {
     label: "Expense",
+    description:
+      "Set up and manage your go-to spending items so you can log them easily later.",
     AddFormComponent: ExpenseForm,
   },
 
   transaction: {
     label: "Transaction",
+    description:
+      "Log your cash flow without the headache—see where your money is actually going.",
     AddFormComponent: TransactionForm,
   },
 };

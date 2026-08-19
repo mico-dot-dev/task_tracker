@@ -1,6 +1,6 @@
 import React from "react";
 import TrancsactionTable from "@/src/components/transaction/TransactionTable";
-import AddButton from "@/src/components/AddButton/AddButton";
+import AddButton from "@/src/components/ui/AddButton";
 
 function page() {
   return (

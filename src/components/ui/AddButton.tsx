@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
-import AddFormModal from "../AddFormModal/AddFormModal";
-import { ContentType } from "../AddFormModal/config";
+import AddFormModal from "../modal/AddModal";
+import { ContentType } from "../modal/AddModal.config";
 
 interface AddButtonProps {
   content: ContentType;
