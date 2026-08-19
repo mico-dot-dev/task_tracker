@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Mulish } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,14 +7,31 @@ export const metadata: Metadata = {
   description: "A self help system for personal growth and development.",
 };
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const mulish = Mulish({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-background">{children}</body>
+    <html
+      lang="en"
+      className={`${cormorantGaramond.variable} ${mulish.variable}`}
+    >
+      <body className="font-sans bg-background">{children}</body>
     </html>
   );
 }

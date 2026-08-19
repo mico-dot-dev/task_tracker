@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode, useState } from "react";
 import { FORM_REGISTRY, ContentType } from "./AddModal.config";
 import ModalWrapper from "./ModalWrapper";
 
