@@ -3,7 +3,7 @@ import { ExpenseType, TransactionStatus } from "@/src/generated/prisma";
 
 export const TransactionSchema = z.object({
   name: z.string(),
-  type: z.nativeEnum(ExpenseType),
+  expense_type: z.nativeEnum(ExpenseType),
   status: z.nativeEnum(TransactionStatus),
   amount: z.int(),
   price: z.float32(),

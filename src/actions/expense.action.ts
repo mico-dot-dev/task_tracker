@@ -10,6 +10,64 @@ import {
 import { ActionResponse } from "../types/auth";
 import { GetAuthUser } from "./auth.action";
 import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
+import { authenticateUser } from "../lib/wrapper-wrapper";
+
+const expenseQueryInclude = {
+  bill_expense: true,
+  transportation_expense: true,
+  stock: true,
+} satisfies Prisma.expenseInclude;
+
+type ExpenseWithRelations = Prisma.expenseGetPayload<{
+  include: typeof expenseQueryInclude;
+}>;
+
+function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
+  const common = {
+    id: item.id.toString(),
+    title: item.name ?? "",
+    description: item.description ?? "",
+  };
+
+  switch (item.expense_type) {
+    case ExpenseType.TRANSPORTATION:
+      const rawCosts = item.transportation_expense?.cost_list ?? [];
+      return {
+        ...common,
+        expense_type: ExpenseType.TRANSPORTATION,
+        cost_list: rawCosts.map((amount) => ({ amount })),
+      };
+
+    case ExpenseType.HOUSE:
+    case ExpenseType.PERSONAL: {
+      return {
+        ...common,
+        expense_type: item.expense_type,
+        // 💡 Correctly access the nested relational object
+        repeating_type:
+          item.bill_expense?.repeating_type ?? DateRepeatType.MANUAL,
+        running_bill: item.bill_expense?.running_bill ?? 0,
+      };
+    }
+
+    case ExpenseType.GROCERY: {
+      return {
+        ...common,
+        expense_type: ExpenseType.GROCERY,
+        // 💡 Correctly access the nested relational object
+        curr_amount: item.stock?.curr_amount ?? 0,
+        min_amount: item.stock?.min_amount ?? 0,
+      };
+    }
+
+    default: {
+      return {
+        ...common,
+        expense_type: item.expense_type ?? ExpenseType.MISC,
+      };
+    }
+  }
+}
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
@@ -96,63 +154,6 @@ export async function GetUserExpenses(): Promise<
       return { success: false, error: "User not authenticated" };
     }
 
-    const expenseQueryInclude = {
-      bill_expense: true,
-      transportation_expense: true,
-      stock: true,
-    } satisfies Prisma.expenseInclude;
-
-    type ExpenseWithRelations = Prisma.expenseGetPayload<{
-      include: typeof expenseQueryInclude;
-    }>;
-
-    function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
-      const common = {
-        id: item.id.toString(),
-        title: item.name ?? "",
-        description: item.description ?? "",
-      };
-
-      switch (item.expense_type) {
-        case ExpenseType.TRANSPORTATION:
-          const rawCosts = item.transportation_expense?.cost_list ?? [];
-          return {
-            ...common,
-            expense_type: ExpenseType.TRANSPORTATION,
-            cost_list: rawCosts.map((amount) => ({ amount })),
-          };
-
-        case ExpenseType.HOUSE:
-        case ExpenseType.PERSONAL: {
-          return {
-            ...common,
-            expense_type: item.expense_type,
-            // 💡 Correctly access the nested relational object
-            repeating_type:
-              item.bill_expense?.repeating_type ?? DateRepeatType.MANUAL,
-            running_bill: item.bill_expense?.running_bill ?? 0,
-          };
-        }
-
-        case ExpenseType.GROCERY: {
-          return {
-            ...common,
-            expense_type: ExpenseType.GROCERY,
-            // 💡 Correctly access the nested relational object
-            curr_amount: item.stock?.curr_amount ?? 0,
-            min_amount: item.stock?.min_amount ?? 0,
-          };
-        }
-
-        default: {
-          return {
-            ...common,
-            expense_type: item.expense_type ?? ExpenseType.MISC,
-          };
-        }
-      }
-    }
-
     const userExpenses = await prisma.expense.findMany({
       where: { user_id: user.data.user },
       include: expenseQueryInclude, // 💡 Bind the constant to the query
@@ -172,4 +173,26 @@ export async function GetUserExpenses(): Promise<
   }
 }
 
-export async function GetUserExpenseByType() {}
+export async function GetUserExpenseByType(
+  type: ExpenseType,
+): Promise<ActionResponse<DynamicListModel[]>> {
+  const userExpense = await authenticateUser(async (userId) => {
+    return {
+      success: true,
+      data: await prisma.expense.findMany({
+        where: { user_id: userId, expense_type: type },
+        include: expenseQueryInclude,
+        orderBy: { name: "desc" },
+      }),
+    };
+  });
+
+  if (!userExpense.success) return { success: false, error: userExpense.error };
+  const mappedExpense: DynamicListModel[] =
+    userExpense.data.map(mapPrismaToDomain);
+
+  return {
+    success: true,
+    data: mappedExpense,
+  };
+}
