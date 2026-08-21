@@ -31,7 +31,7 @@ export default function RootLayout({
       lang="en"
       className={`${cormorantGaramond.variable} ${mulish.variable}`}
     >
-      <body className="font-sans bg-background">{children}</body>
+      <body className=" bg-background">{children}</body>
     </html>
   );
 }

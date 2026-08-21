@@ -1,8 +1,11 @@
 "use server";
 
 import { GetAuthUser } from "@/src/actions/auth.action";
-import { ActionResponse } from "@/src/types/auth";
-import { CategoryFormModel, CategoryListModel } from "@/src/types/category";
+import { ActionResponse } from "@/src/schema/auth.schema";
+import {
+  CategoryFormModel,
+  CategoryListModel,
+} from "@/src/schema/category.schema";
 import { prisma } from "@/src/lib/prisma-client";
 
 export async function GetUserCategory(): Promise<

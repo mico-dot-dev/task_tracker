@@ -4,7 +4,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateCategory } from "@/src/actions/category.action";
-import { CategorySchema, CategoryFormModel } from "@/src/types/category";
+import {
+  CategorySchema,
+  CategoryFormModel,
+} from "@/src/schema/category.schema";
 import Swal from "sweetalert2";
 
 interface AddFormProps {

@@ -8,7 +8,7 @@ async function ExpenseList() {
     return <p>Expense Data Not Found</p>;
   }
   return (
-    <ul className="card-list-base grid-cols-2">
+    <ul className="flex flex-col gap-5">
       {expenses.data.map((expense) => (
         <ExpenseItemCard Expense={expense} key={expense.id} />
       ))}

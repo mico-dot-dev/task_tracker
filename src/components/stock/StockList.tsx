@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { StockModel } from "@/src/types/stock";
+import { StockModel } from "@/src/schema/stock.schema";
 import { GetUserStock, ManageStockAmount } from "@/src/actions/stock.action";
 import { Plus, Minus } from "lucide-react";
 

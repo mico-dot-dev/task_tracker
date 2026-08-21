@@ -1,7 +1,7 @@
 import React from "react";
 import { DateRepeatType } from "@/src/generated/prisma";
 import { useFormContext } from "react-hook-form";
-import { DynamicFormModel } from "@/src/types/expense";
+import { DynamicFormModel } from "@/src/schema/expense.schema";
 
 function BillSubForm() {
   const { register, watch } = useFormContext<DynamicFormModel>();

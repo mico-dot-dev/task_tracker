@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { DynamicFormModel } from "@/src/types/expense";
+import { DynamicFormModel } from "@/src/schema/expense.schema";
 import { Plus, Trash } from "lucide-react";
 
 function TransportationSubForm() {

@@ -1,5 +1,5 @@
-import { ActionResponse } from "../types/auth";
-import { GetAuthUser } from "../actions/auth.action";
+import { ActionResponse } from "../../schema/auth.schema";
+import { GetAuthUser } from "../../actions/auth.action";
 import { redirect } from "next/navigation";
 
 export async function authenticateUser<T>(

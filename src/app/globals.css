@@ -28,7 +28,10 @@
   --color-text-info: #38bdf8;
 
   /* Expense Categories */
-  --color-a: #ff5e5e;
+  /* --color-personal: #091e3a;
+  --color-transportation: #2b1a04;
+  --color-stock: #2e1e05;
+  --color-misc: #062c1b; */
 
   /* Transaction Status */
   --color-text-pending: #fbbf24;
@@ -69,6 +72,10 @@
   .card-container-base {
     @apply bg-foreground border border-border rounded-md;
   }
+  /* 
+  .step-form-button {
+    @apply ;
+  } */
 }
 
 @layer utilities {

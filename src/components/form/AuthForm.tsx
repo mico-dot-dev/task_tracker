@@ -3,7 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { AuthSchema, AuthModel } from "@/src/types/auth";
+import { AuthSchema, AuthModel } from "@/src/schema/auth.schema";
 import { SignUpUser, LoginUser } from "@/src/actions/auth.action";
 import { useRouter } from "next/navigation";
 import { FaFacebook, FaDiscord } from "react-icons/fa";

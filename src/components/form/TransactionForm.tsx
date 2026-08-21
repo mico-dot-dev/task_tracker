@@ -2,21 +2,30 @@
 
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { expenseIconMap } from "@/src/lib/expense-icon-mapper";
+import {
+  expenseIconMap,
+  expenseIconProps,
+} from "@/src/lib/utils/expense-mapper";
 import { ExpenseType } from "@/src/generated/prisma";
 import {
   TransactionFormModel,
   TransactionSchema,
-} from "@/src/types/transaction";
-import { DynamicListModel } from "@/src/types/expense";
+} from "@/src/schema/transaction.schema";
+import { DynamicListModel } from "@/src/schema/expense.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { twJoin } from "tailwind-merge";
 import { GetUserExpenseByType } from "@/src/actions/expense.action";
-import { Divide } from "lucide-react";
+import ExpenseCard from "@/src/components/transaction/TransactionFormButtonCard";
 
 interface AddFormProps {
   closeModal: () => void;
 }
+
+type expenseButtonProps = {
+  isSelected: boolean;
+  expenseType: ExpenseType;
+  iconConfig: expenseIconProps;
+  onSelectType: (type: ExpenseType) => void;
+};
 
 function TransactionForm({ closeModal }: AddFormProps) {
   const methods = useForm<TransactionFormModel>({
@@ -31,7 +40,6 @@ function TransactionForm({ closeModal }: AddFormProps) {
   });
 
   const { register, watch, setValue } = methods;
-
   const selectedExpenseType = watch("expense_type");
 
   const [expenseData, setExpenseData] = useState<DynamicListModel[]>();
@@ -72,45 +80,38 @@ function TransactionForm({ closeModal }: AddFormProps) {
           {step === 1 && (
             <fieldset className="flex-flex-col">
               {Object.entries(expenseIconMap).map(([typeKey, config]) => {
-                const IconComponent = config.icon;
                 const convertedType = typeKey as ExpenseType;
                 const isSelected = convertedType === selectedExpenseType;
 
                 return (
-                  <button
+                  <ExpenseCard
                     key={typeKey}
-                    className={twJoin(
-                      "border border-border w-full cursor-pointer flex mb-3 py-3.5",
-                      isSelected && "border-primary",
-                    )}
-                    type="button"
-                    onClick={() =>
-                      setValue("expense_type", convertedType, {
-                        shouldValidate: true,
-                      })
+                    expenseType={convertedType}
+                    iconConfig={config}
+                    isSelected={isSelected}
+                    onSelectType={(expense) =>
+                      setValue("expense_type", expense)
                     }
-                  >
-                    <div className=" mx-3 p-2">
-                      <IconComponent />
-                    </div>
-                    <div className="flex flex-col text-start">
-                      <p className="p-0 m-0 ">{config.title}</p>
-                      <p className="text-xs text-muted-text">
-                        {config.description}
-                      </p>
-                    </div>
-                  </button>
+                  />
                 );
               })}
             </fieldset>
           )}
 
+          {/* Showcases the Expenses of the chosen expense type */}
           {step === 2 && (
             <fieldset className="flex-flex-col">
               {expenseData ? (
                 <fieldset>
                   {expenseData.map((data, i) => {
-                    return <p key={i}>{data.title}</p>;
+                    return (
+                      <button
+                        key={i}
+                        className="border border-border w-full cursor-pointer flex mb-3 py-3.5"
+                      >
+                        {data.title}
+                      </button>
+                    );
                   })}
                 </fieldset>
               ) : (

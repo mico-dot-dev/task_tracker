@@ -8,16 +8,16 @@ const ExpenseSchema = z.object({
 
 //Declaration for each content type subcategories for dynamic inputs/fetch
 
-const BillsFormSchema = ExpenseSchema.extend({
+const BillsFormBaseSchema = ExpenseSchema.extend({
   repeating_type: z.nativeEnum(DateRepeatType),
   running_bill: z.number(),
 });
 
-const HouseFormSchema = BillsFormSchema.extend({
+const HouseFormSchema = BillsFormBaseSchema.extend({
   expense_type: z.literal(ExpenseType.HOUSE),
 });
 
-const PersonalFormSchema = BillsFormSchema.extend({
+const PersonalFormSchema = BillsFormBaseSchema.extend({
   expense_type: z.literal(ExpenseType.PERSONAL),
 });
 
@@ -81,7 +81,7 @@ export const ManualListSchema = ManualFormSchema.extend({
   id: z.string(),
 });
 
-export const DynamicListSchema = z.discriminatedUnion("content", [
+export const DynamicListSchema = z.discriminatedUnion("expense_type", [
   HouseListSchema,
   PersonalListSchema,
   StockListSchema,

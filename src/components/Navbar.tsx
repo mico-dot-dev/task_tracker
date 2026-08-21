@@ -6,16 +6,17 @@ import {
   Package,
   ShoppingBasket,
   Landmark,
+  Menu,
 } from "lucide-react";
 
 function Navbar() {
   return (
-    <div className="drawer lg:drawer-open w-64 bg-transparent text-primary-text ">
+    <div className="drawer md:fixed lg:drawer-open lg:w-64 lg:relative bg-transparent text-primary-text z-9">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex lg:hidden">
         {/* Page content here */}
-        <label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden ">
-          Open drawer
+        <label htmlFor="my-drawer-3" className=" drawer-button lg:hidden">
+          <Menu />
         </label>
       </div>
       <div className="drawer-side w-full h-screen flex">

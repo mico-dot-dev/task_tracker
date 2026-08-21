@@ -1,6 +1,6 @@
 import { prisma } from "../lib/prisma-client";
-import { ActionResponse } from "../types/auth";
-import { TransactionListModel } from "@/src/types/transaction";
+import { ActionResponse } from "../schema/auth.schema";
+import { TransactionListModel } from "@/src/schema/transaction.schema";
 import { GetAuthUser } from "@/src/actions/auth.action";
 
 export async function GetUserTransaction(): Promise<

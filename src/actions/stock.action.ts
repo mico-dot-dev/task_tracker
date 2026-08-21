@@ -1,11 +1,11 @@
 "use server";
 
 import { prisma } from "@/src/lib/prisma-client";
-import { ActionResponse } from "@/src/types/auth";
+import { ActionResponse } from "@/src/schema/auth.schema";
 import { GetAuthUser } from "./auth.action";
-import { StockModel } from "../types/stock";
-import { TaskFormModelOutput } from "@/src/types/task";
-import { CategoryListModel } from "@/src/types/category";
+import { StockModel } from "../schema/stock.schema";
+import { TaskFormModelOutput } from "@/src/schema/task.schema";
+import { CategoryListModel } from "@/src/schema/category.schema";
 
 export async function GetUserStock(): Promise<ActionResponse<StockModel[]>> {
   try {

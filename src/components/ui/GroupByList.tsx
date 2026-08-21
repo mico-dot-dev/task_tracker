@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import AddCategoryModal from "../modal/AddModal";
-import { CategoryListModel } from "@/src/types/category";
+import { CategoryListModel } from "@/src/schema/category.schema";
 import { GetUserCategory } from "@/src/actions/category.action";
 
-function TaskGroupBy() {
+function GroupByList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState<CategoryListModel[]>([]);
 
@@ -60,4 +60,4 @@ function TaskGroupBy() {
   );
 }
 
-export default TaskGroupBy;
+export default GroupByList;

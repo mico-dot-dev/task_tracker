@@ -1,6 +1,10 @@
 "use server";
 import { supabaseServer } from "../lib/supabase/server";
-import { AuthModel, ActionResponse, AuthSchema } from "@/src/types/auth";
+import {
+  AuthModel,
+  ActionResponse,
+  AuthSchema,
+} from "@/src/schema/auth.schema";
 
 export async function GetAuthUser(): Promise<ActionResponse<{ user: string }>> {
   try {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Search } from "lucide-react";
 
-function TaskSearch() {
+function SearchBar() {
   return (
     <div className="flex relative mb-4 ">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -21,4 +21,4 @@ function TaskSearch() {
   );
 }
 
-export default TaskSearch;
+export default SearchBar;

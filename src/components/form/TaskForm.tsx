@@ -6,14 +6,14 @@ import {
   TaskFormModelInput,
   TaskFormSchema,
   TaskFormModelUpdate,
-} from "@/src/types/task";
-import { ActionResponse } from "@/src/types/auth";
+} from "@/src/schema/task.schema";
+import { ActionResponse } from "@/src/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
 import { GetUserCategory } from "@/src/actions/category.action";
-import { CategoryListModel } from "@/src/types/category";
+import { CategoryListModel } from "@/src/schema/category.schema";
 import { DateRepeatType } from "@/src/generated/prisma";
 
 interface AddFormProps {
