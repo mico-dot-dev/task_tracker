@@ -7,21 +7,22 @@ import {
   ShoppingBasket,
   Landmark,
   Menu,
+  LogOut,
 } from "lucide-react";
 
 function Navbar() {
   return (
     <div className="drawer md:fixed lg:drawer-open lg:w-64 lg:relative bg-transparent text-primary-text z-9">
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+      <input id="drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex lg:hidden">
         {/* Page content here */}
-        <label htmlFor="my-drawer-3" className=" drawer-button lg:hidden">
+        <label htmlFor="drawer" className=" drawer-button lg:hidden absolute">
           <Menu />
         </label>
       </div>
       <div className="drawer-side w-full h-screen flex">
         <label
-          htmlFor="my-drawer-3"
+          htmlFor="drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
@@ -57,6 +58,10 @@ function Navbar() {
             <a href="/dashboard/transaction" className="nav-item-base">
               <Landmark size={20} />
               <p>Transaction</p>
+            </a>
+            <a href="/dashboard/transaction" className="nav-item-base">
+              <LogOut size={20} />
+              <p>Logout</p>
             </a>
           </div>
         </nav>

@@ -40,10 +40,11 @@
 
 @layer components {
   .input-base {
-    @apply rounded-lg bg-input-background border-b-3 border-border 
-              placeholder:text-muted-text 
-                   text-header-text transition-colors duration-200
-                   focus:border-primary focus:outline-none focus:ring-2 focus:ring-input-border-ring;
+    @apply rounded-lg 
+    bg-input-background border-b-3 border-border 
+    placeholder:text-muted-text text-header-text 
+    transition-colors duration-300
+    focus:border-primary focus:outline-none focus:ring-2 focus:ring-input-border-ring;
   }
   .button-base {
     @apply cursor-pointer 

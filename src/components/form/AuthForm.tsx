@@ -8,6 +8,7 @@ import { SignUpUser, LoginUser } from "@/src/actions/auth.action";
 import { useRouter } from "next/navigation";
 import { FaFacebook, FaDiscord } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { twJoin } from "tailwind-merge";
 
 function AccountForm() {
   const router = useRouter();
@@ -35,23 +36,22 @@ function AccountForm() {
     signup: SignUpUser,
   }[mode];
 
-  const { register, handleSubmit } = useForm<AuthModel>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<AuthModel>({
     resolver: zodResolver(AuthSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    mode: "onSubmit",
   });
 
   function toggleMode() {
-    try {
-      setMode((prev) => (prev === "login" ? "signup" : "login"));
-    } catch (error) {}
+    setMode((prev) => (prev === "login" ? "signup" : "login"));
   }
 
   async function AuthSubmit(data: AuthModel) {
+    await Swal.showLoading();
     try {
-      Swal.showLoading();
       const res = await authService(data);
 
       if (!res) {
@@ -72,14 +72,6 @@ function AccountForm() {
         router.push("/dashboard");
         router.refresh();
         Swal.close();
-        // await Swal.fire({
-        //   icon: "success",
-        //   title: "Login Successful",
-        //   text: res.message,
-        // }).then(() => {
-        //   router.push("/dashboard");
-        //   router.refresh();
-        // });
         // Sign up
       } else {
         await Swal.fire({
@@ -92,50 +84,83 @@ function AccountForm() {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      await Swal.fire({
+        icon: "error",
+        title: "Something went wrong",
+        text: "Please try again in a moment.",
+      });
     }
   }
 
   return (
     <>
-      <div className="flex justify-center text-primary-text h-screen items-center">
-        <div className="flex flex-col h-3/4 w-1/4 justify-center">
-          <p className="text-3xl text-center font-bold">{content.title}</p>
-
+      <div className="flex text-primary-text h-screen w-full items-center justify-center">
+        <div className="flex flex-col h-3/4 lg:w-1/4 items-center sm:w-full">
+          <p className="lg:text-3xl sm:text-2xl text-center font-bold lg:mb-20 mb-10">
+            {content.title}
+          </p>
           <form
-            className="flex flex-col my-[20%] "
+            className="flex flex-col w-full mb-15"
             onSubmit={handleSubmit(AuthSubmit)}
+            noValidate
           >
-            <div className="flex flex-col gap-8 mb-5">
-              <input
-                type="email"
-                placeholder="Email Adress"
-                className="input-base indent-2.5 py-2 "
-                required
-                {...register("email")}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="input-base py-2 indent-2.5"
-                autoComplete="off"
-                required
-                {...register("password")}
-              />
+            <div className="flex flex-col gap-8 mb-10">
+              <fieldset className="flex flex-col">
+                {errors.email && (
+                  <label htmlFor="email" className="text-text-error text-sm">
+                    {errors.email.message}
+                  </label>
+                )}
+                <input
+                  type="text"
+                  placeholder="Email Adress"
+                  className="input-base indent-2.5 lg:py-1.5 h-12"
+                  {...register("email")}
+                />
+              </fieldset>
+              <fieldset className="flex flex-col">
+                {errors.password && (
+                  <label htmlFor="password" className="text-text-error text-sm">
+                    {errors.password.message}
+                  </label>
+                )}
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input-base indent-2.5 py-1.5 h-12"
+                  autoComplete="off"
+                  {...register("password")}
+                />
+              </fieldset>
             </div>
 
             <div className="aura text-text-info duration-3000 rounded-4xl">
-              <div className="cursor-pointer button-base rounded-4xl h-12 text-lg flex items-center justify-center">
-                <button className="cursor-pointer" type="submit">
-                  {content.mode}
+              <div
+                className={twJoin(
+                  "cursor-pointer button-base rounded-4xl h-12 text-lg flex items-center justify-center",
+                  isSubmitting && "opacity-70 cursor-not-allowed",
+                )}
+              >
+                <button
+                  className="cursor-pointer"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Loading" : content.mode}
                 </button>
               </div>
             </div>
           </form>
 
-          <fieldset className="flex border-t border-text mb-30">
-            <legend className="text-center px-2 mb-5">
-              or {content.mode} with
-            </legend>
+          <fieldset className="flex flex-col w-full">
+            <div className="text-center px-2 mb-3 relative w-full self-center">
+              <div className="absolute inset-0 flex items-center w-full">
+                <div className="w-full border-t border-primary-text" />
+              </div>
+              <span className="relative bg-background px-2">
+                or {content.mode} with
+              </span>
+            </div>
             <div className="flex justify-between w-full text-3xl">
               <FcGoogle className="" />
               <FaFacebook className="" />
@@ -143,15 +168,18 @@ function AccountForm() {
             </div>
           </fieldset>
 
-          <button
-            className="flex justify-self-center text-center cursor-pointer text-s text-text"
-            onClick={toggleMode}
-          >
-            <p>{content.invertText} &thinsp;</p>{" "}
-            <p className="text-primary hover:underline">
-              {content.invertTitle}
-            </p>
-          </button>
+          <div className="flex flex-1">
+            <button
+              className="flex justify-self-center text-center cursor-pointer  text-text self-end"
+              type="button"
+              onClick={toggleMode}
+            >
+              <p>{content.invertText} &thinsp;</p>{" "}
+              <p className="text-primary hover:underline">
+                {content.invertTitle}
+              </p>
+            </button>
+          </div>
         </div>
       </div>
     </>
