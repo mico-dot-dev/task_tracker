@@ -6,15 +6,19 @@ import {
   expenseIconMap,
   expenseIconProps,
 } from "@/src/lib/utils/expense-mapper";
-import { ExpenseType } from "@/src/generated/prisma";
+import { ExpenseType, TransactionStatus } from "@/src/generated/prisma";
 import {
   TransactionFormModel,
   TransactionSchema,
+  TransactionListModel,
 } from "@/src/schema/transaction.schema";
 import { DynamicListModel } from "@/src/schema/expense.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetUserExpenseByType } from "@/src/actions/expense.action";
 import ExpenseCard from "@/src/components/transaction/TransactionFormButtonCard";
+import { twJoin } from "tailwind-merge";
+import { CreateUserTransaction } from "@/src/actions/transaction.action";
+import Swal from "sweetalert2";
 
 interface AddFormProps {
   closeModal: () => void;
@@ -36,11 +40,14 @@ function TransactionForm({ closeModal }: AddFormProps) {
       amount: 1,
       price: 0,
       due_date: undefined,
+      expense_id: "0",
+      status: TransactionStatus.PENDING,
     },
   });
 
-  const { register, watch, setValue } = methods;
+  const { register, watch, setValue, handleSubmit } = methods;
   const selectedExpenseType = watch("expense_type");
+  const selectedExpenseId = watch("expense_id");
 
   const [expenseData, setExpenseData] = useState<DynamicListModel[]>();
 
@@ -63,6 +70,21 @@ function TransactionForm({ closeModal }: AddFormProps) {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const formSubmit = async (data: TransactionListModel) => {
+    const res = await CreateUserTransaction(data);
+    if (!res.success) alert(res.error);
+
+    await Swal.fire({
+      icon: "success",
+      title: "Transaction Made",
+      text: "nice",
+    });
+  };
+
+  const onInvalid = (errors: any) => {
+    console.log("❌ Form Validation Failed:", errors);
+  };
+
   return (
     <>
       <div className="text-xs">
@@ -75,7 +97,7 @@ function TransactionForm({ closeModal }: AddFormProps) {
       </div>
 
       <FormProvider {...methods}>
-        <form>
+        <form onSubmit={handleSubmit(formSubmit, onInvalid)}>
           {/* Step 1 */}
           {step === 1 && (
             <fieldset className="flex-flex-col">
@@ -104,10 +126,19 @@ function TransactionForm({ closeModal }: AddFormProps) {
               {expenseData ? (
                 <fieldset>
                   {expenseData.map((data, i) => {
+                    const isSelected = data.id === selectedExpenseId;
                     return (
                       <button
                         key={i}
-                        className="border border-border w-full cursor-pointer flex mb-3 py-3.5"
+                        type="button"
+                        className={twJoin(
+                          "border border-border w-full cursor-pointer flex mb-3 py-3.5",
+                          isSelected && "border-primary",
+                        )}
+                        onClick={() => {
+                          setValue("expense_id", data.id);
+                          setValue("name", data.title);
+                        }}
                       >
                         {data.title}
                       </button>
@@ -119,7 +150,20 @@ function TransactionForm({ closeModal }: AddFormProps) {
               )}
             </fieldset>
           )}
-          {step === 3 && <fieldset className="flex-flex-col">Step 3</fieldset>}
+          {step === 3 && (
+            <fieldset className="flex-flex-col">
+              <label htmlFor="">Amount</label>
+              <input
+                type="number"
+                {...register("amount", { valueAsNumber: true })}
+              />
+              <label htmlFor="">Price</label>
+              <input
+                type="number"
+                {...register("price", { valueAsNumber: true })}
+              />
+            </fieldset>
+          )}
 
           <footer className="justify-between w-full flex">
             {step > 1 ? (

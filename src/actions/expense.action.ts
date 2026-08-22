@@ -10,7 +10,7 @@ import {
 import { ActionResponse } from "../schema/auth.schema";
 import { GetAuthUser } from "./auth.action";
 import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
-import { authenticateUser } from "../lib/utils/wrapper-wrapper";
+import { authenticateUser } from "../lib/utils/validation-wrapper";
 
 const expenseQueryInclude = {
   bill_expense: true,

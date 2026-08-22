@@ -8,6 +8,7 @@ export const TransactionSchema = z.object({
   amount: z.int(),
   price: z.float32(),
   due_date: z.date().optional(),
+  expense_id: z.string(),
 });
 
 export type TransactionFormModel = z.input<typeof TransactionSchema>;
