@@ -6,9 +6,10 @@ import { AppModule } from "@/src/type/module";
 
 interface ToolBarProps {
   module: AppModule;
+  categoryContent: string[];
 }
 
-function Toolbar({ module }: ToolBarProps) {
+function Toolbar({ module, categoryContent }: ToolBarProps) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row pb-5 mb-3 border-b border-border">
@@ -20,7 +21,7 @@ function Toolbar({ module }: ToolBarProps) {
         </div>
       </div>
       <Suspense>
-        <CategoryList module={module} />
+        <CategoryList content={categoryContent} />
       </Suspense>
     </div>
   );

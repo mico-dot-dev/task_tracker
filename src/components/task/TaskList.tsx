@@ -1,7 +1,7 @@
 import React from "react";
 import { GetUserTasks } from "@/src/actions/task.action";
 import TaskCard from "@/src/components/task/TaskCard";
-import { ListParams } from "@/src/type/listParams";
+import { ListParams } from "@/src/type/page-types";
 
 interface TaskListProps {
   searchParams?: ListParams;
@@ -9,7 +9,6 @@ interface TaskListProps {
 
 async function TaskList({ searchParams }: TaskListProps) {
   const tasks = await GetUserTasks();
-  console.log(searchParams);
 
   if (!tasks.success) {
     return <p>Task Data Not Found</p>;

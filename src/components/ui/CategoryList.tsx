@@ -10,46 +10,21 @@ import { AppModule } from "@/src/type/module";
 import { upperCaseString } from "@/src/lib/utils/formatter";
 
 interface ListProps {
-  module: AppModule;
+  content: string[];
 }
 
-function CategoryList({ module }: ListProps) {
+function CategoryList({ content }: ListProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [categories, setCategories] = useState<CategoryListModel[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      if (module === "task") {
-        const res = await GetUserCategory();
-        if (res.success) {
-          setCategories(res.data);
-        }
-      } else {
-        const res: CategoryListModel[] = await Object.values(ExpenseType).map(
-          (expense, index) => {
-            return {
-              title: upperCaseString(expense),
-              id: index,
-            };
-          },
-        );
-
-        setCategories(res);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   return (
     <>
       <p></p>
       <div className="flex flex-row ">
         <div className="flex flex-row gap-3 text-background">
-          {categories.map((category) => {
+          {content.map((category, index) => {
             return (
-              <button className="button-base p-2 rounded-2xl" key={category.id}>
-                {category.title}
+              <button className="button-base p-2 rounded-2xl" key={index}>
+                {category}
               </button>
             );
           })}
