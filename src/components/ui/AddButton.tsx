@@ -17,7 +17,10 @@ function AddButton({ content }: AddButtonProps) {
         className="fixed bottom-5 right-5
             font-semibold text-sm tracking-wide lg:px-6 px-3 py-3 rounded-lg
             flex items-center gap-2
-            button-base"
+            button-base
+            bg-primary
+            text-background
+            hover:bg-hover"
       >
         <button
           className="flex cursor-pointer"

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import ExpenseAdd from "@/src/components/ui/AddButton";
 import ExpenseList from "@/src/components/expenses/ExpenseList";
 import SearchBar from "@/src/components/ui/SearchBar";
-import GroupByList from "@/src/components/ui/GroupByList";
+import GroupByList from "@/src/components/ui/CategoryList";
 
 function page() {
   return (

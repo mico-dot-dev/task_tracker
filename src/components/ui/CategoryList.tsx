@@ -6,7 +6,7 @@ import AddCategoryModal from "../modal/AddModal";
 import { CategoryListModel } from "@/src/schema/category.schema";
 import { GetUserCategory } from "@/src/actions/category.action";
 
-function GroupByList() {
+function CategoryList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState<CategoryListModel[]>([]);
 
@@ -23,7 +23,8 @@ function GroupByList() {
 
   return (
     <>
-      <div className="flex flex-row justify-between h-10 text-sm  font-medium">
+      <p></p>
+      <div className="flex flex-row ">
         <div className="flex flex-row gap-3 text-background">
           {categories.map((category) => {
             return (
@@ -40,16 +41,6 @@ function GroupByList() {
             <Plus size={20} />
           </button>
         </div>
-
-        <div className="flex flex-row gap-3 text-background">
-          <button className="flex flex-row px-1.5 gap-1.5 items-center button-base rounded-xl">
-            <p>Group by</p>
-            <p className="font-bold"> Category</p>
-          </button>
-          <button className="cursor-pointer px-5 button-base rounded-xl">
-            Filter
-          </button>
-        </div>
       </div>
       <AddCategoryModal
         isOpen={modalOpen}
@@ -60,4 +51,4 @@ function GroupByList() {
   );
 }
 
-export default GroupByList;
+export default CategoryList;

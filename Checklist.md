@@ -1,13 +1,14 @@
 1. Fix Mobile View
-2. Transaction forms and functionalities
-3. Add more CI/CD pipelines
+<!-- 2. Transaction forms and functionalities -->
+2. Add more CI/CD pipelines
 <!-- 4. Sign In Option -->
-4. Installation of Redis
-5. Buffer and Cache implementationn
-6. Cookies and Session Implementation
-7. Improving CI/CD pipeline
-8. Restriction of database data
-9. Implement hooks on reusable functions
-10. Refactor database
-11. Implement income database
-12. Implement dashboard
+3. Installation of Redis
+4. Buffer and Cache implementationn
+5. Cookies and Session Implementation
+<!-- 6. Improving CI/CD pipeline -->
+6. Restriction of database data
+7. Implement hooks on reusable functions
+8. Refactor database
+9. Implement income database
+10. Implement dashboard
+11. Implement pagintation to the lists

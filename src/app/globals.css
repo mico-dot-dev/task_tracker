@@ -48,11 +48,16 @@
   }
   .button-base {
     @apply cursor-pointer 
-    bg-primary text-background 
-        transition-all duration-200 ease-in-out 
-        hover:bg-hover hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]
-          focus:outline-2 focus:outline-[#EAB308] focus:outline-offset-2 
-          active:scale-95;
+    bg-foreground text-primary-text 
+    border-2 border-border
+    items-center
+    transition-all duration-200 ease-in-out 
+    hover:bg-hover hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]
+      hover:text-background
+
+      focus:outline-2 focus:outline-info focus:outline-offset-1 
+      not-hover:outline-none
+      active:scale-95;
   }
   .nav-item-base {
     @apply cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-muted-text border border-transparent hover:text-header-text hover:bg-white/3;
