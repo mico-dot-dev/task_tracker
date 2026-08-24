@@ -8,7 +8,7 @@ export async function authenticateUser<T>(
   const auth = await GetAuthUser();
 
   if (!auth.success || !auth.data?.user) {
-    redirect("/login");
+    redirect("/");
   }
 
   return actionFn(auth.data.user);

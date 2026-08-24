@@ -14,12 +14,17 @@ export async function proxy(request: NextRequest) {
     path === "/" || path.includes("/login") || path.includes("/signup");
   if (user && isAuthOrRoot) {
     await supabase.auth.signOut();
-
-    // Return the response with the clearance cookies applied
     return supabaseResponse;
   }
+  const isProtectedPath = path.startsWith("/dashboard");
+  if (!user && isProtectedPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
   return supabaseResponse;
 }
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/dashboard:path*"],
 };

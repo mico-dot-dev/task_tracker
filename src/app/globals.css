@@ -44,15 +44,25 @@
     bg-input-background border-b-3 border-border 
     placeholder:text-muted-text text-header-text 
     transition-colors duration-300
-    focus:border-primary focus:outline-none focus:ring-2 focus:ring-input-border-ring;
+    focus:border-primary focus:outline-none;
   }
+
+  .input-base:-webkit-autofill,
+  .input-base:-webkit-autofill:hover,
+  .input-base:-webkit-autofill:focus,
+  .input-base:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-input-background) inset !important;
+    -webkit-text-fill-color: var(--color-header-text) !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+
   .button-base {
     @apply cursor-pointer 
     bg-foreground text-primary-text 
     border-2 border-border
     items-center
     transition-all duration-200 ease-in-out 
-    hover:bg-hover hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]
+    hover:bg-primary hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]
       hover:text-background
 
       focus:outline-2 focus:outline-info focus:outline-offset-1 

@@ -7,24 +7,36 @@ import {
   CategoryListModel,
 } from "@/src/schema/category.schema";
 import { prisma } from "@/src/lib/prisma-client";
+import { authenticateUser } from "@/src/lib/utils/validation-wrapper";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { success } from "zod";
 
 export async function GetUserCategory(): Promise<
   ActionResponse<CategoryListModel[]>
 > {
   try {
-    const user = await GetAuthUser();
-    if (!user.success) {
-      throw new Error("User not authenticated");
+    const res = await authenticateUser(async (userId) => {
+      return {
+        success: true,
+        data: await prisma.task_category.findMany({
+          where: {
+            user_id: userId,
+          },
+          orderBy: {
+            title: "asc",
+          },
+        }),
+      };
+    });
+
+    if (!res.success) {
+      return {
+        success: false,
+        error: "User Not Authenticated",
+      };
     }
 
-    const categories = await prisma.task_category.findMany({
-      where: {
-        user_id: user.data.user,
-      },
-      orderBy: {
-        title: "asc",
-      },
-    });
+    const categories = res.data;
 
     if (categories[0] === undefined) {
       return {
@@ -46,7 +58,13 @@ export async function GetUserCategory(): Promise<
     };
   } catch (error) {
     console.error("Error fetching user categories:", error);
-    throw new Error("Failed to fetch user categories");
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      success: false,
+      error: "Error fetching user categories",
+    };
   }
 }
 

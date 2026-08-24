@@ -1,11 +1,16 @@
-"use server";
 import React, { Suspense, use } from "react";
 import TaskList from "@/src/components/task/TaskList";
 import ToolBar from "@/src/components/ui/Toolbar";
 import AddButton from "@/src/components/ui/AddButton";
-import { Divide } from "lucide-react";
+import { ListParams } from "@/src/type/listParams";
 
-async function page() {
+interface TaskPageProps {
+  searchParams?: Promise<ListParams>;
+}
+
+async function page({ searchParams }: TaskPageProps) {
+  const param = await searchParams;
+
   return (
     <div className="content-container-base">
       <header className="mt-7 mb-3">
@@ -20,7 +25,7 @@ async function page() {
         </div>
         <div className="overflow-y-scroll flex-1 h-fit pb-24">
           <Suspense>
-            <TaskList />
+            <TaskList searchParams={param} />
           </Suspense>
         </div>
       </div>
