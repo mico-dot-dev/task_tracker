@@ -1,21 +1,25 @@
 import React from "react";
 import { Suspense } from "react";
-import ExpenseAdd from "@/src/components/ui/AddButton";
+import AddButton from "@/src/components/ui/AddButton";
 import ExpenseList from "@/src/components/expenses/ExpenseList";
-import SearchBar from "@/src/components/ui/SearchBar";
-import GroupByList from "@/src/components/ui/CategoryList";
+import Toolbar from "@/src/components/ui/Toolbar";
 
 function page() {
   return (
     <div className="content-container-base">
-      <SearchBar />
-      <GroupByList />
-      <div className="mt-5 overflow-scroll">
-        <Suspense>
-          <ExpenseList />
-        </Suspense>
+      <div className="flex flex-col flex-1s h-full">
+        <div className="mb-7">
+          <Toolbar module="expense" />
+        </div>
+        <div className=" overflow-y-scroll flex-1 h-fit pb-10">
+          <Suspense>
+            <ExpenseList />
+          </Suspense>
+        </div>
       </div>
-      <ExpenseAdd content="expense" />
+      <div>
+        <AddButton content="expense" />
+      </div>
     </div>
   );
 }

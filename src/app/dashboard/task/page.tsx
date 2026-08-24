@@ -2,7 +2,8 @@
 import React, { Suspense, use } from "react";
 import TaskList from "@/src/components/task/TaskList";
 import ToolBar from "@/src/components/ui/Toolbar";
-import TaskAdd from "@/src/components/ui/AddButton";
+import AddButton from "@/src/components/ui/AddButton";
+import { Divide } from "lucide-react";
 
 async function page() {
   return (
@@ -13,16 +14,18 @@ async function page() {
           <div></div>
         </div>
       </header>
-      <div className="flex flex-col flex-1s h-full">
+      <div className="flex flex-col flex-1 h-full">
         <div className="mb-7 ">
           <ToolBar module="task" />
         </div>
         <div className="overflow-y-scroll flex-1 h-fit pb-24">
-          <TaskList />
+          <Suspense>
+            <TaskList />
+          </Suspense>
         </div>
       </div>
       <div className="absolute">
-        <TaskAdd content="task" />
+        <AddButton content="task" />
       </div>
     </div>
   );

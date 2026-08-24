@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SearchBar from "@/src/components/ui/SearchBar";
 import CategoryList from "@/src/components/ui/CategoryList";
 import Filter from "@/src/components/ui/Filter";
@@ -19,7 +19,9 @@ function Toolbar({ module }: ToolBarProps) {
           <Filter />
         </div>
       </div>
-      <CategoryList />
+      <Suspense>
+        <CategoryList module={module} />
+      </Suspense>
     </div>
   );
 }

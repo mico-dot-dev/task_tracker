@@ -5,16 +5,36 @@ import { Plus } from "lucide-react";
 import AddCategoryModal from "../modal/AddModal";
 import { CategoryListModel } from "@/src/schema/category.schema";
 import { GetUserCategory } from "@/src/actions/category.action";
+import { ExpenseType } from "@/src/generated/prisma";
+import { AppModule } from "@/src/type/module";
+import { upperCaseString } from "@/src/lib/utils/formatter";
 
-function CategoryList() {
+interface ListProps {
+  module: AppModule;
+}
+
+function CategoryList({ module }: ListProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [categories, setCategories] = useState<CategoryListModel[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const userCategories = await GetUserCategory();
-      if (userCategories.success) {
-        setCategories(userCategories.data);
+      if (module === "task") {
+        const res = await GetUserCategory();
+        if (res.success) {
+          setCategories(res.data);
+        }
+      } else {
+        const res: CategoryListModel[] = await Object.values(ExpenseType).map(
+          (expense, index) => {
+            return {
+              title: upperCaseString(expense),
+              id: index,
+            };
+          },
+        );
+
+        setCategories(res);
       }
     };
 

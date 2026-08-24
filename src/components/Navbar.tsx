@@ -59,7 +59,7 @@ function Navbar() {
               <Landmark size={20} />
               <p>Transaction</p>
             </a>
-            <a href="/dashboard/transaction" className="nav-item-base">
+            <a href="/" className="nav-item-base">
               <LogOut size={20} />
               <p>Logout</p>
             </a>
