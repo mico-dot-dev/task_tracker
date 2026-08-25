@@ -1,6 +1,5 @@
 import { ActionResponse } from "../../schema/auth.schema";
 import { GetAuthUser } from "../../actions/auth.action";
-import { redirect } from "next/navigation";
 
 export async function authenticateUser<T>(
   actionFn: (userId: string) => Promise<ActionResponse<T>>,
@@ -8,7 +7,10 @@ export async function authenticateUser<T>(
   const auth = await GetAuthUser();
 
   if (!auth.success || !auth.data?.user) {
-    redirect("/");
+    return {
+      success: false,
+      error: "User not Authenticated",
+    };
   }
 
   return actionFn(auth.data.user);

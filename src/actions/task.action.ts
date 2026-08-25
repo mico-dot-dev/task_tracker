@@ -15,23 +15,19 @@ import { DateRepeatType, Prisma } from "@/src/generated/prisma";
 import { ReturnErrorMessage } from "@/src/hook/ReturnErrorMessage";
 import { ListParams } from "../type/page-types";
 
-export async function GetUserTasks(
-  params: ListParams,
-): Promise<ActionResponse<TaskListModel[]>> {
+export async function GetUserTasks({
+  category,
+  searchText,
+  filter,
+  groupBy,
+}: ListParams): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const rawTaskData = await authenticateUser(async (userId) => {
-      const whereClause: Prisma.task_categoryWhereInput = {
-        user_id: userId,
-      };
-
-      if (params.category) {
-        whereClause.title = {
-          equals: params.category,
-        };
-      }
-
       const data = await prisma.task_category.findMany({
-        where: whereClause,
+        where: {
+          user_id: userId,
+          ...(category ? { id: Number(category) } : {}),
+        },
         select: {
           title: true,
           task: {

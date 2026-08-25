@@ -2,12 +2,8 @@ import React, { Suspense } from "react";
 import SearchBar from "@/src/components/ui/SearchBar";
 import CategoryList from "@/src/components/ui/CategoryList";
 import Filter from "@/src/components/ui/Filter";
+import { CategoryFilterModel, ToolBarProps } from "@/src/type/page-types";
 import { AppModule } from "@/src/type/module";
-
-interface ToolBarProps {
-  module: AppModule;
-  categoryContent: string[];
-}
 
 function Toolbar({ module, categoryContent }: ToolBarProps) {
   return (
@@ -21,7 +17,7 @@ function Toolbar({ module, categoryContent }: ToolBarProps) {
         </div>
       </div>
       <Suspense>
-        <CategoryList content={categoryContent} />
+        <CategoryList module={module} content={categoryContent} />
       </Suspense>
     </div>
   );

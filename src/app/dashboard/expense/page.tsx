@@ -6,11 +6,20 @@ import Toolbar from "@/src/components/ui/Toolbar";
 import { ToolBarProps } from "@/src/type/page-types";
 import { ExpenseType } from "@/src/generated/prisma";
 import { upperCaseFormat } from "@/src/lib/utils/formatter";
+import { ListParams } from "@/src/type/page-types";
 
-function page() {
+interface PageProps {
+  searchParams?: Promise<ListParams>;
+}
+
+async function page({ searchParams }: PageProps) {
+  const params = await searchParams;
   const toolBarData: ToolBarProps = {
     module: "expense",
-    categoryContent: Object.values(ExpenseType).map((e) => upperCaseFormat(e)),
+    categoryContent: Object.values(ExpenseType).map((e) => ({
+      id: e,
+      label: upperCaseFormat(e),
+    })),
   };
 
   return (
@@ -21,7 +30,7 @@ function page() {
         </div>
         <div className=" overflow-y-scroll flex-1 h-fit pb-10">
           <Suspense>
-            <ExpenseList />
+            <ExpenseList searchParams={params} />
           </Suspense>
         </div>
       </div>

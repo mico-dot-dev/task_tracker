@@ -4,22 +4,24 @@ import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import AddCategoryModal from "../modal/AddModal";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ToolBarProps, CategoryFilterModel } from "@/src/type/page-types";
+import { AppModule } from "@/src/type/module";
 
-interface ListProps {
-  content: string[];
+interface ContentProps {
+  module: AppModule;
+  content: CategoryFilterModel[];
 }
-
-function CategoryList({ content }: ListProps) {
+function CategoryList({ content, module }: ContentProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleCatgoryFilter = (category: string) => {
+  const handleCatgoryFilter = (id: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (category === "All") {
+    if (id === "all") {
       params.delete("category");
     } else {
-      params.set("category", category);
+      params.set("category", id);
     }
     router.push(`?${params.toString()}`);
   };
@@ -31,37 +33,41 @@ function CategoryList({ content }: ListProps) {
         <div className="flex flex-row gap-3 text-background">
           <button
             className="button-base p-2 rounded-2xl"
-            onClick={() => handleCatgoryFilter("All")}
+            onClick={() => handleCatgoryFilter("all")}
           >
             All
           </button>
 
           {/* Loop for category content */}
-          {content.map((category, index) => {
+          {content.map((category) => {
             return (
               <button
                 className="button-base p-2 rounded-2xl"
-                key={index}
-                onClick={() => handleCatgoryFilter(category)}
+                key={category.id}
+                onClick={() => handleCatgoryFilter(category.id)}
               >
-                {category}
+                {category.label}
               </button>
             );
           })}
-          <button
-            className="flex text-header-text cursor-pointer items-center "
-            onClick={() => setModalOpen(true)}
-          >
-            {" "}
-            <Plus size={20} />
-          </button>
+          {module === "task" && (
+            <button
+              className="flex text-header-text cursor-pointer items-center "
+              onClick={() => setModalOpen(true)}
+            >
+              {" "}
+              <Plus size={20} />
+            </button>
+          )}
         </div>
       </div>
-      <AddCategoryModal
-        isOpen={modalOpen}
-        setIsOpen={setModalOpen}
-        content="task_category"
-      />
+      {module === "task" && (
+        <AddCategoryModal
+          isOpen={modalOpen}
+          setIsOpen={setModalOpen}
+          content="task_category"
+        />
+      )}
     </>
   );
 }

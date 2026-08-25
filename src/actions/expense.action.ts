@@ -11,6 +11,7 @@ import { ActionResponse } from "../schema/auth.schema";
 import { GetAuthUser } from "./auth.action";
 import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
 import { authenticateUser } from "../lib/utils/validation-wrapper";
+import { ListParams } from "@/src/type/page-types";
 
 const expenseQueryInclude = {
   bill_expense: true,
@@ -144,32 +145,44 @@ export async function CreateExpense(
   }
 }
 
-export async function GetUserExpenses(): Promise<
-  ActionResponse<DynamicListModel[]>
-> {
-  try {
-    const user = await GetAuthUser();
-    if (!user.success) {
-      return { success: false, error: "User not authenticated" };
+export async function GetUserExpenses({
+  category,
+  filter,
+  groupBy,
+  searchText,
+}: ListParams): Promise<ActionResponse<DynamicListModel[]>> {
+  return authenticateUser(async (userId) => {
+    const validType =
+      category && Object.values(ExpenseType).includes(category as ExpenseType)
+        ? (category as ExpenseType)
+        : undefined;
+
+    console.log(category);
+
+    try {
+      const userExpenses = await prisma.expense.findMany({
+        where: {
+          user_id: userId,
+          ...(category ? { expense_type: validType } : {}),
+        },
+        include: expenseQueryInclude,
+        orderBy: { expense_type: "asc" },
+      });
+      const parsedExpense: DynamicListModel[] =
+        userExpenses.map(mapPrismaToDomain);
+
+      return {
+        success: true,
+        data: parsedExpense,
+      };
+    } catch (e) {
+      console.log("Error fetching user expense:", e);
+      return {
+        success: false,
+        error: "e",
+      };
     }
-
-    const userExpenses = await prisma.expense.findMany({
-      where: { user_id: user.data.user },
-      include: expenseQueryInclude, // 💡 Bind the constant to the query
-      orderBy: { expense_type: "asc" },
-    });
-
-    const parsedExpense: DynamicListModel[] =
-      userExpenses.map(mapPrismaToDomain);
-
-    return {
-      success: true,
-      data: parsedExpense,
-    };
-  } catch (e) {
-    console.log("Error fetching user expense:", e);
-    throw new Error("Failed to fetch user expenses");
-  }
+  });
 }
 
 export async function GetUserExpenseByType(

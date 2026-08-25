@@ -1,9 +1,14 @@
 import React from "react";
 import { GetUserExpenses } from "@/src/actions/expense.action";
 import ExpenseItemCard from "@/src/components/expenses/ExpenseItemCard";
+import { ListParams } from "@/src/type/page-types";
 
-async function ExpenseList() {
-  const expenses = await GetUserExpenses();
+interface TaskListProps {
+  searchParams?: ListParams;
+}
+
+async function ExpenseList({ searchParams }: TaskListProps) {
+  const expenses = await GetUserExpenses({ ...searchParams });
   if (!expenses.success) {
     return <p>Expense Data Not Found</p>;
   }

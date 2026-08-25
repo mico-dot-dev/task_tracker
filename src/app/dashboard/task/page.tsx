@@ -5,6 +5,7 @@ import AddButton from "@/src/components/ui/AddButton";
 import { ListParams } from "@/src/type/page-types";
 import { GetUserCategory } from "@/src/actions/category.action";
 import { ToolBarProps } from "@/src/type/page-types";
+import { id } from "zod/v4/locales";
 
 //Extract the search from REST
 interface TaskPageProps {
@@ -20,7 +21,10 @@ async function page({ searchParams }: TaskPageProps) {
 
   const toolBarData: ToolBarProps = {
     module: "task",
-    categoryContent: res.data.map((c) => c.title),
+    categoryContent: res.data.map((c) => ({
+      id: c.id.toString(),
+      label: c.title,
+    })),
   };
 
   return (
