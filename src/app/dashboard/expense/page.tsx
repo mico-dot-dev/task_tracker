@@ -5,11 +5,12 @@ import ExpenseList from "@/src/components/expenses/ExpenseList";
 import Toolbar from "@/src/components/ui/Toolbar";
 import { ToolBarProps } from "@/src/type/page-types";
 import { ExpenseType } from "@/src/generated/prisma";
+import { upperCaseFormat } from "@/src/lib/utils/formatter";
 
 function page() {
   const toolBarData: ToolBarProps = {
     module: "expense",
-    categoryContent: Object.values(ExpenseType),
+    categoryContent: Object.values(ExpenseType).map((e) => upperCaseFormat(e)),
   };
 
   return (

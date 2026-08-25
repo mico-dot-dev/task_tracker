@@ -9,11 +9,13 @@ import {
 import { ExpenseType } from "@/src/generated/prisma";
 import { DynamicListModel } from "@/src/schema/expense.schema";
 
+//Move to types
 export interface expenseCardSubContent {
   primary: string;
   secondary: string;
 }
 
+//Move to types
 export interface expenseIconProps {
   title: string;
   description: string;

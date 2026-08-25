@@ -11,20 +11,34 @@ import {
 import { ActionResponse } from "@/src/schema/auth.schema";
 import { authenticateUser } from "@/src/lib/utils/validation-wrapper";
 import { revalidatePath } from "next/cache";
-import { DateRepeatType } from "@/src/generated/prisma";
+import { DateRepeatType, Prisma } from "@/src/generated/prisma";
 import { ReturnErrorMessage } from "@/src/hook/ReturnErrorMessage";
+import { ListParams } from "../type/page-types";
 
-export async function GetUserTasks(): Promise<ActionResponse<TaskListModel[]>> {
+export async function GetUserTasks(
+  params: ListParams,
+): Promise<ActionResponse<TaskListModel[]>> {
   try {
     const rawTaskData = await authenticateUser(async (userId) => {
+      const whereClause: Prisma.task_categoryWhereInput = {
+        user_id: userId,
+      };
+
+      if (params.category) {
+        whereClause.title = {
+          equals: params.category,
+        };
+      }
+
       const data = await prisma.task_category.findMany({
-        where: { user_id: userId },
+        where: whereClause,
         select: {
           title: true,
-          task: true,
-        },
-        orderBy: {
-          title: "asc",
+          task: {
+            orderBy: {
+              completed: "asc",
+            },
+          },
         },
       });
 

@@ -3,11 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import AddCategoryModal from "../modal/AddModal";
-import { CategoryListModel } from "@/src/schema/category.schema";
-import { GetUserCategory } from "@/src/actions/category.action";
-import { ExpenseType } from "@/src/generated/prisma";
-import { AppModule } from "@/src/type/module";
-import { upperCaseString } from "@/src/lib/utils/formatter";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListProps {
   content: string[];
@@ -15,15 +11,39 @@ interface ListProps {
 
 function CategoryList({ content }: ListProps) {
   const [modalOpen, setModalOpen] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleCatgoryFilter = (category: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (category === "All") {
+      params.delete("category");
+    } else {
+      params.set("category", category);
+    }
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <>
       <p></p>
       <div className="flex flex-row ">
         <div className="flex flex-row gap-3 text-background">
+          <button
+            className="button-base p-2 rounded-2xl"
+            onClick={() => handleCatgoryFilter("All")}
+          >
+            All
+          </button>
+
+          {/* Loop for category content */}
           {content.map((category, index) => {
             return (
-              <button className="button-base p-2 rounded-2xl" key={index}>
+              <button
+                className="button-base p-2 rounded-2xl"
+                key={index}
+                onClick={() => handleCatgoryFilter(category)}
+              >
                 {category}
               </button>
             );

@@ -72,15 +72,14 @@ function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
 export async function CreateExpense(
   data: DynamicFormInputModel,
 ): Promise<ActionResponse<DynamicFormModel>> {
+  const parsedData = DynamicFormSchema.safeParse(data);
+  if (!parsedData.success) {
+    throw new Error("Parse Error");
+  }
   try {
     const user = await GetAuthUser();
     if (!user.success) {
       throw new Error("User not authenticated");
-    }
-
-    const parsedData = DynamicFormSchema.safeParse(data);
-    if (!parsedData.success) {
-      throw new Error("Parse Error");
     }
 
     const expense: DynamicFormModel = parsedData.data;

@@ -1,7 +1,7 @@
 import { AppModule } from "./module";
 
 export interface ListParams {
-  categoryId?: string;
+  category?: string;
   searchText?: string;
   filter?: string;
   groupBy?: string;
