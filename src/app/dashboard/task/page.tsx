@@ -8,11 +8,11 @@ import { ToolBarProps } from "@/src/type/page-types";
 import { id } from "zod/v4/locales";
 
 //Extract the search from REST
-interface TaskPageProps {
+interface PageProps {
   searchParams?: Promise<ListParams>;
 }
 
-async function page({ searchParams }: TaskPageProps) {
+async function page({ searchParams }: PageProps) {
   const param = await searchParams;
   const res = await GetUserCategory();
   if (!res.success) {

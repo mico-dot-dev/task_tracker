@@ -2,8 +2,7 @@ import React, { Suspense } from "react";
 import SearchBar from "@/src/components/ui/SearchBar";
 import CategoryList from "@/src/components/ui/CategoryList";
 import Filter from "@/src/components/ui/Filter";
-import { CategoryFilterModel, ToolBarProps } from "@/src/type/page-types";
-import { AppModule } from "@/src/type/module";
+import { ToolBarProps } from "@/src/type/page-types";
 
 function Toolbar({ module, categoryContent }: ToolBarProps) {
   return (

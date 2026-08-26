@@ -12,3 +12,5 @@
 9. Implement income database
 10. Implement dashboard
 11. Implement pagintation to the lists
+12. Consistency of Auth Function
+13. Enforce database function restrictions, refer to claude
