@@ -4,7 +4,7 @@ import { DynamicListModel } from "@/src/schema/expense.schema";
 import { EllipsisVertical } from "lucide-react";
 import {
   expenseCardSubContent,
-  getExpenseCardSubContent,
+  getExpenseListSubContent,
   expenseIconMap,
 } from "@/src/lib/utils/expense-mapper";
 import { twJoin } from "tailwind-merge";
@@ -16,7 +16,7 @@ interface ExpenseItemProps {
 function ExpenseItemCard({ Expense }: ExpenseItemProps) {
   const expenseIconInfo = expenseIconMap[Expense.expense_type];
   const IconComponent = expenseIconInfo.icon;
-  const subInfo: expenseCardSubContent = getExpenseCardSubContent(Expense);
+  const subInfo: expenseCardSubContent = getExpenseListSubContent(Expense);
 
   return (
     <li className="card-container-base flex flex-col p-5">
