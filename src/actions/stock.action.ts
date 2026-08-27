@@ -12,7 +12,10 @@ export async function GetUserStock(): Promise<ActionResponse<StockModel[]>> {
   try {
     const user = await GetAuthUser();
     if (!user.success) {
-      throw new Error("User not authenticated");
+      return {
+        success: false,
+        error: "User not authenticated",
+      };
     }
 
     const userStock = await prisma.expense.findMany({
@@ -46,7 +49,10 @@ export async function GetUserStock(): Promise<ActionResponse<StockModel[]>> {
     };
   } catch (err) {
     console.error(err);
-    throw new Error("Error fetching user stock");
+    return {
+      success: false,
+      error: "Get Stock Error",
+    };
   }
 }
 
