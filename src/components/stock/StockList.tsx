@@ -1,6 +1,7 @@
 import React from "react";
 import { GetUserStock } from "@/src/actions/stock.action";
 import { stockColumns } from "./StockTableStructure";
+import StockItemCard from "./StockItemCard";
 import DataShowcase from "../ui/DataShowcase";
 
 async function StockList() {
@@ -10,12 +11,13 @@ async function StockList() {
     return <p>No Use Stock Available</p>;
   }
 
-  return <></>;
-
-  // return <DataShowcase
-  //   columns={stockColumns}
-  //   data={userStock.data}
-  // />;
+  return (
+    <DataShowcase
+      columns={stockColumns}
+      data={userStock.data}
+      CardComponent={StockItemCard}
+    />
+  );
 }
 
 export default StockList;

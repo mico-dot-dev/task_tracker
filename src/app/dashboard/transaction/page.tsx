@@ -1,11 +1,11 @@
 import React from "react";
-import TrancsactionTable from "@/src/components/transaction/TransactionTable";
 import AddButton from "@/src/components/ui/AddButton";
+import TransactionList from "@/src/components/transaction/TransactionList";
 
 function page() {
   return (
     <div>
-      <TrancsactionTable />
+      <TransactionList />
       <AddButton content="transaction" />
     </div>
   );

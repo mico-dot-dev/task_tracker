@@ -7,6 +7,7 @@ export const TransactionSchema = z.object({
   status: z.nativeEnum(TransactionStatus),
   amount: z.int(),
   price: z.float32(),
+  date_added: z.date(),
   due_date: z.date().optional(),
   expense_id: z.string(),
 });

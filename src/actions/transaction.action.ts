@@ -6,48 +6,83 @@ import {
   TransactionFormModel,
   TransactionListModel,
 } from "@/src/schema/transaction.schema";
-import { GetAuthUser } from "@/src/actions/auth.action";
 import { authenticateUser } from "@/src/lib/utils/validation-wrapper";
 import { TransactionStatus } from "@/src/generated/prisma";
-import { error } from "console";
 
 export async function GetUserTransaction(): Promise<
-  ActionResponse<TransactionListModel>
+  ActionResponse<TransactionListModel[]>
 > {
-  try {
-    const user = await GetAuthUser();
-    if (!user.success) {
-      throw new Error("User auth Error");
+  return authenticateUser(async (userId) => {
+    try {
+      const userTransaction = await prisma.expense.findMany({
+        where: {
+          user_id: userId,
+        },
+        select: {
+          transaction: true,
+          expense_type: true,
+          name: true,
+        },
+      });
+
+      const parsedData: TransactionListModel[] = userTransaction.flatMap(
+        (transactionArray) =>
+          transactionArray.transaction.map((transaction) => {
+            return {
+              name: transactionArray.name!,
+              expense_type: transactionArray.expense_type!,
+              status: transaction.status!,
+              amount: transaction.amount,
+              price: transaction.price ?? 0,
+              date_added: transaction.created_at!,
+              due_date: transaction.repeat_at!,
+              expense_id: transaction.expense_id!.toString(),
+            };
+          }),
+      );
+
+      return {
+        success: true,
+        data: parsedData,
+      };
+    } catch (e) {
+      return { success: false, error: "" };
     }
+  });
 
-    const userTransaction = await prisma.expense.findMany({
-      where: {
-        user_id: user.data.user,
-      },
-      select: {
-        transaction: true,
-      },
-    });
+  // try {
 
-    const t: TransactionListModel = {
-      name: "",
-      expense_type: "GROCERY",
-      status: "PENDING",
-      amount: 0,
-      price: 0,
-      expense_id: "0",
-    };
+  //   const userTransaction = await prisma.expense.findMany({
+  //     where: {
+  //       user_id: user.data.user,
+  //     },
+  //     select: {
+  //       transaction: true,
+  //     },
+  //   });
 
-    return {
-      success: true,
-      data: t,
-    };
-  } catch (e) {
-    return {
-      success: false,
-      error: "Error in transaction service",
-    };
-  }
+  //   const t: TransactionListModel[] = [
+  //     {
+  //       name: "",
+  //       expense_type: "GROCERY",
+  //       status: "PENDING",
+  //       amount: 0,
+  //       price: 0,
+  //       expense_id: "0",
+  //       date_added: new Date(Date.now()),
+  //     },
+  //   ];
+
+  //   return {
+  //     success: true,
+  //     data: t,
+  //   };
+  // } catch (e) {
+  //   return {
+  //     success: false,
+  //     error: "Error in transaction service",
+  //   };
+  // }
 }
 
 export async function CreateUserTransaction(

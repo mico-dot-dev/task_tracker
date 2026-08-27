@@ -1,7 +1,6 @@
 "use client";
-import DataShowcase from "@/src/components/ui/DataShowcase";
 import { TaskListModel } from "@/src/schema/task.schema";
-import { ColumnDef, tableFeatures } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { UpdateTaskCompletion } from "@/src/actions/task.action";
 
 export const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
