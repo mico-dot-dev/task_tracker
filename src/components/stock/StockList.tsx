@@ -1,6 +1,7 @@
 import React from "react";
 import { GetUserStock } from "@/src/actions/stock.action";
-import StockDataStructure from "./StockDataStructure";
+import { stockColumns } from "./StockTableStructure";
+import DataShowcase from "../ui/DataShowcase";
 
 async function StockList() {
   const userStock = await GetUserStock();
@@ -9,7 +10,12 @@ async function StockList() {
     return <p>No Use Stock Available</p>;
   }
 
-  return <StockDataStructure data={userStock.data} />;
+  return <></>;
+
+  // return <DataShowcase
+  //   columns={stockColumns}
+  //   data={userStock.data}
+  // />;
 }
 
 export default StockList;

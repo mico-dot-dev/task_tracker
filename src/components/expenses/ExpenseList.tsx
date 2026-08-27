@@ -1,7 +1,9 @@
 import React from "react";
 import { GetUserExpenses } from "@/src/actions/expense.action";
 import { ListParams } from "@/src/type/page-types";
-import ExpenseDataStructure from "./ExpenseDataStructure";
+import { expenseColumns } from "./ExpenseTableStructure";
+import DataShowcase from "../ui/DataShowcase";
+import ExpenseItemCard from "./ExpenseItemCard";
 
 interface TaskListProps {
   searchParams?: ListParams;
@@ -13,12 +15,11 @@ async function ExpenseList({ searchParams }: TaskListProps) {
     return <p>Expense Data Not Found</p>;
   }
   return (
-    <ExpenseDataStructure data={expenses.data} />
-    // <ul className="flex flex-col gap-5">
-    //   {expenses.data.map((expense) => (
-    //     <ExpenseItemCard Expense={expense} key={expense.id} />
-    //   ))}
-    // </ul>
+    <DataShowcase
+      columns={expenseColumns}
+      data={expenses.data}
+      CardComponent={ExpenseItemCard}
+    />
   );
 }
 

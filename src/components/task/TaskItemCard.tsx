@@ -6,8 +6,9 @@ import { twJoin } from "tailwind-merge";
 import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";
 import { Circle, CircleCheck, EllipsisVertical } from "lucide-react";
+import { ModuleCardProps } from "@/src/type/data-table";
 
-function TaskCard({ Task }: { Task: TaskListModel }) {
+function TaskItemCard({ data }: ModuleCardProps<TaskListModel>) {
   const router = useRouter();
   // const statusColors: Record<category, string> = {
   //   [category.PRIORITY]: "bg-amber-500",
@@ -18,7 +19,7 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
 
   function handleToggleComplete() {
     try {
-      const res = UpdateTaskCompletion(Task.id);
+      const res = UpdateTaskCompletion(data.id);
       // if(res)
     } catch (error) {
       console.error("Error occurred while toggling task completion:", error);
@@ -30,24 +31,24 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
       <div
         className={twJoin(
           "flex flex-row m-5",
-          Task.completed && "text-muted-text",
+          data.completed && "text-muted-text",
         )}
       >
         <button
           onClick={handleToggleComplete}
           className="cursor-pointer self-start"
         >
-          {(Task.completed && <CircleCheck size={20} className="" />) || (
+          {(data.completed && <CircleCheck size={20} className="" />) || (
             <Circle size={20} />
           )}
         </button>
 
         <div className="self-start flex flex-col ml-3 flex-1">
-          <p className="text-base flex w-full">{Task.title}</p>
-          <p className="text-sm text-muted-text">{Task.description}</p>
+          <p className="text-base flex w-full">{data.title}</p>
+          <p className="text-sm text-muted-text">{data.description}</p>
           <div className="flex lg:flex-row text-sm justify-between mt-3 md:flex-col">
             <p className="">Due: June 15, 2026</p>
-            <p className="">{Task.category}</p>
+            <p className="">{data.category}</p>
           </div>
         </div>
         <button className="cursor-pointer self-start ">
@@ -66,4 +67,4 @@ function TaskCard({ Task }: { Task: TaskListModel }) {
   );
 }
 
-export default TaskCard;
+export default TaskItemCard;

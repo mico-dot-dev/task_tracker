@@ -4,11 +4,7 @@ import { TaskListModel } from "@/src/schema/task.schema";
 import { ColumnDef, tableFeatures } from "@tanstack/react-table";
 import { UpdateTaskCompletion } from "@/src/actions/task.action";
 
-interface Props {
-  data: TaskListModel[];
-}
-
-const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
+export const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
   {
     accessorKey: "number",
     header: "No.",
@@ -57,9 +53,3 @@ const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
     },
   },
 ];
-
-function TaskDataView({ data }: Props) {
-  return <DataShowcase data={data} columns={taskColumns} />;
-}
-
-export default TaskDataView;

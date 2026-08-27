@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ModuleColumns } from "@/src/type/data-table";
 import { tableFeatures, useTable, RowData } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
 

@@ -8,15 +8,12 @@ import {
   expenseIconMap,
 } from "@/src/lib/utils/expense-mapper";
 import { twJoin } from "tailwind-merge";
+import { ModuleCardProps } from "@/src/type/data-table";
 
-interface ExpenseItemProps {
-  Expense: DynamicListModel;
-}
-
-function ExpenseItemCard({ Expense }: ExpenseItemProps) {
-  const expenseIconInfo = expenseIconMap[Expense.expense_type];
+function ExpenseItemCard({ data }: ModuleCardProps<DynamicListModel>) {
+  const expenseIconInfo = expenseIconMap[data.expense_type];
   const IconComponent = expenseIconInfo.icon;
-  const subInfo: expenseCardSubContent = getExpenseListSubContent(Expense);
+  const subInfo: expenseCardSubContent = getExpenseListSubContent(data);
 
   return (
     <li className="card-container-base flex flex-col p-5">
@@ -33,8 +30,8 @@ function ExpenseItemCard({ Expense }: ExpenseItemProps) {
 
         <div className="flex-1">
           {" "}
-          <p>{Expense.title}</p>
-          <p className="text-sm text-muted-text">{Expense.description}</p>
+          <p>{data.title}</p>
+          <p className="text-sm text-muted-text">{data.description}</p>
         </div>
         <div className="">
           <EllipsisVertical size={20} />
