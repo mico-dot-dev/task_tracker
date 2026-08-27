@@ -25,7 +25,7 @@ function TableData<T extends RowData>({
 
   return (
     <>
-      <table>
+      <table className="table">
         <thead>
           {table.getHeaderGroups().map((headerGroup, i) => (
             <tr key={i}>

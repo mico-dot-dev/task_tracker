@@ -59,7 +59,7 @@ export const expenseIconMap: Record<ExpenseType, expenseIconProps> = {
   },
 };
 
-export function getExpenseCardSubContent(
+export function getExpenseListSubContent(
   expense: DynamicListModel,
 ): expenseCardSubContent {
   switch (expense.expense_type) {

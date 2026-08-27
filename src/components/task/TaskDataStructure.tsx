@@ -1,7 +1,5 @@
 "use client";
 import DataShowcase from "@/src/components/ui/DataShowcase";
-import TaskCard from "@/src/components/task/TaskCard";
-import { ModuleColumns } from "@/src/type/data-table";
 import { TaskListModel } from "@/src/schema/task.schema";
 import { ColumnDef, tableFeatures } from "@tanstack/react-table";
 import { UpdateTaskCompletion } from "@/src/actions/task.action";
@@ -10,40 +8,49 @@ interface Props {
   data: TaskListModel[];
 }
 
-const features = tableFeatures({});
-
-const taskColumns: Array<ColumnDef<typeof features, TaskListModel>> = [
+const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
+  {
+    accessorKey: "number",
+    header: "No.",
+    cell: ({ row }) => row.id,
+  },
   {
     accessorKey: "checkbox",
     header: "Checkbox",
-    cell: (row) => row.getValue(),
+    cell: (data) => {
+      return <button type="button">checkbox</button>;
+    },
   },
   {
-    accessorFn: (row) => row.title,
+    accessorFn: (data) => data.title,
     header: "Title",
-    cell: (row) => row.getValue(),
+    cell: (data) => data.getValue(),
   },
   {
-    accessorFn: (row) => row.category,
+    accessorFn: (data) => data.category,
     header: "Category",
-    cell: (row) => row.getValue(),
+    cell: (data) => data.getValue(),
   },
   {
-    accessorFn: (row) => row.completed,
-    header: "Completion",
-    cell: (row) => (row.getValue() ? "Completed" : "Pending"),
+    accessorFn: (data) => data.completed,
+    header: "Status",
+    cell: (data) => (data.getValue() ? "Completed" : "Pending"),
   },
   {
-    accessorFn: (row) => row.due_date,
+    accessorFn: (data) => data.due_date,
     header: "Due Date",
-    cell: (row) => row.getValue() || "No Due Date",
+    cell: (data) => data.getValue() || "No Due Date",
   },
   {
     id: "actions",
     header: "Action",
     cell: ({ row }) => {
       return (
-        <button onClick={() => UpdateTaskCompletion(row.original.id)}>
+        <button
+          className="button-base"
+          type="button"
+          onClick={() => UpdateTaskCompletion(row.original.id)}
+        >
           Click me
         </button>
       );

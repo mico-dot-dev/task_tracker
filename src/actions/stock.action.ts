@@ -6,6 +6,7 @@ import { GetAuthUser } from "./auth.action";
 import { StockModel } from "../schema/stock.schema";
 import { TaskFormModelOutput } from "@/src/schema/task.schema";
 import { CategoryListModel } from "@/src/schema/category.schema";
+import { revalidatePath } from "next/cache";
 
 export async function GetUserStock(): Promise<ActionResponse<StockModel[]>> {
   try {
@@ -109,8 +110,6 @@ export async function ManageStockAmount(
       },
     });
 
-    console.log("Existing Task:", existingTask);
-
     if (existingTask && updatedStock.curr_amount >= updatedStock.min_amount) {
       await prisma.task.updateMany({
         where: {
@@ -136,6 +135,7 @@ export async function ManageStockAmount(
         },
       });
     }
+    revalidatePath("/(dashboard)/stock");
   } catch (err) {
     console.error("[ManageStockAmount Failure]:", {
       message: err instanceof Error ? err.message : "Unknown error",
