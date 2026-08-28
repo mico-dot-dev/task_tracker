@@ -10,7 +10,7 @@ function DataShowcase<T extends RowData>({
 }: ResponsiveDataProps<T>) {
   return (
     <>
-      <div className="lg:block sm:hidden">
+      <div className="lg:block hidden">
         <DataTable columns={columns} data={data} />
       </div>
       <div className="lg:hidden">

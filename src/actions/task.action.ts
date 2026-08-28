@@ -189,29 +189,29 @@ export async function UpdateTaskCompletion(taskID: string) {
   }
 }
 
-export async function DeleteTask(taskID: string) {
-  try {
-    const tasknum = parseInt(taskID, 10);
-    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
+// export async function DeleteTask(taskID: string) {
+//   try {
+//     const tasknum = parseInt(taskID, 10);
+//     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${taskID}`);
 
-    const task = await prisma.task.findUnique({
-      select: { id: true },
-      where: { id: tasknum },
-    });
+//     const task = await prisma.task.findUnique({
+//       select: { id: true },
+//       where: { id: tasknum },
+//     });
 
-    if (!task) throw new Error(`Task not found: ${taskID}`);
+//     if (!task) throw new Error(`Task not found: ${taskID}`);
 
-    await prisma.task.delete({
-      where: { id: tasknum },
-    });
-    revalidatePath("/(dashboard)/tasks");
+//     await prisma.task.delete({
+//       where: { id: tasknum },
+//     });
+//     revalidatePath("/(dashboard)/tasks");
 
-    console.log("Deleting task:", taskID);
-  } catch (error) {
-    console.error("Error occurred while deleting task:", error);
-    throw new Error("Failed to delete task");
-  }
-}
+//     console.log("Deleting task:", taskID);
+//   } catch (error) {
+//     console.error("Error occurred while deleting task:", error);
+//     throw new Error("Failed to delete task");
+//   }
+// }
 
 export async function GetTaskByID(
   taskID: string,
@@ -244,34 +244,34 @@ export async function GetTaskByID(
   }
 }
 
-export async function UpdateTask(
-  data: TaskFormModelUpdate,
-): Promise<ActionResponse<TaskFormModelBase>> {
-  try {
-    const tasknum = parseInt(data.id, 10);
+// export async function UpdateTask(
+//   data: TaskFormModelUpdate,
+// ): Promise<ActionResponse<TaskFormModelBase>> {
+//   try {
+//     const tasknum = parseInt(data.id, 10);
 
-    if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${data.id}`);
+//     if (isNaN(tasknum)) throw new Error(`Invalid task ID: ${data.id}`);
 
-    const updatedTask = await prisma.task.update({
-      where: { id: tasknum },
-      data: {
-        title: data.title,
-        description: data.description,
-        completed: data.completed,
-      },
-    });
-    revalidatePath("/(dashboard)/tasks");
-    return {
-      success: true,
-      data: {
-        title: updatedTask.title!,
-        description: updatedTask.description!,
-        completed: updatedTask.completed!,
-        priority_level: 0,
-        repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
-      },
-    };
-  } catch (error) {
-    throw new Error("Failed to update task");
-  }
-}
+//     const updatedTask = await prisma.task.update({
+//       where: { id: tasknum },
+//       data: {
+//         title: data.title,
+//         description: data.description,
+//         completed: data.completed,
+//       },
+//     });
+//     revalidatePath("/(dashboard)/tasks");
+//     return {
+//       success: true,
+//       data: {
+//         title: updatedTask.title!,
+//         description: updatedTask.description!,
+//         completed: updatedTask.completed!,
+//         priority_level: 0,
+//         repeating_type: DateRepeatType.MANUAL, // Default to Manual if not provided
+//       },
+//     };
+//   } catch (error) {
+//     throw new Error("Failed to update task");
+//   }
+// }
