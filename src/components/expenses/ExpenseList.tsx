@@ -19,6 +19,7 @@ async function ExpenseList({ searchParams }: TaskListProps) {
       columns={expenseColumns}
       data={expenses.data}
       CardComponent={ExpenseItemCard}
+      module="expense"
     />
   );
 }

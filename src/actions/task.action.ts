@@ -167,38 +167,59 @@ export async function CreateTask(
 }
 
 export async function UpdateTaskCompletion(taskID: string) {
-  try {
-    const tasknum = parseInt(taskID, 10);
-    if (isNaN(tasknum)) {
+  const res = await authenticateUser(async (userId) => {
+    try {
+      const tasknum = parseInt(taskID);
+      if (isNaN(tasknum)) {
+        return {
+          success: false,
+          error: `Invalid task ID: ${taskID}`,
+        };
+      }
+
+      const existingTask = await prisma.task.findUnique({
+        where: {
+          id: tasknum,
+          task_category: {
+            user_id: userId,
+          },
+        },
+        select: {
+          completed: true,
+        },
+      });
+
+      if (!existingTask) {
+        return {
+          success: false,
+          error: `Task not found: ${taskID}`,
+        };
+      }
+
+      const res = await prisma.task.update({
+        where: {
+          id: tasknum,
+          task_category: {
+            user_id: userId,
+          },
+        },
+        data: { completed: !existingTask.completed },
+      });
+
+      return {
+        success: true,
+        data: res,
+      };
+    } catch (error) {
+      console.error("Error occurred while updating task completion:", error);
       return {
         success: false,
-        error: `Invalid task ID: ${taskID}`,
+        error: "Error occurred while updating task completion",
       };
     }
-
-    const task = await prisma.task.findUnique({
-      select: { completed: true },
-      where: { id: tasknum },
-    });
-
-    if (!task) {
-      return {
-        success: false,
-        error: `Task not found: ${taskID}`,
-      };
-    }
-
-    const res = await prisma.task.update({
-      where: { id: tasknum },
-      data: { completed: !task.completed },
-    });
+  });
+  if (res) {
     revalidatePath("/(dashboard)/tasks");
-  } catch (error) {
-    console.error("Error occurred while updating task completion:", error);
-    return {
-      success: false,
-      error: "Error occurred while updating task completion",
-    };
   }
 }
 

@@ -7,11 +7,12 @@ function DataShowcase<T extends RowData>({
   columns,
   data,
   CardComponent,
+  module,
 }: ResponsiveDataProps<T>) {
   return (
     <>
       <div className="lg:block hidden">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} module={module} />
       </div>
       <div className="lg:hidden">
         {data.map((item, i) => (

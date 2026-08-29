@@ -19,6 +19,7 @@ async function TaskList({ searchParams }: TaskListProps) {
       data={tasks.data}
       columns={taskColumns}
       CardComponent={TaskItemCard}
+      module="task"
     />
   );
 }

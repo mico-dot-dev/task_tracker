@@ -45,7 +45,6 @@ function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
       return {
         ...common,
         expense_type: item.expense_type,
-        // 💡 Correctly access the nested relational object
         repeating_type:
           item.bill_expense?.repeating_type ?? DateRepeatType.MANUAL,
         running_bill: item.bill_expense?.running_bill ?? 0,
@@ -56,7 +55,6 @@ function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
       return {
         ...common,
         expense_type: ExpenseType.GROCERY,
-        // 💡 Correctly access the nested relational object
         curr_amount: item.stock?.curr_amount ?? 0,
         min_amount: item.stock?.min_amount ?? 0,
       };
@@ -84,50 +82,99 @@ export async function CreateExpense(
 
   return authenticateUser(async (userId) => {
     try {
-      const res = await prisma.expense.create({
-        data: {
-          name: data.title,
-          description: data.description,
-          expense_type: data.expense_type,
-          user_id: userId,
-        },
+      //creates an instance of transaction for simultaneous successful db functions or none at all
+      const res = await prisma.$transaction(async (tsc) => {
+        const newExpense = await tsc.expense.create({
+          data: {
+            name: data.title,
+            description: data.description,
+            expense_type: data.expense_type,
+            user_id: userId,
+          },
+        });
+
+        switch (data.expense_type) {
+          case ExpenseType.HOUSE:
+          case ExpenseType.PERSONAL:
+            await tsc.bill_expense.create({
+              data: {
+                expense_id: newExpense.id,
+                repeating_type: data.repeating_type,
+                running_bill: data.running_bill || 0,
+              },
+            });
+
+            if (data.repeating_type !== DateRepeatType.MANUAL) {
+              //insert into transaction table
+            }
+            break;
+          case ExpenseType.TRANSPORTATION:
+            const costList: number[] = data.cost_list.map((item) =>
+              Number(item.amount),
+            );
+            await tsc.transportation_expense.create({
+              data: {
+                expense_id: newExpense.id,
+                cost_list: costList,
+              },
+            });
+            break;
+          case ExpenseType.GROCERY:
+            await tsc.stock.create({
+              data: {
+                expense_id: newExpense.id,
+                min_amount: data.min_amount,
+              },
+            });
+
+          default:
+        }
+
+        return newExpense;
+
+        // switch (data.expense_type) {
+        //   case ExpenseType.HOUSE:
+        //   case ExpenseType.PERSONAL:
+        //     await tsc.bill_expense.create({
+        //       data: {
+        //         expense_id: newExpense.id,
+        //         repeating_type: data.repeating_type,
+        //         running_bill: data.running_bill || 0,
+        //       },
+        //     });
+
+        //     if (data.repeating_type !== DateRepeatType.MANUAL) {
+        //       //insert into transaction table
+        //     }
+        //     break;
+        //   case ExpenseType.TRANSPORTATION:
+        //     const costList: number[] = data.cost_list.map((item) =>
+        //       Number(item.amount),
+        //     );
+        //     await prisma.transportation_expense.create({
+        //       data: {
+        //         expense_id: newExpense.id,
+        //         cost_list: costList,
+        //       },
+        //     });
+        //     break;
+        //   case ExpenseType.GROCERY:
+        //     await prisma.stock.create({
+        //       data: {
+        //         expense_id: newExpense.id,
+        //         min_amount: data.min_amount,
+        //       },
+        //     });
+
+        //   default:
+        // }
       });
 
-      switch (data.expense_type) {
-        case ExpenseType.HOUSE:
-        case ExpenseType.PERSONAL:
-          await prisma.bill_expense.create({
-            data: {
-              expense_id: res.id,
-              repeating_type: data.repeating_type,
-              running_bill: data.running_bill || 0,
-            },
-          });
-
-          if (data.repeating_type !== DateRepeatType.MANUAL) {
-            //insert into transaction table
-          }
-          break;
-        case ExpenseType.TRANSPORTATION:
-          const costList: number[] = data.cost_list.map((item) =>
-            Number(item.amount),
-          );
-          await prisma.transportation_expense.create({
-            data: {
-              expense_id: res.id,
-              cost_list: costList,
-            },
-          });
-          break;
-        case ExpenseType.GROCERY:
-          await prisma.stock.create({
-            data: {
-              expense_id: res.id,
-              min_amount: data.min_amount,
-            },
-          });
-
-        default:
+      if (!res) {
+        return {
+          success: false,
+          error: "Error creating new expense",
+        };
       }
 
       return {

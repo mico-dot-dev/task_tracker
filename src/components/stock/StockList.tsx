@@ -16,6 +16,7 @@ async function StockList() {
       columns={stockColumns}
       data={userStock.data}
       CardComponent={StockItemCard}
+      module="stock"
     />
   );
 }

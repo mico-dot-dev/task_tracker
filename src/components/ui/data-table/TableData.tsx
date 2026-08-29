@@ -12,13 +12,19 @@ import {
 import type { ColumnDef } from "@tanstack/react-table";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { twJoin } from "tailwind-merge";
+import { AppModule } from "@/src/type/module";
 
 interface TableDataProps<T extends RowData> {
   columns: Array<ColumnDef<any, T>>;
   data: T[];
+  module: AppModule;
 }
 
-function TableData<T extends RowData>({ columns, data }: TableDataProps<T>) {
+function TableData<T extends RowData>({
+  columns,
+  data,
+  module,
+}: TableDataProps<T>) {
   const features = tableFeatures({
     rowSortingFeature,
     sortedRowModel: createSortedRowModel(),
@@ -59,15 +65,17 @@ function TableData<T extends RowData>({ columns, data }: TableDataProps<T>) {
         ))}
       </thead>
       <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getAllCells().map((cell) => (
-              <td key={cell.id}>
-                <table.FlexRender cell={cell} />
-              </td>
-            ))}
-          </tr>
-        ))}
+        {table.getRowModel().rows.map((row) => {
+          return (
+            <tr key={row.id}>
+              {row.getAllCells().map((cell) => (
+                <td key={cell.id}>
+                  <table.FlexRender cell={cell} />
+                </td>
+              ))}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

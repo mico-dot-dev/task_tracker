@@ -17,6 +17,7 @@ async function TaskList() {
       data={userTransactions.data}
       columns={transactionColumn}
       CardComponent={TransactionCard}
+      module="transaction"
     />
   );
 }

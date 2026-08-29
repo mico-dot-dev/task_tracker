@@ -3,24 +3,17 @@
 import React from "react";
 import { TaskListModel } from "@/src/schema/task.schema";
 import { twJoin } from "tailwind-merge";
-import { UpdateTaskCompletion, DeleteTask } from "@/src/actions/task.action";
+import { UpdateTaskCompletion } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";
 import { Circle, CircleCheck, EllipsisVertical } from "lucide-react";
 import { ModuleCardProps } from "@/src/type/data-table";
 
 function TaskItemCard({ data }: ModuleCardProps<TaskListModel>) {
   const router = useRouter();
-  // const statusColors: Record<category, string> = {
-  //   [category.PRIORITY]: "bg-amber-500",
-  //   [category.TODAY]: "bg-blue-500",
-  //   [category.WEEK]: "bg-emerald-500",
-  //   [category.OTHER]: "bg-slate-500",
-  // };
-
   function handleToggleComplete() {
     try {
       const res = UpdateTaskCompletion(data.id);
-      // if(res)
+      console.log(res);
     } catch (error) {
       console.error("Error occurred while toggling task completion:", error);
     }
