@@ -79,7 +79,12 @@ export async function SignUpUser(
       password: data.password,
     });
 
-    if (error) throw new Error("Error in creating a new user");
+    if (error) {
+      return {
+        success: false,
+        error: "Error in creating a new user",
+      };
+    }
 
     return {
       success: true,

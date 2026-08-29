@@ -54,11 +54,7 @@ function AccountForm() {
     try {
       const res = await authService(data);
 
-      if (!res) {
-        throw new Error("No response from auth service");
-      }
-
-      if (!res.success) {
+      if (!res.success || !res) {
         await Swal.fire({
           icon: "error",
           title: mode === "login" ? "Login Failed" : "Sign Up Failed",

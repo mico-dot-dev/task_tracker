@@ -2,58 +2,48 @@
 
 import { prisma } from "@/src/lib/prisma-client";
 import { ActionResponse } from "@/src/schema/auth.schema";
-import { GetAuthUser } from "./auth.action";
 import { StockModel } from "../schema/stock.schema";
 import { TaskFormModelOutput } from "@/src/schema/task.schema";
-import { CategoryListModel } from "@/src/schema/category.schema";
 import { revalidatePath } from "next/cache";
+import { authenticateUser } from "@/src/lib/utils/validation-wrapper";
 
 export async function GetUserStock(): Promise<ActionResponse<StockModel[]>> {
-  try {
-    const user = await GetAuthUser();
-    if (!user.success) {
+  return authenticateUser(async (userId) => {
+    try {
+      const userStock = await prisma.expense.findMany({
+        where: {
+          user_id: userId,
+          stock: {
+            isNot: null,
+          },
+        },
+        include: {
+          stock: true,
+        },
+      });
+
+      const parsedStock: StockModel[] = userStock.map((stock) => {
+        return {
+          id: stock.stock!.id.toString(),
+          name: stock.name!,
+          description: stock.description!,
+          curr_amount: stock.stock?.curr_amount || 0,
+          min_amount: stock.stock?.min_amount || 0,
+        };
+      });
+
+      return {
+        success: true,
+        data: parsedStock,
+      };
+    } catch (err) {
+      console.error(err);
       return {
         success: false,
-        error: "User not authenticated",
+        error: "Get Stock Error",
       };
     }
-
-    const userStock = await prisma.expense.findMany({
-      where: {
-        user_id: user.data.user,
-        stock: {
-          isNot: null,
-        },
-      },
-      include: {
-        stock: true,
-      },
-    });
-
-    const parsedStock: StockModel[] = userStock.map((stock) => {
-      if (stock.stock === null) {
-        throw new Error("Stock data is null");
-      }
-      return {
-        id: stock.stock?.id.toString(),
-        name: stock.name!,
-        description: stock.description!,
-        curr_amount: stock.stock?.curr_amount || 0,
-        min_amount: stock.stock?.min_amount || 0,
-      };
-    });
-
-    return {
-      success: true,
-      data: parsedStock,
-    };
-  } catch (err) {
-    console.error(err);
-    return {
-      success: false,
-      error: "Get Stock Error",
-    };
-  }
+  });
 }
 
 export async function ManageStockAmount(
@@ -62,7 +52,10 @@ export async function ManageStockAmount(
 ) {
   try {
     if (action === "decrement" && stock.curr_amount <= 0) {
-      throw new Error("Current amount cannot be less than 0");
+      return {
+        success: false,
+        error: "Current amount cannot be less than 0",
+      };
     }
 
     const updatedStock = await prisma.stock.update({
@@ -88,7 +81,10 @@ export async function ManageStockAmount(
     });
 
     if (!updatedStock || updatedStock.curr_amount === null) {
-      throw new Error("Failed to update stock amount");
+      return {
+        success: false,
+        error: "Failed to update stock amount",
+      };
     }
 
     const stockTaskCategory = await prisma.task_category.findUnique({
@@ -97,7 +93,12 @@ export async function ManageStockAmount(
       },
     });
 
-    if (!stockTaskCategory) throw new Error("Stock task category not found");
+    if (!stockTaskCategory) {
+      return {
+        success: false,
+        error: "Stock task category not found",
+      };
+    }
 
     const updateTask: TaskFormModelOutput = {
       title: "Buy " + updatedStock.expense.name,

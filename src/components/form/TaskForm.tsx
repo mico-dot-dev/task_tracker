@@ -9,7 +9,7 @@ import {
 } from "@/src/schema/task.schema";
 import { ActionResponse } from "@/src/schema/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateTask, GetTaskByID, UpdateTask } from "@/src/actions/task.action";
+import { CreateTask, GetTaskByID } from "@/src/actions/task.action";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
 import { GetUserCategory } from "@/src/actions/category.action";
@@ -114,9 +114,10 @@ function TaskForm({ closeModal }: AddFormProps) {
       res = await CreateTask(createData);
 
       if (!res.success) {
-        throw new Error(
-          res.error || "An error occurred while saving the task.",
-        );
+        return {
+          success: false,
+          error: res.error || "An error occurred while saving the task.",
+        };
       }
       closeModal();
       Swal.fire({

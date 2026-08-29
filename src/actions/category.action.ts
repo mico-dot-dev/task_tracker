@@ -1,15 +1,13 @@
 "use server";
 
-import { GetAuthUser } from "@/src/actions/auth.action";
 import { ActionResponse } from "@/src/schema/auth.schema";
 import {
   CategoryFormModel,
   CategoryListModel,
+  CategoryListSchema,
 } from "@/src/schema/category.schema";
 import { prisma } from "@/src/lib/prisma-client";
 import { authenticateUser } from "@/src/lib/utils/validation-wrapper";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { success } from "zod";
 
 export async function GetUserCategory(): Promise<
   ActionResponse<CategoryListModel[]>
@@ -58,9 +56,7 @@ export async function GetUserCategory(): Promise<
     };
   } catch (error) {
     console.error("Error fetching user categories:", error);
-    if (isRedirectError(error)) {
-      throw error;
-    }
+
     return {
       success: false,
       error: "Error fetching user categories",
@@ -70,30 +66,33 @@ export async function GetUserCategory(): Promise<
 
 export async function CreateCategory(
   data: CategoryFormModel,
-): Promise<ActionResponse<CategoryFormModel>> {
-  try {
-    const user = await GetAuthUser();
-    if (!user.success) {
-      throw new Error("User not authenticated");
-    }
-
-    const newCategory = await prisma.task_category.create({
-      data: {
-        title: data.title,
-        user_id: user.data.user,
-      },
-    });
-
-    if (!newCategory.title) {
-      throw new Error("Failed to create category");
-    }
-
+): Promise<ActionResponse<{ message: string }>> {
+  const parsedData = CategoryListSchema.safeParse(data);
+  if (!parsedData.success) {
     return {
-      success: true,
-      data: { title: newCategory.title },
+      success: false,
+      error: "Failed to parsed category data",
     };
-  } catch (error) {
-    console.error("Error creating category:", error);
-    throw new Error("Failed to create category");
   }
+  return authenticateUser(async (userId) => {
+    try {
+      const newCategory = await prisma.task_category.create({
+        data: {
+          title: data.title,
+          user_id: userId,
+        },
+      });
+
+      return {
+        success: true,
+        data: { message: "Success" },
+      };
+    } catch (error) {
+      console.error("Error creating category:", error);
+      return {
+        success: false,
+        error: "Error occured in category creation",
+      };
+    }
+  });
 }

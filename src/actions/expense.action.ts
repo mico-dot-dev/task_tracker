@@ -8,10 +8,11 @@ import {
   DynamicFormModel,
 } from "@/src/schema/expense.schema";
 import { ActionResponse } from "../schema/auth.schema";
-import { GetAuthUser } from "./auth.action";
 import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
 import { authenticateUser } from "../lib/utils/validation-wrapper";
 import { ListParams } from "@/src/type/page-types";
+import { success } from "zod";
+import { da } from "zod/v4/locales";
 
 const expenseQueryInclude = {
   bill_expense: true,
@@ -72,77 +73,77 @@ function mapPrismaToDomain(item: ExpenseWithRelations): DynamicListModel {
 
 export async function CreateExpense(
   data: DynamicFormInputModel,
-): Promise<ActionResponse<DynamicFormModel>> {
+): Promise<ActionResponse<{ message: string }>> {
   const parsedData = DynamicFormSchema.safeParse(data);
   if (!parsedData.success) {
-    throw new Error("Parse Error");
-  }
-  try {
-    const user = await GetAuthUser();
-    if (!user.success) {
-      throw new Error("User not authenticated");
-    }
-
-    const expense: DynamicFormModel = parsedData.data;
-
-    const res = await prisma.expense.create({
-      data: {
-        name: expense.title,
-        description: expense.description,
-        expense_type: expense.expense_type,
-        user_id: user.data.user,
-      },
-    });
-
-    switch (expense.expense_type) {
-      case ExpenseType.HOUSE:
-      case ExpenseType.PERSONAL:
-        await prisma.bill_expense.create({
-          data: {
-            expense_id: res.id,
-            repeating_type: expense.repeating_type,
-            running_bill: expense.running_bill || 0,
-          },
-        });
-
-        if (expense.repeating_type !== DateRepeatType.MANUAL) {
-        }
-        break;
-      case ExpenseType.TRANSPORTATION:
-        const costList: number[] = expense.cost_list.map(
-          (item: { amount: number }) => item.amount,
-        );
-        await prisma.transportation_expense.create({
-          data: {
-            expense_id: res.id,
-            cost_list: costList,
-          },
-        });
-        break;
-      case ExpenseType.GROCERY:
-        await prisma.stock.create({
-          data: {
-            expense_id: res.id,
-            min_amount: expense.min_amount,
-          },
-        });
-
-      default:
-    }
-
-    return {
-      success: true,
-      data: expense,
-    };
-  } catch (e) {
-    const message =
-      e instanceof Error ? e.message : "An unknown error occurred";
-
     return {
       success: false,
-      error: message,
+      error: "Expense Parse Error",
     };
   }
+
+  return authenticateUser(async (userId) => {
+    try {
+      const res = await prisma.expense.create({
+        data: {
+          name: data.title,
+          description: data.description,
+          expense_type: data.expense_type,
+          user_id: userId,
+        },
+      });
+
+      switch (data.expense_type) {
+        case ExpenseType.HOUSE:
+        case ExpenseType.PERSONAL:
+          await prisma.bill_expense.create({
+            data: {
+              expense_id: res.id,
+              repeating_type: data.repeating_type,
+              running_bill: data.running_bill || 0,
+            },
+          });
+
+          if (data.repeating_type !== DateRepeatType.MANUAL) {
+            //insert into transaction table
+          }
+          break;
+        case ExpenseType.TRANSPORTATION:
+          const costList: number[] = data.cost_list.map((item) =>
+            Number(item.amount),
+          );
+          await prisma.transportation_expense.create({
+            data: {
+              expense_id: res.id,
+              cost_list: costList,
+            },
+          });
+          break;
+        case ExpenseType.GROCERY:
+          await prisma.stock.create({
+            data: {
+              expense_id: res.id,
+              min_amount: data.min_amount,
+            },
+          });
+
+        default:
+      }
+
+      return {
+        success: true,
+        data: { message: "Success" },
+      };
+    } catch (e) {
+      const message =
+        e instanceof Error ? e.message : "An unknown error occurred";
+
+      return {
+        success: false,
+        error: message,
+      };
+    }
+  });
 }
 
 export async function GetUserExpenses({
