@@ -1,6 +1,6 @@
 import { ComponentType, ReactNode } from "react";
 import { RowData } from "@tanstack/react-table";
-import { ColumnDef, tableFeatures } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 
 export interface ModuleCardProps<T> {
   data: T;
