@@ -190,6 +190,15 @@ exports.Prisma.Transportation_expenseScalarFieldEnum = {
   cost_list: 'cost_list'
 };
 
+exports.Prisma.IncomeScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  amount: 'amount',
+  user_id: 'user_id',
+  from_job: 'from_job',
+  date_obtained: 'date_obtained'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -234,7 +243,8 @@ exports.Prisma.ModelName = {
   expense: 'expense',
   stock: 'stock',
   transaction: 'transaction',
-  transportation_expense: 'transportation_expense'
+  transportation_expense: 'transportation_expense',
+  income: 'income'
 };
 
 /**
