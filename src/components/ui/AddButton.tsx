@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import AddFormModal from "../modal/AddModal";
-import { ContentType } from "../modal/AddModal.config";
+import { ModuleWithModals } from "../modal/AddModal.config";
 
 interface AddButtonProps {
-  content: ContentType;
+  content: ModuleWithModals;
 }
 
 function AddButton({ content }: AddButtonProps) {

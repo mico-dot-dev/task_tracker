@@ -1,4 +1,6 @@
+import { ReactNode } from "react";
 import { AppModule } from "./module";
+import { ModuleWithModals } from "../components/modal/AddModal.config";
 
 export interface ListParams {
   category?: string;
@@ -13,6 +15,11 @@ export interface CategoryFilterModel {
 }
 
 export interface ToolBarProps {
-  module: AppModule;
   categoryContent: CategoryFilterModel[];
+}
+
+export interface DataListProps {
+  module: ModuleWithModals;
+  toolBarProps: ToolBarProps;
+  dataList: ReactNode;
 }

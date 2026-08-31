@@ -1,11 +1,8 @@
 import dynamic from "next/dynamic";
 import React from "react";
-export type ContentType =
-  | "task"
-  | "expense"
-  | "task_category"
-  | "transaction"
-  | "income";
+import { AppModule } from "@/src/type/module";
+
+export type ModuleWithModals = Exclude<AppModule, "stock">;
 
 interface AddContents {
   label: string;
@@ -23,7 +20,7 @@ const TransactionForm = dynamic(
 );
 const IncomeForm = dynamic(() => import("@/src/components/form/IncomeForm"));
 
-export const FORM_REGISTRY: Record<ContentType, AddContents> = {
+export const FORM_REGISTRY: Record<ModuleWithModals, AddContents> = {
   task: {
     label: "Task",
     description:

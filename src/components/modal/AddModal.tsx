@@ -1,11 +1,11 @@
 import React, { ReactNode, useState } from "react";
-import { FORM_REGISTRY, ContentType } from "./AddModal.config";
+import { FORM_REGISTRY, ModuleWithModals } from "./AddModal.config";
 import ModalWrapper from "./ModalWrapper";
 
 type ModalProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  content: ContentType;
+  content: ModuleWithModals;
 };
 
 function AddFormModal({ isOpen, setIsOpen, content }: ModalProps) {
