@@ -11,6 +11,7 @@ import { ActionResponse } from "../schema/auth.schema";
 import { DateRepeatType, ExpenseType, Prisma } from "../generated/prisma";
 import { authenticateUser } from "../lib/utils/validation-wrapper";
 import { ListParams } from "@/src/type/page-types";
+import { getNextDueDate } from "../lib/utils/date-formatter";
 import { success } from "zod";
 import { da } from "zod/v4/locales";
 
@@ -106,6 +107,16 @@ export async function CreateExpense(
 
             if (data.repeating_type !== DateRepeatType.MANUAL) {
               //insert into transaction table
+              const repeatingDate = getNextDueDate(data.repeating_type);
+              await tsc.transaction.create({
+                data: {
+                  amount: 0,
+                  expense_id: newExpense.id,
+                  price: data.running_bill,
+                  repeat_at: repeatingDate,
+                  status: "PENDING",
+                },
+              });
             }
             break;
           case ExpenseType.TRANSPORTATION:
@@ -204,8 +215,6 @@ export async function GetUserExpenses({
       category && Object.values(ExpenseType).includes(category as ExpenseType)
         ? (category as ExpenseType)
         : undefined;
-
-    console.log(category);
 
     try {
       const userExpenses = await prisma.expense.findMany({

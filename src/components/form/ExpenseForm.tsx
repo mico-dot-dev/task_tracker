@@ -48,13 +48,18 @@ function ExpenseForm({ closeModal }: AddFormProps) {
   async function ExpeneseSubmit(data: DynamicFormInputModel) {
     try {
       const res = await CreateExpense(data);
-      if (res.success) {
+      if (!res.success) {
         closeModal();
         Swal.fire({
-          icon: "success",
-          title: "Expense Added Successfully",
+          icon: "error",
+          title: "Error adding expense" + res.error,
         });
       }
+      closeModal();
+      Swal.fire({
+        icon: "success",
+        title: "Expense Added Successfully",
+      });
     } catch (e) {}
   }
 

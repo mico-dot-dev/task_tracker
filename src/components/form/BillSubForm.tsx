@@ -32,7 +32,7 @@ function BillSubForm() {
         <label htmlFor="title">Running Bill</label>
         <input
           id="title"
-          type="int"
+          type="number"
           className="input-base p-2"
           {...register("running_bill", { valueAsNumber: true })}
         />
