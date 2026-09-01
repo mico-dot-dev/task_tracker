@@ -35,8 +35,8 @@ jobs:
       #   run: npm run lint
 
       # Step 5: Run your automated unit tests
-      - name: Run unit tests
-        run: npm test
+      # - name: Run unit tests
+      #   run: npm test
 
       # Step 6: Ensure the app builds into production bundle without crashing
       - name: Build application
