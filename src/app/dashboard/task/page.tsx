@@ -1,8 +1,7 @@
 import React, { Suspense, use } from "react";
-import TaskList from "@/src/components/task/TaskList";
 import { ListParams } from "@/src/type/page-types";
 import { GetUserCategory } from "@/src/actions/category.action";
-import { DataListProps } from "@/src/type/page-types";
+import AddButton from "@/src/components/ui/AddButton";
 import DataListContainer from "@/src/components/ui/DataListContainer";
 
 //Extract the search from REST
@@ -30,6 +29,9 @@ async function page({ searchParams }: PageProps) {
               })),
             }}
           />
+        </div>
+        <div>
+          <AddButton content="task" />
         </div>
       </header>
     </div>

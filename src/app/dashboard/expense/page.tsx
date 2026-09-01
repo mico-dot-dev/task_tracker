@@ -1,6 +1,6 @@
 import React from "react";
 import DataListContainer from "@/src/components/ui/DataListContainer";
-import ExpenseList from "@/src/components/expense/ExpenseList";
+import AddButton from "@/src/components/ui/AddButton";
 import { ExpenseType } from "@/src/generated/prisma";
 import { upperCaseFormat } from "@/src/lib/utils/formatter";
 import { ListParams } from "@/src/type/page-types";
@@ -24,6 +24,9 @@ async function page({ searchParams }: PageProps) {
             })),
           }}
         />
+      </div>
+      <div>
+        <AddButton content="expense" />
       </div>
     </div>
   );
