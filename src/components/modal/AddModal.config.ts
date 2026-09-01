@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic";
 import React from "react";
-import { AppModule } from "@/src/type/module";
-
-export type ModuleWithModals = Exclude<AppModule, "stock">;
+import { ModuleWithModals } from "@/src/type/module";
 
 interface AddContents {
   label: string;

@@ -126,6 +126,13 @@ function TaskForm({ closeModal }: AddFormProps) {
       });
     } catch (error) {
       console.error("Error submitting task:", error);
+      closeModal();
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while saving the task.",
+      });
     }
   }
 

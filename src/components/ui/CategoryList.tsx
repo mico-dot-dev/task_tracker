@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
 import AddCategoryModal from "../modal/AddModal";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ToolBarProps, CategoryFilterModel } from "@/src/type/page-types";
+import { CategoryFilterModel } from "@/src/type/page-types";
 import { AppModule } from "@/src/type/module";
 
 interface ContentProps {

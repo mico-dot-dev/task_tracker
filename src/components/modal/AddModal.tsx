@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from "react";
-import { FORM_REGISTRY, ModuleWithModals } from "./AddModal.config";
+import { FORM_REGISTRY } from "./AddModal.config";
+import { ModuleWithModals } from "@/src/type/module";
 import ModalWrapper from "./ModalWrapper";
 
 type ModalProps = {

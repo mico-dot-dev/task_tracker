@@ -2,9 +2,9 @@ import React, { Suspense } from "react";
 import SearchBar from "@/src/components/ui/SearchBar";
 import CategoryList from "@/src/components/ui/CategoryList";
 import Filter from "@/src/components/ui/Filter";
-import { ToolBarProps } from "@/src/type/page-types";
+import { DataListProps } from "@/src/type/page-types";
 
-function Toolbar({ module, categoryContent }: ToolBarProps) {
+function Toolbar({ module, toolBarProps }: DataListProps) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row pb-5 mb-3 border-b border-border">
@@ -16,7 +16,7 @@ function Toolbar({ module, categoryContent }: ToolBarProps) {
         </div>
       </div>
       <Suspense>
-        <CategoryList module={module} content={categoryContent} />
+        <CategoryList module={module} content={toolBarProps.categoryContent} />
       </Suspense>
     </div>
   );

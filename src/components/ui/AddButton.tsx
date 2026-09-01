@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
 import AddFormModal from "../modal/AddModal";
-import { ModuleWithModals } from "../modal/AddModal.config";
+import { ModuleWithModals } from "@/src/type/module";
 
 interface AddButtonProps {
   content: ModuleWithModals;

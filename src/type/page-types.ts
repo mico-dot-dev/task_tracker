@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { AppModule } from "./module";
-import { ModuleWithModals } from "../components/modal/AddModal.config";
+import { AppModule } from "../type/module";
+import { ModuleWithModals } from "../type/module";
 
 export interface ListParams {
   category?: string;
@@ -19,7 +19,6 @@ export interface ToolBarProps {
 }
 
 export interface DataListProps {
-  module: ModuleWithModals;
+  module: AppModule;
   toolBarProps: ToolBarProps;
-  dataList: ReactNode;
 }

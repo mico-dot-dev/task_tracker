@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 async function page({ searchParams }: PageProps) {
-  const param = await searchParams;
+  const params = await searchParams;
   const res = await GetUserCategory();
   if (!res.success) {
     return;
@@ -21,18 +21,15 @@ async function page({ searchParams }: PageProps) {
       <header className="mt-7 mb-3">
         <p className="text-2xl font-bold text-primary-text">Good Morning</p>
         <div>
-          <div>
-            <DataListContainer
-              module="task"
-              toolBarProps={{
-                categoryContent: res.data.map((c) => ({
-                  id: c.id.toString(),
-                  label: c.title,
-                })),
-              }}
-              dataList={<TaskList searchParams={param} />}
-            />
-          </div>
+          <DataListContainer
+            module="task"
+            toolBarProps={{
+              categoryContent: res.data.map((c) => ({
+                id: c.id.toString(),
+                label: c.title,
+              })),
+            }}
+          />
         </div>
       </header>
     </div>
