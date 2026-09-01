@@ -44,5 +44,9 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "lightningcss-linux-x64-gnu": "^1.29.0",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.0.0"
   }
 }
