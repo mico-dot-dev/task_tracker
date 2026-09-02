@@ -21,11 +21,11 @@ function DataListContainer({
   return (
     <>
       {" "}
-      <div className="flex flex-col flex-1 h-full bg-foreground border border-border rounded-2xl">
+      <div className="flex flex-col flex-1 h-full bg-foreground border border-border rounded-2xl p-5">
         <div className="mb-7 ">
           <ToolBar module={module} toolBarProps={toolBarProps} />
         </div>
-        <div className="overflow-y-scroll flex-1 h-fit pb-20 ">
+        <div className="overflow-y-scroll flex-1 h-fit  ">
           <Suspense>
             <ListComponent searchParams={searchParams} />
           </Suspense>

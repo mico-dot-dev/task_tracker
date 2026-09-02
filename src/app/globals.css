@@ -74,7 +74,7 @@
   }
 
   .content-container-base {
-    @apply flex flex-1 flex-col justify-between min-h-full overflow-hidden;
+    @apply flex flex-1 flex-col min-h-full overflow-hidden pt-8 p-5 pr-0;
   }
 
   .modal-form-base {

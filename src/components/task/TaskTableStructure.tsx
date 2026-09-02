@@ -6,46 +6,38 @@ import { Ellipsis } from "lucide-react";
 
 export const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
   {
-    accessorKey: "checkbox",
-    header: "",
-    cell: ({ row }) => {
-      return (
+    accessorKey: "Title",
+    header: () => null,
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        {" "}
         <button
           type="button"
-          className="flex button-base w-5 aspect-square justify-self-center"
+          className="flex button-base w-5 aspect-square justify-self-center rounded-full"
           onClick={() => UpdateTaskCompletion(row.original.id)}
         ></button>
-      );
-    },
+        <span>{row.original.title}</span>
+      </div>
+    ),
   },
   {
-    accessorKey: "number",
-    header: "No.",
-    cell: ({ row }) => row.id,
-  },
-  {
-    accessorFn: (data) => data.title,
-    header: "Title",
+    accessorKey: "category",
+    header: () => null,
     cell: (data) => data.getValue(),
   },
   {
-    accessorFn: (data) => data.category,
-    header: "Category",
-    cell: (data) => data.getValue(),
-  },
-  {
-    accessorFn: (data) => data.completed,
-    header: "Status",
+    accessorKey: "completed",
+    header: () => null,
     cell: (data) => (data.getValue() ? "Completed" : "Pending"),
   },
   {
-    accessorFn: (data) => data.due_date,
-    header: "Due Date",
+    accessorKey: "due_date",
+    header: () => null,
     cell: (data) => data.getValue() || "No Due Date",
   },
   {
     id: "actions",
-    header: "Action",
+    header: () => null,
     cell: ({ row }) => {
       return (
         <button>

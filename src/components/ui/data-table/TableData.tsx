@@ -37,7 +37,7 @@ function TableData<T extends RowData>({
   });
 
   return (
-    <table className="table">
+    <table className="table table-auto border border-border">
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

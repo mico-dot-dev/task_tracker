@@ -14,7 +14,7 @@ function AddButton({ content }: AddButtonProps) {
   return (
     <div>
       <div
-        className="fixed bottom-5 right-5
+        className="
             font-semibold text-sm tracking-wide lg:px-6 px-3 py-3 rounded-lg
             flex items-center gap-2
             button-base
