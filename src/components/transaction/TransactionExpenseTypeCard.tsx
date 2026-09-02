@@ -1,7 +1,5 @@
 "use client";
 
-import { LucideIcon } from "lucide-react";
-import React, { ReactNode } from "react";
 import { twJoin } from "tailwind-merge";
 import { expenseIconProps } from "@/src/lib/utils/expense-mapper";
 import { ExpenseType } from "@/src/generated/prisma";
@@ -13,7 +11,7 @@ type expenseButtonProps = {
   onSelectType: (type: ExpenseType) => void;
 };
 
-function TransactionFormButtonCard({
+function ExpenseTypeCard({
   isSelected,
   expenseType,
   iconConfig,
@@ -41,4 +39,4 @@ function TransactionFormButtonCard({
   );
 }
 
-export default TransactionFormButtonCard;
+export default ExpenseTypeCard;

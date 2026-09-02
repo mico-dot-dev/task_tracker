@@ -15,21 +15,15 @@ import {
 import { DynamicListModel } from "@/src/schema/expense.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetUserExpenseByType } from "@/src/actions/expense.action";
-import ExpenseCard from "@/src/components/transaction/TransactionFormButtonCard";
+import ExpenseTypeCard from "@/src/components/transaction/TransactionExpenseTypeCard";
 import { twJoin } from "tailwind-merge";
 import { CreateUserTransaction } from "@/src/actions/transaction.action";
 import Swal from "sweetalert2";
+import TransactionExpenseCard from "@/src/components/transaction/TransactionExpenseCard";
 
 interface AddFormProps {
   closeModal: () => void;
 }
-
-type expenseButtonProps = {
-  isSelected: boolean;
-  expenseType: ExpenseType;
-  iconConfig: expenseIconProps;
-  onSelectType: (type: ExpenseType) => void;
-};
 
 function TransactionForm({ closeModal }: AddFormProps) {
   const methods = useForm<TransactionFormModel>({
@@ -86,86 +80,93 @@ function TransactionForm({ closeModal }: AddFormProps) {
   };
 
   return (
-    <>
+    <div className="h-full">
       <div className="text-xs">
         <ul className="steps w-full">
-          <li className="step step-primary"></li>
-          <li className="step "></li>
-          <li className="step "></li>
+          <li className="step step-primary "></li>
+          <li
+            className={twJoin(
+              "step transition-colors ",
+              step >= 2 ? "  step-primary" : "",
+            )}
+          ></li>
+          <li
+            className={twJoin(
+              "step transition-colors ",
+              step >= 3 ? "step-primary" : "",
+            )}
+          ></li>
         </ul>
         <p>Select the Expense Type</p>
       </div>
 
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(formSubmit, onInvalid)}>
-          {/* Step 1 */}
-          {step === 1 && (
-            <fieldset className="flex-flex-col">
-              {Object.entries(expenseIconMap).map(([typeKey, config]) => {
-                const convertedType = typeKey as ExpenseType;
-                const isSelected = convertedType === selectedExpenseType;
+        <form
+          onSubmit={handleSubmit(formSubmit, onInvalid)}
+          className="flex flex-col h-[85%]"
+        >
+          <div className="flex-1 h-full">
+            {/* Step 1 */}
+            {step === 1 && (
+              <fieldset className="grid grid-cols-2">
+                {Object.entries(expenseIconMap).map(([typeKey, config]) => {
+                  const convertedType = typeKey as ExpenseType;
+                  const isSelected = convertedType === selectedExpenseType;
+                  return (
+                    <ExpenseTypeCard
+                      key={typeKey}
+                      expenseType={convertedType}
+                      iconConfig={config}
+                      isSelected={isSelected}
+                      onSelectType={(expense) =>
+                        setValue("expense_type", expense)
+                      }
+                    />
+                  );
+                })}
+              </fieldset>
+            )}
+            {/* Showcases the Expenses of the chosen expense type */}
+            {step === 2 && (
+              <fieldset>
+                {expenseData ? (
+                  <fieldset className="grid grid-cols-2 gap-3">
+                    {expenseData.map((data) => {
+                      const isSelected = data.id === selectedExpenseId;
+                      return (
+                        <TransactionExpenseCard
+                          key={data.id}
+                          data={data}
+                          isSelected={isSelected}
+                          onSelectType={(id) =>
+                            setValue("expense_id", id.toString())
+                          }
+                        />
+                      );
+                    })}
+                  </fieldset>
+                ) : (
+                  <p>No Expense Data for this Type</p>
+                )}
+              </fieldset>
+            )}
+            {step === 3 && (
+              <fieldset className="flex flex-col">
+                <label htmlFor="">Amount</label>
+                <input
+                  type="number"
+                  {...register("amount", { valueAsNumber: true })}
+                />
+                <label htmlFor="">Price</label>
+                <input
+                  type="number"
+                  {...register("price", { valueAsNumber: true })}
+                />
+              </fieldset>
+            )}
+          </div>
 
-                return (
-                  <ExpenseCard
-                    key={typeKey}
-                    expenseType={convertedType}
-                    iconConfig={config}
-                    isSelected={isSelected}
-                    onSelectType={(expense) =>
-                      setValue("expense_type", expense)
-                    }
-                  />
-                );
-              })}
-            </fieldset>
-          )}
-
-          {/* Showcases the Expenses of the chosen expense type */}
-          {step === 2 && (
-            <fieldset className="flex-flex-col">
-              {expenseData ? (
-                <fieldset>
-                  {expenseData.map((data, i) => {
-                    const isSelected = data.id === selectedExpenseId;
-                    return (
-                      <button
-                        key={i}
-                        type="button"
-                        className={twJoin(
-                          "border border-border w-full cursor-pointer flex mb-3 py-3.5",
-                          isSelected && "border-primary",
-                        )}
-                        onClick={() => {
-                          setValue("expense_id", data.id);
-                          setValue("name", data.title);
-                        }}
-                      >
-                        {data.title}
-                      </button>
-                    );
-                  })}
-                </fieldset>
-              ) : (
-                <p>No Expense Data for this Type</p>
-              )}
-            </fieldset>
-          )}
-          {step === 3 && (
-            <fieldset className="flex-flex-col">
-              <label htmlFor="">Amount</label>
-              <input
-                type="number"
-                {...register("amount", { valueAsNumber: true })}
-              />
-              <label htmlFor="">Price</label>
-              <input
-                type="number"
-                {...register("price", { valueAsNumber: true })}
-              />
-            </fieldset>
-          )}
-
-          <footer className="justify-between w-full flex">
+          <footer className="justify-between w-full flex ">
             {step > 1 ? (
               <button
                 type="button"
@@ -200,7 +201,7 @@ function TransactionForm({ closeModal }: AddFormProps) {
           </footer>
         </form>
       </FormProvider>
-    </>
+    </div>
   );
 }
 

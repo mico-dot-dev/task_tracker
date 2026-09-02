@@ -10,7 +10,7 @@ function DataShowcase<T extends RowData>({
   module,
 }: ResponsiveDataProps<T>) {
   return (
-    <>
+    <div className="">
       <div className="lg:block hidden">
         <DataTable columns={columns} data={data} module={module} />
       </div>
@@ -19,7 +19,7 @@ function DataShowcase<T extends RowData>({
           <CardComponent data={item} key={i} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

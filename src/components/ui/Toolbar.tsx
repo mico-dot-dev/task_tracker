@@ -7,7 +7,7 @@ import { DataListProps } from "@/src/type/page-types";
 function Toolbar({ module, toolBarProps }: DataListProps) {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row pb-5 mb-3 border-b border-border">
+      <div className="flex flex-row pb-5 mb-3 ">
         <div className="flex-1">
           <SearchBar />
         </div>
