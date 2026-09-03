@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { AppModule } from "../type/module";
+import { ModuleWithModals } from "../type/module";
 
 export type ListParams = {
   category?: string;
@@ -19,6 +20,7 @@ export interface ToolBarProps {
 
 export interface DataListProps {
   module: AppModule;
+  buttonModule: ModuleWithModals;
   toolBarProps: ToolBarProps;
   searchParams?: ListParams;
 }

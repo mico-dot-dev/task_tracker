@@ -17,6 +17,7 @@ async function page({ searchParams }: PageProps) {
       <div className="flex flex-col flex-1s h-full">
         <DataListContainer
           module="expense"
+          buttonModule="expense"
           toolBarProps={{
             categoryContent: Object.values(ExpenseType).map((e) => ({
               id: e,

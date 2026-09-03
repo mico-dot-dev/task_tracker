@@ -5,18 +5,21 @@ import Filter from "@/src/components/ui/Filter";
 import { DataListProps } from "@/src/type/page-types";
 import AddButton from "@/src/components/ui/AddButton";
 
-function Toolbar({ module, toolBarProps }: DataListProps) {
+function Toolbar({ module, buttonModule, toolBarProps }: DataListProps) {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row pb-5 mb-3 ">
-        <div>
-          <AddButton content="task" />
-        </div>
-        <div className="flex-1">
+      <div className="flex flex-row mb-3 items-stretch h-9.5">
+        {/* Search Bar */}
+        <div className="flex-1 min-h-full ">
           <SearchBar />
         </div>
-        <div className="flex pl-15">
+        {/* Filter Buttons */}
+        <div className="flex pl-15 min-h-full">
           <Filter />
+        </div>
+        {/* Add Button */}
+        <div className="flex min-h-full pl-3">
+          <AddButton content={buttonModule} />
         </div>
       </div>
       <Suspense>

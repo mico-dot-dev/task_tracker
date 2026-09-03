@@ -6,38 +6,38 @@ import { Ellipsis } from "lucide-react";
 
 export const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
   {
-    accessorKey: "Title",
-    header: () => null,
+    id: "button",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        {" "}
-        <button
-          type="button"
-          className="flex button-base w-5 aspect-square justify-self-center rounded-full"
-          onClick={() => UpdateTaskCompletion(row.original.id)}
-        ></button>
-        <span>{row.original.title}</span>
-      </div>
+      <button
+        type="button"
+        className="flex button-base w-5 aspect-square justify-self-center rounded-full"
+        onClick={() => UpdateTaskCompletion(row.original.id)}
+      ></button>
     ),
   },
   {
-    accessorKey: "category",
-    header: () => null,
+    accessorKey: (data) => data.title,
+    header: "Title",
     cell: (data) => data.getValue(),
   },
   {
-    accessorKey: "completed",
-    header: () => null,
+    accessorKey: (data) => data.category,
+    header: "Category",
+    cell: (data) => data.getValue(),
+  },
+  {
+    accessorKey: (data) => data.completed,
+    header: "Completed",
     cell: (data) => (data.getValue() ? "Completed" : "Pending"),
   },
   {
-    accessorKey: "due_date",
-    header: () => null,
+    accessorKey: (data) => data.due_date,
+    header: "Due Date",
     cell: (data) => data.getValue() || "No Due Date",
   },
   {
     id: "actions",
-    header: () => null,
+    header: "Actions",
     cell: ({ row }) => {
       return (
         <button>

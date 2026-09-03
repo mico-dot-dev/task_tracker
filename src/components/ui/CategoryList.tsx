@@ -28,9 +28,11 @@ function CategoryList({ content, module }: ContentProps) {
 
   return (
     <>
-      <p></p>
       <div className="flex flex-row ">
         <div className="flex flex-row gap-3 text-background">
+          <p className="text-muted-text font-semibold uppercase self-center">
+            Categories:{" "}
+          </p>
           <button
             className="button-base p-2 rounded-2xl"
             onClick={() => handleCatgoryFilter("all")}

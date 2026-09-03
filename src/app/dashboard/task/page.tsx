@@ -28,6 +28,7 @@ async function page({ searchParams }: PageProps) {
       <div>
         <DataListContainer
           module="task"
+          buttonModule="task"
           toolBarProps={{
             categoryContent: res.data.map((c) => ({
               id: c.id.toString(),

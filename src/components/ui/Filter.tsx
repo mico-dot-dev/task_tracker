@@ -7,11 +7,11 @@ function Filter() {
   const [groupBy, setGroupBy] = useState<string | null>();
 
   return (
-    <div className="flex flex-row gap-3 text-background">
+    <div className="flex flex-row gap-3 text-background h-full">
       <div className="dropdown relative h-full">
         <button
           tabIndex={0}
-          className="flex flex-row gap-1.5  button-base rounded-xl h-full px-3"
+          className="flex flex-row gap-1.5  button-base rounded-xl px-3 h-full"
         >
           <p className="text-muted-text">Group by: </p>
           <p className="font-semibold">None</p>
@@ -25,7 +25,9 @@ function Filter() {
         </ul>
       </div>
 
-      <button className="button-base rounded-xl px-3">Filter</button>
+      <div className="h-full">
+        <button className="button-base rounded-xl px-3 h-full">Filter</button>
+      </div>
     </div>
   );
 }

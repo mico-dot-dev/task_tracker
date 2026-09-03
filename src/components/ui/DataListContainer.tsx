@@ -8,6 +8,7 @@ function DataListContainer({
   module,
   toolBarProps,
   searchParams,
+  buttonModule,
 }: DataListProps) {
   const ListComponent = dataListRegistry[module];
 
@@ -22,8 +23,12 @@ function DataListContainer({
     <>
       {" "}
       <div className="flex flex-col flex-1 h-full bg-foreground border border-border rounded-2xl p-5">
-        <div className="mb-7 ">
-          <ToolBar module={module} toolBarProps={toolBarProps} />
+        <div className="mb-3">
+          <ToolBar
+            module={module}
+            buttonModule={buttonModule}
+            toolBarProps={toolBarProps}
+          />
         </div>
         <div className="overflow-y-scroll flex-1 h-fit  ">
           <Suspense>
