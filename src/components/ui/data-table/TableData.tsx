@@ -20,11 +20,7 @@ interface TableDataProps<T extends RowData> {
   module: AppModule;
 }
 
-function TableData<T extends RowData>({
-  columns,
-  data,
-  module,
-}: TableDataProps<T>) {
+function TableData<T extends RowData>({ columns, data }: TableDataProps<T>) {
   const features = tableFeatures({
     rowSortingFeature,
     sortedRowModel: createSortedRowModel(),
@@ -38,7 +34,7 @@ function TableData<T extends RowData>({
 
   return (
     <table className="table table-auto border border-border">
-      <thead>
+      <thead className="bg-table-header">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (

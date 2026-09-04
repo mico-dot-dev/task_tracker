@@ -11,6 +11,7 @@ interface TaskListProps {
 
 async function TaskList({ searchParams }: TaskListProps) {
   const tasks = await GetUserTasks({ ...searchParams });
+  await console.log(taskColumns);
   if (!tasks.success) {
     return <p>Task Data Not Found</p>;
   }

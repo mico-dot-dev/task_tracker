@@ -26,9 +26,6 @@ async function page({ searchParams }: PageProps) {
           }}
         />
       </div>
-      <div>
-        <AddButton content="expense" />
-      </div>
     </div>
   );
 }

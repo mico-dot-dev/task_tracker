@@ -16,22 +16,22 @@ export const taskColumns: Array<ColumnDef<{}, TaskListModel>> = [
     ),
   },
   {
-    accessorKey: (data) => data.title,
+    accessorFn: (data) => data.title,
     header: "Title",
     cell: (data) => data.getValue(),
   },
   {
-    accessorKey: (data) => data.category,
+    accessorFn: (data) => data.category,
     header: "Category",
     cell: (data) => data.getValue(),
   },
   {
-    accessorKey: (data) => data.completed,
+    accessorFn: (data) => data.completed,
     header: "Completed",
     cell: (data) => (data.getValue() ? "Completed" : "Pending"),
   },
   {
-    accessorKey: (data) => data.due_date,
+    accessorFn: (data) => data.due_date,
     header: "Due Date",
     cell: (data) => data.getValue() || "No Due Date",
   },
