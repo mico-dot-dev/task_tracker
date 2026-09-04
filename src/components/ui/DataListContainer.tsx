@@ -23,7 +23,7 @@ function DataListContainer({
     <>
       {" "}
       <div className="flex flex-col flex-1 h-full bg-foreground border border-border rounded-2xl p-5">
-        <div className="mb-3">
+        <div className="mb-4">
           <ToolBar
             module={module}
             buttonModule={buttonModule}

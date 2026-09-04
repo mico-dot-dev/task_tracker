@@ -28,23 +28,23 @@ function CategoryList({ content, module }: ContentProps) {
 
   return (
     <>
-      <div className="flex flex-row ">
+      <div className="flex flex-row text-sm">
         <div className="flex flex-row gap-3 text-background">
           <p className="text-muted-text font-semibold uppercase self-center">
             Categories:{" "}
           </p>
           <button
-            className="button-base p-2 rounded-2xl"
+            className="button-base p-2 py-3 rounded-2xl"
             onClick={() => handleCatgoryFilter("all")}
           >
-            All
+            All Categories
           </button>
 
           {/* Loop for category content */}
           {content.map((category) => {
             return (
               <button
-                className="button-base p-2 rounded-2xl"
+                className="button-base p-2 py-3 rounded-2xl"
                 key={category.id}
                 onClick={() => handleCatgoryFilter(category.id)}
               >

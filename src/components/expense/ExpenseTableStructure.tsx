@@ -9,7 +9,7 @@ import { getExpenseListSubContent } from "@/src/lib/utils/expense-mapper";
 export const expenseColumns: Array<ColumnDef<{}, DynamicListModel>> = [
   { accessorKey: "number", header: "No.", cell: ({ row }) => row.id },
   {
-    accessorKey: (data) => data.title,
+    accessorKey: "title",
     header: "Title",
     cell: (data) => data.getValue(),
   },
