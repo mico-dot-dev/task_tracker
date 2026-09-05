@@ -16,17 +16,17 @@ const handleStockUpdate = (
 export const stockColumns: Array<ColumnDef<{}, StockModel>> = [
   { accessorKey: "number", header: "No.", cell: ({ row }) => row.id },
   {
-    accessorKey: (data) => data.name,
+    accessorKey: "name",
     header: "Title",
     cell: (data) => data.getValue(),
   },
   {
-    accessorKey: (data) => data.curr_amount,
+    accessorKey: "curr_amount",
     header: "Current Amount",
     cell: (data) => data.getValue(),
   },
   {
-    accessorKey: (data) => data.min_amount,
+    accessorKey: "min_amount",
     header: "Minimum Amount",
     cell: (data) => data.getValue(),
   },
