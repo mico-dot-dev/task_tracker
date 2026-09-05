@@ -31,6 +31,13 @@ export async function GetUserTasks({
         select: {
           title: true,
           task: {
+            where: {
+              ...(searchText
+                ? {
+                    title: { contains: searchText, mode: "insensitive" },
+                  }
+                : {}),
+            },
             orderBy: {
               completed: "asc",
             },

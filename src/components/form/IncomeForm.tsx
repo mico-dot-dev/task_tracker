@@ -33,7 +33,6 @@ function IncomeForm({ closeModal }: AddFormProps) {
         timer: 2000,
       });
     }
-    console.log(res);
   }
 
   return (

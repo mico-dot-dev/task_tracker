@@ -7,15 +7,19 @@ import { UpdateTaskCompletion } from "@/src/actions/task.action";
 import { useRouter } from "next/navigation";
 import { Circle, CircleCheck, EllipsisVertical } from "lucide-react";
 import { ModuleCardProps } from "@/src/type/data-table";
+import Swal from "sweetalert2";
 
 function TaskItemCard({ data }: ModuleCardProps<TaskListModel>) {
   const router = useRouter();
   function handleToggleComplete() {
     try {
       const res = UpdateTaskCompletion(data.id);
-      console.log(res);
     } catch (error) {
-      console.error("Error occurred while toggling task completion:", error);
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while toggling task completion.",
+        icon: "error",
+      });
     }
   }
 
